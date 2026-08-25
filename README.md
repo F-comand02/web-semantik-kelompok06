@@ -339,8 +339,6 @@ Bagi kami, pembelajaran tidak hanya berhenti pada **"tugas sudah selesai"**, tet
 |  4  | **William Fransisco sihotang** | `251402052` | Data & Knowledge Graph   |
 |  5  | **Ray Nathan Geereno Saragih** | `251402046` | Documentation            |
 
-> ✏️ Silakan ganti data anggota sesuai dengan kelompok kalian.
-
 ---
 
 # 💻 Struktur Repository
