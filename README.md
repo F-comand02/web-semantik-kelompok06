@@ -334,7 +334,7 @@ Bagi kami, pembelajaran tidak hanya berhenti pada **"tugas sudah selesai"**, tet
 | No. | Nama               | NIM   | Peran                    |
 | :-: | ------------------ | ----- | ------------------------ |
 |  1  | **Farel Yamotaro Hia** | `251402069` | Project Manager            |
-|  2  | **Nama Anggota 2** | `NIM` | Research & Documentation |
+|  2  | **Naufal Muhammad Dzaki** | `251402128` | Research & Documentation |
 |  3  | **Nama Anggota 3** | `NIM` | Development              |
 |  4  | **Nama Anggota 4** | `NIM` | Data & Knowledge Graph   |
 |  5  | **Nama Anggota 5** | `NIM` | Documentation            |
