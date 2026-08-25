@@ -237,30 +237,30 @@ Salah satu perkembangan menarik adalah menggabungkan kemampuan **Knowledge Graph
 Salah satu pendekatan yang berkembang adalah:
 
 ```text
-        User Question
+         User Question
               │
               ↓
        ┌──────────────┐
        │     LLM      │
        └──────┬───────┘
               ↓
-       Information
-        Retrieval
+         Information
+          Retrieval
               │
               ↓
-      ┌──────────────┐
-      │ Knowledge    │
-      │    Graph     │
-      └──────┬───────┘
-             ↓
+       ┌──────────────┐
+       │ Knowledge    │
+       │    Graph     │
+       └──────┬───────┘
+              ↓
        Structured Data
-             │
-             ↓
+              │
+              ↓
        ┌──────────────┐
        │     LLM      │
        └──────┬───────┘
               ↓
-        Final Answer
+         Final Answer
 ```
 
 Pendekatan seperti **GraphRAG** mencoba memanfaatkan struktur graf untuk membantu proses pencarian dan pemanfaatan informasi oleh sistem AI.
@@ -299,17 +299,17 @@ Secara konseptual, Semantic Web memiliki beberapa lapisan teknologi yang saling 
 ┌─────────────────────────────┐
 │            Trust            │
 ├─────────────────────────────┤
-│          Proof              │
+│            Proof            │
 ├─────────────────────────────┤
-│        Logic Rules          │
+│         Logic Rules         │
 ├─────────────────────────────┤
 │     Ontology / OWL / RDFS   │
 ├─────────────────────────────┤
-│            RDF              │
+│             RDF             │
 ├─────────────────────────────┤
-│            URI              │
+│             URI             │
 ├─────────────────────────────┤
-│        Unicode / XML        │
+│         Unicode / XML       │
 └─────────────────────────────┘
 ```
 
