@@ -335,9 +335,9 @@ Bagi kami, pembelajaran tidak hanya berhenti pada **"tugas sudah selesai"**, tet
 | :-: | ------------------ | ----- | ------------------------ |
 |  1  | **Farel Yamotaro Hia** | `251402069` | Project Manager            |
 |  2  | **Naufal Muhammad Dzaki** | `251402128` | Research & Documentation |
-|  3  | **Nama Anggota 3** | `NIM` | Development              |
-|  4  | **Nama Anggota 4** | `NIM` | Data & Knowledge Graph   |
-|  5  | **Nama Anggota 5** | `NIM` | Documentation            |
+|  3  | **Yabesh Day Siahaan** | `251402004` | Development              |
+|  4  | **William Fransisco sihotang** | `251402052` | Data & Knowledge Graph   |
+|  5  | **Ray Nathan Geereno Saragih** | `251402046` | Documentation            |
 
 > ✏️ Silakan ganti data anggota sesuai dengan kelompok kalian.
 
