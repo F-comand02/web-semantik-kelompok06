@@ -34,3 +34,21 @@
 | Universitas Sumatera Utara → has legal form → Perguruan Tinggi Negeri Badan Hukum              | Relasi   | Menunjukkan hubungan Universitas Sumatera Utara dengan sudah memiliki hukum di kelembagaannya               |
 | Universitas Sumatera Utara → language of work or name → Indonesian                             | Relasi   | Menunjukkan hubungan Universitas Sumatera Utara dengan bahasa namanya dan bahasa yang digunakan dalam operasionalnya |
 
+
+## 4. Pertanyaan Evaluasi 
+
+### 1. Apa perbedaan web tradisional dan Web Semantik?
+Jawaban: ...
+
+### 2. Mengapa entitas membutuhkan identifier unik?
+Jawaban: ...
+
+### 3. Jelaskan subject, predicate, dan object.
+Jawaban: ...
+
+### 4. Apa keuntungan merepresentasikan informasi sebagai hubungan antarentitas dibandingkan hanya menyimpannya sebagai teks biasa ?
+Jawaban: Informasi sebagai hubungan antarentitas memliki keterkaiatan antara satu data dan data lainnya sehingga pada mesin memudahkan proses pencarian, menganalisis data, serta pembuatan quary kompleks. Melalui informasi yang hubungan antara entitas data lebih terstruktur memungkinkan komputer melakukan penarikan kesimpulan secara otomatis atau inference, mengurangi pengulangan data dan mempermudah jalannya pertukaran informasi antar sistem. Dengan ini data dapat dipahami maknanya secara cepat, tepat dan efisien. Berbeda dengan teks biasa yang tidak terstruktur dan membutuhkan teknik kusus seperti NLP (Natural Language Processing) yang artinya menggunkan LLM (Large Language Model) atau AI dalam memproses data.
+
+
+### 5. Bagaimana Knowledge Graph membantu AI?
+Jawaban: ...
