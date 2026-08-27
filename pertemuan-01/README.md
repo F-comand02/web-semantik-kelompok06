@@ -34,6 +34,14 @@
 | Universitas Sumatera Utara → has legal form → Perguruan Tinggi Negeri Badan Hukum              | Relasi   | Menunjukkan hubungan Universitas Sumatera Utara dengan sudah memiliki hukum di kelembagaannya               |
 | Universitas Sumatera Utara → language of work or name → Indonesian                             | Relasi   | Menunjukkan hubungan Universitas Sumatera Utara dengan bahasa namanya dan bahasa yang digunakan dalam operasionalnya |
 
+## 3. Eksplorasi Schema.org
+
+Tipe yang digunakan: [EducationalOrganization](https://schema.org/EducationalOrganization) (diatas dari turunan CollegeUniversity)
+| Property        | Fungsi                                                                | Contoh Nilai                     |
+| --------------- | --------------------------------------------------------------------- | -------------------------------- |
+| alumni          | Menunjukkan orang yang pernah menjadi lulusan universitas.            | B.J. Habibie                     |
+| department      | Menunjukkan departemen atau bagian yang terdapat dalam universitas.   | Departemen Teknologi Informasi   |
+| founder         | Menunjukkan pihak yang mendirikan universitas.                        | Pemerintah Republik Indonesia    |
 
 ## 4. Pertanyaan Evaluasi 
 
