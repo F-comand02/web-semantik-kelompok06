@@ -50,6 +50,45 @@ Tipe yang digunakan: [EducationalOrganization](https://schema.org/EducationalOrg
 | memberOf        | Menunjukkan organisasi atau asosiasi yang diikuti universitas.        | Asosiasi Perguruan Tinggi        |
 | sameAs          | Menunjukkan URL lain yang merujuk pada universitas yang sama.         | https://www.usu.ac.id/           |
 
+## Implementasi JSON-LD
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Universitas Sumatera Utara",
+  "alumni": {
+    "@type": "Person",
+    "name": "B.J. Habibie"
+  },
+  "department": {
+    "@type": "Organization",
+    "name": "Departemen Teknologi Informasi"
+  },
+  "founder": {
+    "@type": "Organization",
+    "name": "Pemerintah Republik Indonesia"
+  },
+  "foundingDate": "1952-08-20",
+  "accreditation": "Akreditasi Unggul",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Sumatera Utara"
+  },
+  "award": "Penghargaan Universitas Hijau",
+  "knowsAbout": [
+    "Artificial Intelligence",
+    "Teknologi Informasi"
+  ],
+  "memberOf": {
+    "@type": "Organization",
+    "name": "Asosiasi Perguruan Tinggi"
+  },
+  "sameAs": "https://www.usu.ac.id/"
+}
+```
+
+
 ## 4. Pertanyaan Evaluasi 
 
 ### 1. Apa perbedaan web tradisional dan Web Semantik?
