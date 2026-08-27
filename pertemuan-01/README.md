@@ -42,6 +42,10 @@ Tipe yang digunakan: [EducationalOrganization](https://schema.org/EducationalOrg
 | alumni          | Menunjukkan orang yang pernah menjadi lulusan universitas.            | B.J. Habibie                     |
 | department      | Menunjukkan departemen atau bagian yang terdapat dalam universitas.   | Departemen Teknologi Informasi   |
 | founder         | Menunjukkan pihak yang mendirikan universitas.                        | Pemerintah Republik Indonesia    |
+| foundingDate    | Menunjukkan tanggal berdirinya universitas.                           | 1952-08-20                       |
+| accreditation   | Menunjukkan informasi atau status akreditasi universitas.             | Akreditasi Unggul                |
+| areaServed      | Menunjukkan wilayah yang dilayani atau menjadi cakupan universitas.   | Sumatera Utara                   |
+| award           | Menunjukkan penghargaan yang pernah diterima universitas.             | Penghargaan Universitas Hijau    |
 
 ## 4. Pertanyaan Evaluasi 
 
