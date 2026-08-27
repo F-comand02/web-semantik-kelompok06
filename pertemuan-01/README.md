@@ -1,4 +1,4 @@
-# [Pertemuan 1](web-semantik-kelompok06/pertemuan-01/) - Pengenalan Web Semantik
+# [Pertemuan 1](README.md) - Pengenalan Web Semantik
 
 ## 1. Eksplorasi Wikidata
 - Nama entitas: Universitas Sumatera Utara (University of North Sumatera)
