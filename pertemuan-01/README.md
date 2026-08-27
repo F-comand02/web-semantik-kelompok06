@@ -46,6 +46,9 @@ Tipe yang digunakan: [EducationalOrganization](https://schema.org/EducationalOrg
 | accreditation   | Menunjukkan informasi atau status akreditasi universitas.             | Akreditasi Unggul                |
 | areaServed      | Menunjukkan wilayah yang dilayani atau menjadi cakupan universitas.   | Sumatera Utara                   |
 | award           | Menunjukkan penghargaan yang pernah diterima universitas.             | Penghargaan Universitas Hijau    |
+| knowsAbout      | Menunjukkan bidang ilmu atau topik yang menjadi keahlian universitas. | Artificial Intelligence          |
+| memberOf        | Menunjukkan organisasi atau asosiasi yang diikuti universitas.        | Asosiasi Perguruan Tinggi        |
+| sameAs          | Menunjukkan URL lain yang merujuk pada universitas yang sama.         | https://www.usu.ac.id/           |
 
 ## 4. Pertanyaan Evaluasi 
 
