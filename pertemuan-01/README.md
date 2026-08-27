@@ -38,7 +38,14 @@
 ## 4. Pertanyaan Evaluasi 
 
 ### 1. Apa perbedaan web tradisional dan Web Semantik?
-Jawaban: ...
+Jawaban: Perbedaan utama antara Web Tradisional dan Web Semantik terletak pada bagaimana komputer memproses informasi. Pada Web Tradisional, situs web itu dirancang supaya manusia bisa membaca dan mengerti isinya. Komputer hanya melihat data, tetapi tidak benar‑benar mengerti makna di baliknya.
+
+Web Semantik itu dibuat supaya komputer lebih cerdas dalam memahami informasi. Komputer tidak hanya melihat kata‑kata di situs, tetapi juga mengenal arti dan hubungan antar informasi. Jadi, data yang didapatnya bisa diolah dan dicari dengan lebih akurat.
+
+Contohnya, ada kalimat “Yabesh adalah mahasiswa di Universitas Sumatera Utara.” Pada Web Tradisional, komputer melihatnya hanya sebagai teks biasa tetapi pada Web Semantik komputer mengenali bahwa Yabesh adalah orang, mahasiswa adalah statusnya, dan Universitas Sumatera Utara adalah tempatnya belajar. Dengan begitu, informasinya itu punya hubungan yang jelas.
+
+Jadi secara sederhana, Web Tradisional hanya menyampaikan informasi, sementara Web Semantik memudahkan komputer memahami informasi. Jadi bisa dibilang, Web Tradisional membuat komputer “membaca” teks, sedangkan Web Semantik membuat komputer “mengerti” teks.
+
 
 ### 2. Mengapa entitas membutuhkan identifier unik?
 Jawaban: ...
