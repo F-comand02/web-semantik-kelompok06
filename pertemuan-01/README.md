@@ -48,7 +48,7 @@ Jadi secara sederhana, Web Tradisional hanya menyampaikan informasi, sementara W
 
 
 ### 2. Mengapa entitas membutuhkan identifier unik?
-Jawaban: ...
+Jawaban: Suatu entitas membutuhkan identifier unik karena namanya bisa disebut dengan banyak cara berbeda, seperti "Universitas Sumatera Utara", "University of North Sumatra", atau "USU", sehingga tanpa ID yang pasti, mesin bisa bingung apakah semua sebutan itu merujuk pada entitas yang sama. Selain itu, ada universitas lain dengan nama mirip seperti Universitas Islam Sumatera Utara dan Universitas Muhammadiyah Sumatera Utara, sehingga identifier unik seperti Q4200341 memastikan tidak terjadi kesalahan atau tertukar antara satu entitas dengan entitas lain yang serupa. Identifier ini juga membuat data bisa dihubungkan lintas sumber, misalnya Wikipedia Bahasa Indonesia dan Bahasa Inggris bisa merujuk ke entitas yang sama lewat satu ID yang konsisten, sehingga data lebih mudah diproses dan dinalar oleh mesin dibanding hanya mengandalkan teks nama saja. Terakhir, identifier unik memberi stabilitas jangka panjang, karena meskipun nama entitas berubah di masa depan, ID seperti Q4200341 akan tetap sama sehingga semua relasi dan data yang sudah dibangun sebelumnya tetap valid dan tidak rusak.
 
 ### 3. Jelaskan subject, predicate, dan object.
 Jawaban: ...
