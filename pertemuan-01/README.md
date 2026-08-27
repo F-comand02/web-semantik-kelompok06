@@ -115,4 +115,5 @@ Jawaban: Informasi sebagai hubungan antarentitas memliki keterkaiatan antara sat
 
 
 ### 5. Bagaimana Knowledge Graph membantu AI?
-Jawaban: ...
+Jawaban: Knowledge Graph membantu AI dengan menyusun informasi dan hubungan antar informasi secara terstruktur. Dengan adanya struktur ini, AI tidak hanya memahami informasi secara terpisah, tetapi juga mengetahui bagaimana satu informasi berhubungan dengan informasi lainnya. Hal ini membuat AI lebih mudah memahami konteks, menghubungkan fakta, mencari informasi yang relevan, dan melakukan reasoning. Misalnya, AI dapat memahami bahwa Messi bermain untuk Barcelona, Barcelona berada di Spanyol, dan Spanyol berada di Eropa. Sederhananya, Knowledge Graph seperti peta pengetahuan yang membantu AI melihat dan memahami hubungan antara berbagai informasi dengan lebih jelas dan terstruktur.
+
