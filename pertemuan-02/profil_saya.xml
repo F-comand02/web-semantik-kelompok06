@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Profil mahasiswa Web Semantik -->
+
+<profil nim="251402069">
+    <nama>Farel Yamotaro Hia</nama>
+    <angkatan>2025</angkatan>
+    <programStudi>Teknologi Informasi</programStudi>
+
+    <hobiList>
+        <hobi>Bermain Musik</hobi>
+        <hobi>Bernyanyi</hobi>
+    </hobiList>
+
+    <deskripsi>
+        <paragraf>
+            Halo, nama saya Farel Yamotaro Hia. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+            Saya memiliki minat yang besar dalam bidang musik dan bernyanyi.
+            Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+            Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+            pada proyek-proyek yang menarik di masa depan.
+        </paragraf>
+    </deskripsi>
+</profil>
