@@ -11,6 +11,42 @@
 
 
 
+## 4. Analisis Namespace
+
+1. Mengapa kedua elemen title tersebut tidak dianggap sama?
+
+Karena kedua elemen title berada di namespace yang berbeda.
+<buku:title> berada pada namespace https://example.org/buku
+<web:title> berada pada namespace https://example.org/web
+Walaupun nama lokalnya sama-sama title, namespace membuat keduanya menjadi dua elemen yang berbeda.
+   
+2. Apa fungsi prefix buku: dan web:?
+
+Prefix digunakan sebagai penanda namespace pada sebuah elemen XML.
+Dengan prefix tersebut, XML dapat membedakan elemen yang memiliki nama sama tetapi berasal dari namespace berbeda.
+ 
+3. Apa fungsi atribut xmlns?
+
+xmlns digunakan untuk mendeklarasikan namespace dalam XML.
+Contohnya:
+xmlns:buku="https://example.org/buku"
+xmlns:web="https://example.org/web"
+
+Artinya:
+buku: dipetakan ke namespace https://example.org/buku
+web: dipetakan ke namespace https://example.org/web
+Namespace membantu mencegah konflik nama ketika XML menggunakan elemen dari berbagai sumber atau kosakata.
+  
+4. Apakah URI namespace harus dapat dibuka sebagai halaman web? Jelaskan.
+
+Tidak harus.
+
+URI namespace berfungsi sebagai identifier (penanda) unik, bukan sebagai alamat yang wajib menyediakan halaman web.
+URI tersebut tidak harus benar-benar memiliki halaman web yang dapat dibuka di browser. Yang penting URI tersebut 
+digunakan sebagai identitas namespace yang unik dan konsisten.
+
+
+
 ## 5. Membaca XML Schema (XSD)
 
 1. Root element yang diizinkan: buku
@@ -66,6 +102,9 @@ Namespace sangat penting ketika menggabungkan data dari berbagai sumber karena b
 6. Apa kegunaan XPath dalam pengolahan dokumen XML?
 
 XPath digunakan untuk menentukan lokasi atau alamat suatu elemen, atribut, atau bagian tertentu di dalam struktur dokumen XML, sehingga memudahkan proses navigasi dan pencarian data tanpa harus membaca seluruh dokumen secara manual. XPath juga berperan penting sebagai dasar transformasi dokumen dengan XSLT, digunakan dalam validasi tambahan, dipakai untuk mengekstrak data XML melalui berbagai bahasa pemrograman, serta digunakan dalam pengujian otomatis pada aplikasi web untuk menemukan elemen tertentu. Jadi secara sederhana, XPath memudahkan pencarian, penyaringan, dan pengambilan data secara presisi dari struktur dokumen XML yang kompleks.
+
+
+
 
 
 
