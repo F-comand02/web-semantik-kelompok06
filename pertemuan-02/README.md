@@ -28,11 +28,19 @@
 ## Pertanyaan Evaluasi
 
 1. Apa perbedaan utama XML dan HTML?
-| No | Aspek | XML | HTML |
-| -- | ----- | --- | ---- |
-| 1 | **Tujuan** | Menyimpan dan mengangkut **data** | Menampilkan dan memformat **tampilan** halaman web |
-| 2 | **Tag** | Bebas dibuat sendiri, misalnya `<buku>` dan `<harga>` | Sudah baku/ditentukan, misalnya `<p>`, `<div>`, dan `<table>` |
-| 3 | **Fokus** | Struktur dan isi **data** | Cara data **ditampilkan** di browser |
-| 4 | **Aturan Penulisan** | Ketat — harus *well-formed* | Lebih toleran terhadap kesalahan tertentu |
-| 5 | **Ekstensibilitas** | *Extensible*, dapat membuat tag sesuai kebutuhan | Tidak dapat membuat tag sembarangan dan mengikuti spesifikasi HTML |
+
+| No | Bagian yang Dibandingkan | XML | HTML |
+| -- | ------------------------ | --- | ---- |
+| 1 | Kepanjangan | XML adalah singkatan dari **Extensible Markup Language**. | HTML adalah singkatan dari **HyperText Markup Language**. |
+| 2 | Tujuan utama | Digunakan untuk **menyimpan, mengatur, dan mengirim data**. | Digunakan untuk **menampilkan dan menyusun konten pada halaman web**. |
+| 3 | Fokus | Berfokus pada **struktur dan penyimpanan data**. | Berfokus pada **struktur dan penyajian konten halaman web**. |
+| 4 | Tag | Tag dapat **dibuat sendiri** sesuai kebutuhan data. | Menggunakan tag yang **sudah ditentukan oleh standar HTML**. |
+| 5 | Case Sensitive | XML bersifat **case-sensitive**, sehingga `<Nama>` dan `<nama>` dianggap berbeda. | HTML umumnya **tidak case-sensitive** terhadap nama tag, meskipun penulisan huruf kecil tetap disarankan. |
+| 6 | Aturan penulisan | Memiliki aturan penulisan yang **lebih ketat** dan dokumen harus **well-formed**. | Lebih **fleksibel** dalam menangani beberapa kesalahan penulisan. |
+| 7 | Penutupan tag | Setiap elemen XML harus memiliki **tag pembuka dan tag penutup**. | Beberapa elemen HTML tidak memerlukan tag penutup, seperti `<br>` dan `<img>`. |
+| 8 | Contoh | `<nama>Naufal</nama>` | `<h1>Naufal</h1>` |
+| 9 | Penggunaan | Digunakan untuk **pertukaran, penyimpanan, dan representasi data**. | Digunakan untuk **membuat struktur dan konten halaman web**. |
+| 10 | Tampilan | XML **tidak dirancang untuk menampilkan data** secara langsung kepada pengguna. | HTML **dirancang untuk menampilkan konten** pada browser. |
+
+
 
