@@ -28,7 +28,7 @@
 ## Pertanyaan Evaluasi
 1. Apa perbedaan utama XML dan HTML?
 | Aspek | XML | HTML |
-| --- | --- | --- |
+| ------------------------- | ------------------------------------------- | ---------------------------- |
 | Tujuan | Menyimpan dan mengangkut data | Menampilkan dan memformat tampilan halaman web |
 | Tag | Tidak punya tag baku — bebas membuat tag sendiri (mis. `<buku>`, `<harga>`) | Tag sudah ditentukan/baku (mis. `<p>`, `<div>`, `<table>`) dan punya arti tampilan tertentu |
 | Fokus | Fokus pada struktur & isi data | Fokus pada cara data ditampilkan di browser |
