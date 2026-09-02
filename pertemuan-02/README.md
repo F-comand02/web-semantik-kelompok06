@@ -61,7 +61,11 @@ XSD lebih kuat daripada DTD karena mampu melakukan validasi XML secara lebih det
 
 5. Mengapa namespace penting ketika data XML berasal dari beberapa kosakata berbeda?
 
-Namespace sangat penting ketika menggabungkan data dari berbagai sumber karena berfungsi mencegah bentrokan nama tag. Jika tidak menggunakan namespace, komputer akan bingung ketika menemukan nama elemen yang sama tetapi memiliki arti yang berbeda. Contoh sederhananya yaitu jika kamu menggabungkan data toko furnitur yang menggunakan tag untuk meja dengan data tata letak web yang juga menggunakan tag untuk tabel HTML, sistem tidak bisa membedakan mana barang dagangan dan mana struktur tampilan. Namespace menyelesaikan masalah ini dengan memberikan label unik atau awalan pada setiap tag, sehingga komputer dapat mengenali asal-usul dan konteks data tersebut secara pasti.
+Namespace sangat penting ketika menggabungkan data dari berbagai sumber karena berfungsi mencegah bentrokan nama tag. Jika tidak menggunakan namespace, komputer akan bingung ketika menemukan nama elemen yang sama tetapi memiliki arti yang berbeda. Contoh sederhananya yaitu jika kita menggabungkan data toko furnitur yang menggunakan tag untuk meja dengan data tata letak web yang juga menggunakan tag untuk tabel HTML, sistem tidak bisa membedakan mana barang dagangan dan mana struktur tampilan. Namespace menyelesaikan masalah ini dengan memberikan label unik atau awalan pada setiap tag, sehingga komputer dapat mengenali asal-usul dan konteks data tersebut secara pasti.
+
+6. Apa kegunaan XPath dalam pengolahan dokumen XML?
+
+XPath digunakan untuk menentukan lokasi atau alamat suatu elemen, atribut, atau bagian tertentu di dalam struktur dokumen XML, sehingga memudahkan proses navigasi dan pencarian data tanpa harus membaca seluruh dokumen secara manual. XPath juga berperan penting sebagai dasar transformasi dokumen dengan XSLT, digunakan dalam validasi tambahan, dipakai untuk mengekstrak data XML melalui berbagai bahasa pemrograman, serta digunakan dalam pengujian otomatis pada aplikasi web untuk menemukan elemen tertentu. Jadi secara sederhana, XPath memudahkan pencarian, penyaringan, dan pengambilan data secara presisi dari struktur dokumen XML yang kompleks.
 
 
 
