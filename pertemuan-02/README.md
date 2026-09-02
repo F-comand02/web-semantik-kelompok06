@@ -19,3 +19,19 @@
 4. Tipe data harga: xs:decimal
 5. Atribut isbn tidak boleh dihilangkan, karena use="required" mewajibkan kehadirannya — dokumen tanpa atribut ini akan gagal validasi XSD.
 
+
+
+
+
+
+
+## Pertanyaan Evaluasi
+1. Apa perbedaan utama XML dan HTML?
+| Aspek | XML | HTML |
+|---|---|---|
+| Tujuan | Menyimpan dan mengangkut **data** | Menampilkan dan memformat **tampilan** halaman web |
+| Tag | Bebas dibuat sendiri (mis. `<buku>`, `<harga>`) | Sudah baku/ditentukan (mis. `<p>`, `<div>`, `<table>`) |
+| Fokus | Struktur dan isi **data** | Cara data **ditampilkan** di browser |
+| Aturan penulisan | Ketat — harus *well-formed* | Longgar — tag salah/tidak ditutup masih bisa tampil |
+| Ekstensibilitas | *eXtensible*, bisa dikembangkan sesuai kebutuhan | Tidak extensible, tag terbatas pada spesifikasi HTML |
+
