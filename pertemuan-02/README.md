@@ -59,6 +59,9 @@ Dokumen XML yang well-formed adalah dokumen XML yang memiliki struktur dan penul
 
 XSD lebih kuat daripada DTD karena mampu melakukan validasi XML secara lebih detail, ketat, dan fleksibel, terutama dalam menentukan tipe data dan aturan struktur.
 
+5. Mengapa namespace penting ketika data XML berasal dari beberapa kosakata berbeda?
+
+Namespace sangat penting ketika menggabungkan data dari berbagai sumber karena berfungsi mencegah bentrokan nama tag. Jika tidak menggunakan namespace, komputer akan bingung ketika menemukan nama elemen yang sama tetapi memiliki arti yang berbeda. Contoh sederhananya yaitu jika kamu menggabungkan data toko furnitur yang menggunakan tag untuk meja dengan data tata letak web yang juga menggunakan tag untuk tabel HTML, sistem tidak bisa membedakan mana barang dagangan dan mana struktur tampilan. Namespace menyelesaikan masalah ini dengan memberikan label unik atau awalan pada setiap tag, sehingga komputer dapat mengenali asal-usul dan konteks data tersebut secara pasti.
 
 
 
