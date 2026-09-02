@@ -46,5 +46,19 @@
 
 Dokumen XML yang well-formed adalah dokumen XML yang memiliki struktur dan penulisan sintaks yang sesuai dengan aturan dasar XML sehingga dapat dibaca dan diproses dengan benar oleh XML parser. Sebuah dokumen XML dikatakan well-formed apabila memiliki satu root element, setiap tag pembuka memiliki tag penutup yang sesuai, penulisan huruf besar dan kecil pada tag harus konsisten karena XML bersifat case-sensitive, serta elemen-elemen di dalamnya harus tersusun atau bersarang dengan benar. Selain itu, nilai atribut harus ditulis menggunakan tanda kutip dan karakter khusus seperti & harus ditulis dalam bentuk entity seperti &amp;. Jika salah satu aturan tersebut dilanggar, maka dokumen XML dianggap tidak well-formed dan dapat menyebabkan kesalahan ketika diproses.
 
+3. Jelaskan perbedaan well-formed dan valid.
+
+| Well-formed                     | Valid                                               |
+| ------------------------------- | --------------------------------------------------- |
+| Memenuhi aturan **sintaks XML** | Memenuhi aturan **struktur/isi XML**                |
+| Tidak membutuhkan DTD/XSD       | Biasanya diperiksa dengan DTD/XSD                   |
+| Fokus pada cara XML ditulis     | Fokus pada apakah XML sesuai aturan yang ditentukan |
+| Syarat dasar                    | Tingkat pemeriksaan lebih lanjut                    |
+
+4. Mengapa XSD lebih kuat dibandingkan DTD?
+
+XSD lebih kuat daripada DTD karena mampu melakukan validasi XML secara lebih detail, ketat, dan fleksibel, terutama dalam menentukan tipe data dan aturan struktur.
+
+
 
 
