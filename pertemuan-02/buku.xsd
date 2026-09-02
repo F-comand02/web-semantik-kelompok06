@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="buku">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="judul" type="xs:string"/>
+                <xs:element name="pengarang" type="xs:string"/>
+                <xs:element name="tahun" type="xs:gYear"/>
+                <xs:element name="harga" type="xs:decimal"/>
+            </xs:sequence>
+
+            <xs:attribute name="isbn" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
