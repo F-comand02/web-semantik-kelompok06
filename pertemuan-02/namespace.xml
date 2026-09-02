@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:buku="https://example.org/buku" xmlns:web="https://example.org/web">
+    <buku:title>Pengantar Web Semantik</buku:title>
+    <web:title>Portal Pembelajaran Web Semantik</web:title>
+</data>
