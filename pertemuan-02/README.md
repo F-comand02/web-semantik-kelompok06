@@ -30,9 +30,9 @@
 1. Apa perbedaan utama XML dan HTML?
 | No | Aspek | XML | HTML |
 | -- | ----- | --- | ---- |
-| 1 | Tujuan | Menyimpan dan mengangkut data | Menampilkan dan memformat tampilan halaman web |
-| 2 | Tag | Tidak punya tag baku — bebas membuat tag sendiri (mis. `<buku>`, `<harga>`) | Tag sudah ditentukan/baku (mis. `<p>`, `<div>`, `<table>`) dan punya arti tampilan tertentu |
-| 3 | Fokus | Fokus pada struktur & isi data | Fokus pada cara data ditampilkan di browser |
-| 4 | Aturan Penulisan | Sangat ketat — harus **well-formed** (tag harus ditutup, sensitif huruf besar/kecil, dll.) | Lebih longgar — browser masih bisa menampilkan HTML meski ada tag yang salah/tidak ditutup |
-| 5 | Ekstensibilitas | **eXtensible** — bisa dikembangkan sesuai kebutuhan pembuatnya | Tidak *extensible*, tag terbatas pada spesifikasi HTML |
+| 1 | **Tujuan** | Menyimpan dan mengangkut **data** | Menampilkan dan memformat **tampilan** halaman web |
+| 2 | **Tag** | Bebas dibuat sendiri, misalnya `<buku>` dan `<harga>` | Sudah baku/ditentukan, misalnya `<p>`, `<div>`, dan `<table>` |
+| 3 | **Fokus** | Struktur dan isi **data** | Cara data **ditampilkan** di browser |
+| 4 | **Aturan Penulisan** | Ketat — harus *well-formed* | Lebih toleran terhadap kesalahan tertentu |
+| 5 | **Ekstensibilitas** | *Extensible*, dapat membuat tag sesuai kebutuhan | Tidak dapat membuat tag sembarangan dan mengikuti spesifikasi HTML |
 
