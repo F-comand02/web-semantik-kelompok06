@@ -2,23 +2,113 @@
 
 <!-- Profil mahasiswa Web Semantik -->
 
-<profil nim="251402069">
-    <nama>Farel Yamotaro Hia</nama>
-    <angkatan>2025</angkatan>
-    <programStudi>Teknologi Informasi</programStudi>
+<mahasiswa>
+    <profilList>
 
-    <hobiList>
-        <hobi>Bermain Musik</hobi>
-        <hobi>Bernyanyi</hobi>
-    </hobiList>
+        <profil nim="251402069">
+            <nama>Farel Yamotaro Hia</nama>
+            <angkatan>2025</angkatan>
+            <programStudi>Teknologi Informasi</programStudi>
 
-    <deskripsi>
-        <paragraf>
-            Halo, nama saya Farel Yamotaro Hia. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
-            Saya memiliki minat yang besar dalam bidang musik dan bernyanyi.
-            Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
-            Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
-            pada proyek-proyek yang menarik di masa depan.
-        </paragraf>
-    </deskripsi>
-</profil>
+            <hobiList>
+                <hobi>Bermain Musik</hobi>
+                <hobi>Bernyanyi</hobi>
+            </hobiList>
+
+            <deskripsi>
+                <paragraf>
+                    Halo, nama saya Farel Yamotaro Hia. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+                    Saya memiliki minat yang besar dalam bidang musik dan bernyanyi.
+                    Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+                    Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+                    pada proyek-proyek yang menarik di masa depan.
+                </paragraf>
+            </deskripsi>
+        </profil>
+
+        <profil nim="251402004">
+            <nama>Yabesh Day Siahaan</nama>
+            <angkatan>2025</angkatan>
+            <programStudi>Teknologi Informasi</programStudi>
+
+            <hobiList>
+                <hobi>Bermain Game</hobi>
+                <hobi>Berolahraga</hobi>
+            </hobiList>
+
+            <deskripsi>
+                <paragraf>
+                    Halo, nama saya Yabesh Day Siahaan. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+                    Saya memiliki minat yang besar dalam bidang game dan berolahraga.
+                    Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+                    Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+                    pada proyek-proyek yang menarik di masa depan.
+                </paragraf>
+            </deskripsi>
+        </profil>
+
+        <profil nim="251402046">
+            <nama>Ray Nathan Geereno Saragih</nama>
+            <angkatan>2025</angkatan>
+            <programStudi>Teknologi Informasi</programStudi>
+
+            <hobiList>
+                <hobi>Bermain Game</hobi>
+                <hobi>Bermain Basket</hobi>
+            </hobiList>
+
+            <deskripsi>
+                <paragraf>
+                    Halo, nama saya Ray Nathan Geereno Saragih. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+                    Saya memiliki minat yang besar dalam bidang game dan bermain basket.
+                    Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+                    Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+                    pada proyek-proyek yang menarik di masa depan.
+                </paragraf>
+            </deskripsi>
+        </profil>
+
+        <profil nim="251402052">
+            <nama>William Fransisco Sihotang</nama>
+            <angkatan>2025</angkatan>
+            <programStudi>Teknologi Informasi</programStudi>
+
+            <hobiList>
+                <hobi>Bermain Musik</hobi>
+                <hobi>Trading</hobi>
+            </hobiList>
+
+            <deskripsi>
+                <paragraf>
+                    Halo, nama saya William Fransisco Sihotang. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+                    Saya memiliki minat yang besar dalam bidang musik dan trading.
+                    Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+                    Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+                    pada proyek-proyek yang menarik di masa depan.
+                </paragraf>
+            </deskripsi>
+        </profil>
+
+        <profil nim="251402128">
+            <nama>Naufal Muhammad Dzaki</nama>
+            <angkatan>2025</angkatan>
+            <programStudi>Teknologi Informasi</programStudi>
+
+            <hobiList>
+                <hobi>Bermain Saham</hobi>
+                <hobi>Bermain Basket</hobi>
+            </hobiList>
+
+            <deskripsi>
+                <paragraf>
+                    Halo, nama saya Naufal Muhammad Dzaki. Saya adalah mahasiswa Teknologi Informasi angkatan 2025.
+                    Saya memiliki minat yang besar dalam bidang saham dan olahraga basket.
+                    Selain itu, saya juga tertarik dengan pengembangan web dan teknologi terbaru.
+                    Saya berharap dapat mengembangkan keterampilan saya di bidang ini dan berkontribusi
+                    pada proyek-proyek yang menarik di masa depan.
+                </paragraf>
+            </deskripsi>
+        </profil>
+
+    </profilList>
+</mahasiswa>    
