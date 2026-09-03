@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<katalog>
+
+    <buku isbn="978-001">
+        <judul>Pengantar Web Semantik</judul>
+        <pengarang>Andi Wijaya</pengarang>
+        <tahun>2024</tahun>
+        <harga>125000</harga>
+    </buku>
+
+    <buku isbn="978-002">
+        <judul>Dasar Knowledge Graph</judul>
+        <pengarang>Siti Rahma</pengarang>
+        <tahun>2023</tahun>
+        <harga>95000</harga>
+    </buku>
+
+    <buku isbn="978-003">
+        <judul>Pemrograman XML</judul>
+        <pengarang>Budi Santoso</pengarang>
+        <tahun>2022</tahun>
+        <harga>110000</harga>
+    </buku>
+
+    <buku isbn="978-004">
+        <judul>Basis Data dan Web</judul>
+        <pengarang>Dewi Lestari</pengarang>
+        <tahun>2024</tahun>
+        <harga>135000</harga>
+    </buku>
+
+    <buku isbn="978-005">
+        <judul>Teknologi Web Modern</judul>
+        <pengarang>Rizky Pratama</pengarang>
+        <tahun>2025</tahun>
+        <harga>150000</harga>
+    </buku>
+
+</katalog>
