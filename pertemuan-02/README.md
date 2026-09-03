@@ -2,12 +2,9 @@
 
 ## 1. Profil XML
 
-# Struktur XML Profil Mahasiswa
+### `Struktur XML Profil Mahasiswa`
 
-## Deskripsi
-XML ini dibuat untuk menyimpan data profil beberapa mahasiswa secara terstruktur dan hierarkis. Data yang disimpan meliputi NIM, nama, angkatan, program studi, hobi, dan deskripsi diri mahasiswa.
-
-## Elemen Root
+#### ``Elemen Root``
 Elemen root merupakan elemen paling luar dan menjadi induk dari seluruh elemen lainnya. Pada XML ini, elemen root yang digunakan adalah:
 
 ```xml
@@ -15,7 +12,7 @@ Elemen root merupakan elemen paling luar dan menjadi induk dari seluruh elemen l
 ```
 Elemen `<mahasiswa>` membungkus seluruh data profil mahasiswa.
 
-## Struktur Elemen XML
+#### ``Struktur Elemen XML``
 Struktur XML yang dibuat adalah sebagai berikut:
 ```text
 mahasiswa
@@ -31,7 +28,7 @@ mahasiswa
 ```
 Elemen `<profilList>` digunakan sebagai wadah untuk menampung seluruh data profil mahasiswa. Setiap mahasiswa disimpan dalam satu elemen `<profil>`.
 
-## Elemen-Elemen di Dalam Root
+#### ``Elemen-Elemen di Dalam Root``
 Berikut adalah elemen-elemen yang terdapat di dalam root `<mahasiswa>`:
 - `<profilList>` digunakan untuk mengelompokkan seluruh profil mahasiswa.
 - `<profil>` digunakan untuk menyimpan data satu mahasiswa.
@@ -43,7 +40,7 @@ Berikut adalah elemen-elemen yang terdapat di dalam root `<mahasiswa>`:
 - `<deskripsi>` digunakan untuk menyimpan deskripsi diri mahasiswa.
 - `<paragraf>` digunakan untuk menyimpan isi deskripsi mahasiswa.
 
-## Atribut yang Digunakan
+#### ``Atribut yang Digunakan``
 Atribut yang digunakan adalah atribut `nim` pada elemen `<profil>`. Atribut ini berfungsi untuk memberikan informasi tambahan berupa Nomor Induk Mahasiswa sebagai identitas setiap mahasiswa.
 
 Contoh penggunaan atribut:
@@ -52,7 +49,7 @@ Contoh penggunaan atribut:
 ```
 Nilai `251402069` merupakan NIM dari mahasiswa yang bersangkutan.
 
-## Contoh Data XML
+#### ``Contoh Data XML``
 Berikut adalah contoh struktur data dalam XML:
 
 ```xml
@@ -79,7 +76,7 @@ Berikut adalah contoh struktur data dalam XML:
 </mahasiswa>
 ```
 
-## Hubungan Antar Elemen
+#### ``Hubungan Antar Elemen``
 Elemen-elemen XML memiliki hubungan hierarkis, yaitu:
 - Elemen yang berada di dalam elemen lain disebut elemen anak atau *child*.
 - Elemen yang membungkus elemen lain disebut elemen induk atau *parent*.
@@ -92,7 +89,7 @@ Contohnya:
 - `<deskripsi>` merupakan parent dari `<paragraf>`.
 Hubungan tersebut membuat struktur XML menjadi terorganisasi dan mudah dipahami.
 
-## Struktur Data
+#### ``Struktur Data``
 
 Data dalam XML disimpan menggunakan tiga bagian utama, yaitu:
 1. **Elemen**, digunakan untuk mengelompokkan dan memberi nama pada data.
@@ -105,7 +102,7 @@ Contohnya:
 ```
 Pada contoh tersebut, `<nama>` merupakan elemen, sedangkan `Farel Yamotaro Hia` merupakan nilai atau *text content*.
 
-## Kesimpulan
+#### ``Kesimpulan``
 XML kami ini menyimpan data profil mahasiswa secara terstruktur dan hierarkis. Elemen root `<mahasiswa>` menjadi induk dari seluruh data, sedangkan atribut `nim` digunakan sebagai identitas setiap mahasiswa.
 Penggunaan elemen, atribut, dan nilai membuat data dapat dibaca serta diproses dan bermakna oleh manusia maupun komputer.
 
@@ -119,6 +116,14 @@ Penggunaan elemen, atribut, dan nilai membuat data dapat dibaca serta diproses d
 | 4  |  Struktur `<angkatan>` menyebabkan `<hobi>` dan `<deskripsi>` ikut terbaca di dalamnya| Karena `<angkatan>` tidak ditutup, elemen setelahnya secara struktur dianggap berada di dalam `<angkatan>`.                    | Tutup `<angkatan>` sebelum elemen `<hobi>`: `<angkatan>2024</angkatan>`                         |
 | 5  | `<hobi>Programming</hobi>` dan `<hobi>Membaca</hobi>` berdiri sendiri                 | Ini **bukan error XML**, tetapi struktur data kurang terorganisir jika kedua hobi ingin dianggap sebagai satu kelompok.        | Gunakan elemen pembungkus, misalnya `<hobi><item>Programming</item><item>Membaca</item></hobi>` |
 | 6  |  Tidak ada deklarasi XML                                                              | Deklarasi XML **tidak wajib**, jadi ini bukan error. Namun, deklarasi dapat menjelaskan versi XML dan encoding yang digunakan. | Tambahkan `<?xml version="1.0" encoding="UTF-8"?>` di awal dokumen                              |
+
+## 3. Analisis XML Schema
+
+1. Root element: Buku
+2. Tipe data `judul`: xs:string
+3. Tipe data `tahun`: xs:gYear
+4. Tipe data `harga`: xs:decimal
+5. Atribut `ISBN`: Tidak boleh dihilangkan, karena use="required" mewajibkan kehadirannya — dokumen tanpa atribut ini akan gagal validasi XSD.
 
 ## 4. Analisis Namespace
 
@@ -154,15 +159,7 @@ URI namespace berfungsi sebagai identifier (penanda) unik, bukan sebagai alamat 
 URI tersebut tidak harus benar-benar memiliki halaman web yang dapat dibuka di browser. Yang penting URI tersebut 
 digunakan sebagai identitas namespace yang unik dan konsisten.
 
-## 5. Membaca XML Schema (XSD)
-
-1. Root element yang diizinkan: buku
-2. Tipe data judul: xs:string
-3. Tipe data tahun: xs:gYear
-4. Tipe data harga: xs:decimal
-5. Atribut isbn tidak boleh dihilangkan, karena use="required" mewajibkan kehadirannya — dokumen tanpa atribut ini akan gagal validasi XSD.
-
-## Pertanyaan Evaluasi
+## 5. Pertanyaan Evaluasi
 
 1. Apa perbedaan utama XML dan HTML?
 
