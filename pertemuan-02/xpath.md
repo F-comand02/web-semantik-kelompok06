@@ -6,3 +6,4 @@
 | 4 | Buku yang mempunyai atribut ISBN | `//buku[@isbn]` |
 | 5 | Buku dengan harga > 100000 | `//buku[harga > 100000]` |
 | 6 | Nilai teks seluruh pengarang | `//pengarang/text()` |
+.
