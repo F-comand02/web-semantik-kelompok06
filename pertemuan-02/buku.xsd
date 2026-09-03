@@ -8,7 +8,7 @@
                 <xs:element name="judul" type="xs:string"/>
                 <xs:element name="pengarang" type="xs:string"/>
                 <xs:element name="tahun" type="xs:gYear"/>
-                <xs:element name="Harga" type="xs:decimal"/>
+                <xs:element name="harga" type="xs:decimal"/>
             </xs:sequence>
 
             <xs:attribute name="isbn" type="xs:string" use="required"/>
