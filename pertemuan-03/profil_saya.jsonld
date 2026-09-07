@@ -1,0 +1,71 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://usu.ac.id/mhs/231401001",
+      "name": "Farel Yamotaro Hia",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Sumatera Utara"
+      },
+      "knowsAbout": [
+        "Teknologi Informasi",
+        "Pemrograman Web"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://usu.ac.id/mhs/231401002",
+      "name": "Yabesh Day Siahaan",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Sumatera Utara"
+      },
+      "knowsAbout": [
+        "Database",
+        "Sistem Informasi"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://usu.ac.id/mhs/231401003",
+      "name": "Naufal Muhammad Dzaki",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Sumatera Utara"
+      },
+      "knowsAbout": [
+        "Artificial Intelligence",
+        "Machine Learning"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://usu.ac.id/mhs/231401004",
+      "name": "William Sihotang",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Sumatera Utara"
+      },
+      "knowsAbout": [
+        "Cyber Security",
+        "Jaringan Komputer"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://usu.ac.id/mhs/231401005",
+      "name": "Ray Nathan Geereno Saragih",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universitas Sumatera Utara"
+      },
+      "knowsAbout": [
+        "Data Science",
+        "Analisis Data"
+      ]
+    }
+  ]
+}
+
