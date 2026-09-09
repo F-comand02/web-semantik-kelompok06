@@ -29,6 +29,15 @@ Di sini kami tidak hanya menyimpan hasil akhir tugas, tetapi juga mendokumentasi
 
 ---
 
+# PETA MAP REPOSITORY
+- [README.md](README.md)
+- [Pertemuan 01](pertemuan-01/)
+- [Pertemuan 02](pertemuan-02/)
+- [Pertemuan 03](pertemuan-03/)
+- ....
+
+---
+
 # 🧠 Pengantar Web Semantik & Knowledge Graph di Era AI
 
 ## 🌐 Apa Itu Web Semantik?
