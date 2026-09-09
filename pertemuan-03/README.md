@@ -1,5 +1,5 @@
 # [Latihan Pertemuan 3](README.md) - JSON-LD dan Structured Data
-.
+
 ## Identitas
 | No. | Nama                       |       NIM |
 | --: | -------------------------- | --------: |
@@ -132,26 +132,63 @@ Referensi:
 
 ## 1. Tabel Pemeriksaan Kosakata
 
+
 | Entitas | Tipe yang Dipakai | Properti yang Diperiksa |
 |---|---|---|
 | Mahasiswa | `Person` | `name`, `alumniOf`, `knowsAbout` |
 | Universitas | `CollegeOrUniversity` | `name` |
+| Mata Kuliah | `Course` | `name`, `description`, `provider` |
+| Organisasi | `Organization` | `name`, `url`, `member` |
+| Institusi Pendidikan | `EducationalOrganization` | `name`, `url`, `address` |
 
 ### Penjelasan
 
-**Mahasiswa** menggunakan tipe `Person` karena mahasiswa merupakan seorang manusia atau individu.
+### Mahasiswa
 
-Properti yang diperiksa:
+Mahasiswa direpresentasikan menggunakan tipe:
 
-- `name` → menyimpan nama mahasiswa.
-- `alumniOf` → menunjukkan institusi pendidikan tempat seseorang menjadi alumni.
-- `knowsAbout` → menunjukkan bidang, topik, atau pengetahuan yang diketahui atau dikuasai seseorang.
+`Person`
 
-**Universitas** menggunakan tipe `CollegeOrUniversity` karena tipe ini secara khusus digunakan untuk merepresentasikan perguruan tinggi atau universitas.
+Tipe `Person` digunakan untuk merepresentasikan seseorang. Beberapa properti
+yang digunakan adalah `name`, `alumniOf`, dan `knowsAbout`.
 
-Properti yang diperiksa:
+### Universitas
 
-- `name` → menyimpan nama universitas.
+Universitas direpresentasikan menggunakan tipe:
+
+`CollegeOrUniversity`
+
+Tipe `CollegeOrUniversity` digunakan untuk merepresentasikan institusi
+pendidikan tinggi seperti universitas atau perguruan tinggi.
+
+### Mata Kuliah
+
+Mata kuliah direpresentasikan menggunakan tipe:
+
+`Course`
+
+Tipe `Course` digunakan untuk merepresentasikan sebuah mata kuliah atau
+program pembelajaran. Properti yang dapat digunakan antara lain `name`,
+`description`, dan `provider`.
+
+### Organisasi
+
+Organisasi direpresentasikan menggunakan tipe:
+
+`Organization`
+
+Tipe `Organization` digunakan untuk merepresentasikan sebuah organisasi.
+Properti yang dapat digunakan antara lain `name`, `url`, dan `member`.
+
+### Institusi Pendidikan
+
+Institusi pendidikan direpresentasikan menggunakan tipe:
+
+`EducationalOrganization`
+
+Tipe `EducationalOrganization` digunakan untuk merepresentasikan organisasi
+yang bergerak di bidang pendidikan. Properti yang dapat digunakan antara lain
+`name`, `url`, dan `address`.
 
 ---
 
