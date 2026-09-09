@@ -1,5 +1,5 @@
 # [Latihan Pertemuan 3](README.md) - JSON-LD dan Structured Data
-
+.
 ## Identitas
 | No. | Nama                       |       NIM |
 | --: | -------------------------- | --------: |
