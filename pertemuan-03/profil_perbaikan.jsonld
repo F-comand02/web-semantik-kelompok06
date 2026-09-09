@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://usu.ac.id/dosen/idadi",
+  "name": "Rina Anggraini",
+  "birthDate": "2004-09-12",
+  "identifier": "221401001"
+}
