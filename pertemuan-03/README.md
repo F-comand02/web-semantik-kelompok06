@@ -280,18 +280,45 @@ Pada contoh di atas:
 Tuliskan satu baris N-Quads yang terbentuk:
 
 ```text
-ISI_TRIPLE
+<https://usu.ac.id/mhs/231401001> <http://schema.org/name> "Farel Yamotaro Hia" .
 ```
 
 ## 5. Hasil Validasi
-- Schema Markup Validator: ...
-- Rich Results Test: ...
-- JSON-LD Playground: ...
+- Schema Markup Validator:
+  5 entitas `Person` terdeteksi dengan:
+  - 0 errors
+  - 0 warnings
+
+- Rich Results Test:
+  Hasil pengujian `seminar.html`:
+  - 1 valid item detected
+  - Tipe: `Events`
+  - Eligible for Google Search's rich results
+  - 8 non-critical issues detected
+    Peringatan:
+    - Missing field `offers` (optional)
+    - Missing field `endDate` (optional)
+    - Missing field `description` (optional)
+    - Missing field `eventStatus` (optional)
+    - Missing field `performer` (optional)
+    - Missing field `image` (optional)
+    - Missing field `address` (optional)
+    - Missing field `url` (optional)
+  
+- JSON-LD Playground:
+  JSON-LD berhasil dikonversi menjadi format N-Quads dan menghasilkan triple RDF.
 
 ## 6. Refleksi
 1. Mengapa `@context` disebut jembatan menuju makna?
+   Jawaban : @context disebut jembatan menuju makna karena @context menghubungkan istilah yang digunakan dalam JSON-LD dengan kosakata yang memiliki makna yang jelas, seperti Schema.org. Dengan adanya @context,     komputer dapat memahami bahwa istilah seperti Person, name, atau knowsAbout memiliki arti tertentu, bukan sekadar teks biasa.
+   
 2. Apa perbedaan fungsi Schema Markup Validator dan Rich Results Test?
+   Jawaban : Schema Markup Validator digunakan untuk memeriksa apakah struktur dan penggunaan tipe serta properti dalam structured data sudah sesuai dengan kosakata Schema.org.
+   Sedangkan Rich Results Test digunakan untuk memeriksa apakah structured data pada suatu halaman memenuhi persyaratan agar berpotensi ditampilkan sebagai rich result di Google.
+   Jadi, Schema Markup Validator fokus pada kebenaran markup, sedangkan Rich Results Test fokus pada kelayakan untuk fitur hasil kaya Google.
+   
 3. Mengapa isi JSON-LD harus sama dengan konten yang terlihat pada halaman?
+   Jawaban : Karena JSON-LD berfungsi untuk memberikan informasi terstruktur tentang konten halaman. Jika informasi dalam JSON-LD berbeda atau tidak sesuai dengan apa yang terlihat oleh pengguna, mesin pencari      dapat menganggap data tersebut menyesatkan atau tidak merepresentasikan isi halaman dengan benar. Contohnya, jika JSON-LD menyatakan seminar berlangsung pada 12 September 2026, maka informasi tanggal yang        terlihat di halaman juga harus menunjukkan tanggal tersebut. Dengan begitu, structured data benar-benar merepresentasikan konten halaman.
 
 ## Bukti
 ![Schema Markup Validator](screenshots/profil-schema-validator.png)
