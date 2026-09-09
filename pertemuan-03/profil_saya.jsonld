@@ -3,7 +3,7 @@
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://usu.ac.id/mhs/231401001",
+      "@id": "https://usu.ac.id/mhs/251402069",
       "name": "Farel Yamotaro Hia",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
@@ -16,7 +16,7 @@
     },
     {
       "@type": "Person",
-      "@id": "https://usu.ac.id/mhs/231401002",
+      "@id": "https://usu.ac.id/mhs/251402004",
       "name": "Yabesh Day Siahaan",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
@@ -29,7 +29,7 @@
     },
     {
       "@type": "Person",
-      "@id": "https://usu.ac.id/mhs/231401003",
+      "@id": "https://usu.ac.id/mhs/251402128",
       "name": "Naufal Muhammad Dzaki",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
@@ -42,7 +42,7 @@
     },
     {
       "@type": "Person",
-      "@id": "https://usu.ac.id/mhs/231401004",
+      "@id": "https://usu.ac.id/mhs/251402052",
       "name": "William Sihotang",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
@@ -55,7 +55,7 @@
     },
     {
       "@type": "Person",
-      "@id": "https://usu.ac.id/mhs/231401005",
+      "@id": "https://usu.ac.id/mhs/251402046",
       "name": "Ray Nathan Geereno Saragih",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
