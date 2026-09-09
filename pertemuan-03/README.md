@@ -266,13 +266,15 @@ Pada contoh di atas:
 ---
 
 ## 3. Perbaikan Lima Kesalahan
-| No. | Bagian Salah | Alasan | Perbaikan |
-|---|---|---|---|
-| 1 | ... | ... | ... |
-| 2 | ... | ... | ... |
-| 3 | ... | ... | ... |
-| 4 | ... | ... | ... |
-| 5 | ... | ... | ... |
+# Perbaikan profil_perbaikan.jsonld
+
+| No | Kesalahan | Sebelum | Sesudah | Penjelasan |
+|----|-----------|---------|---------|------------|
+| 1 | Huruf besar/kecil pada tipe | `"@type": "person"` | `"@type": "Person"` | Tipe schema.org bersifat *case-sensitive* dan harus diawali huruf kapital, sesuai vocabulary resmi (`Person`, bukan `person`). |
+| 2 | Jenis tanda kutip | `'name': "Rina Anggraini"` | `"name": "Rina Anggraini"` | JSON hanya mengizinkan tanda kutip ganda (`"`) untuk key maupun string. Tanda kutip tunggal (`'`) membuat JSON tidak valid. |
+| 3 | Format tanggal bukan ISO 8601 | `"birthDate": "12 September 2004"` | `"birthDate": "2004-09-12"` | Properti tanggal pada schema.org harus mengikuti format ISO 8601 (`YYYY-MM-DD`) agar dapat dibaca mesin secara konsisten. |
+| 4 | Properti tidak terdaftar di schema.org | `"nomorInduk": "221401001"` | `"identifier": "221401001"` | `nomorInduk` bukan properti resmi schema.org. Diganti dengan `identifier`, properti standar untuk menyimpan nomor pengenal seperti NIM/NIP. |
+| 5 | Koma menggantung pada properti terakhir | `"nomorInduk": "221401001",` (diikuti `}`) | `"identifier": "221401001"` (tanpa koma sebelum `}`) | Trailing comma tidak diperbolehkan dalam JSON standar; koma setelah properti terakhir menyebabkan parsing error. |
 
 ## 4. Triple dari JSON-LD Playground
 Tuliskan satu baris N-Quads yang terbentuk:
