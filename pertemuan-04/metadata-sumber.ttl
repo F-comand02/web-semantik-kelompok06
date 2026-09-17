@@ -1,0 +1,15 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/pertemuan-04/sumber-belajar>
+    dcterms:title       "Pemanfaatan Teknologi Web Sematik Dalam Pencarian Informasi Berbasis E-Learning"@id ;
+    dcterms:creator     "Hendri, S.Kom., M.S.I"@id ;
+    dcterms:description "Pembelajaran melalui suatu media teknologi informasi dan komunikasi atau yang dikenal Elearning merupakan sistem yang sedang berkembang di Indonesia. Sistem elearning yang ada saat ini masih menggunakan konsep website pencarian yang berdasarkan kata kunci sehingga aplikasi website Elearning yang ada tidak dapat menampilkan lebih jauh tentang konten pendukung yang memiliki kesamaan konteks dengan konteks yang sedang dipelajarinya."@id ;
+    dcterms:created     "2014-10"^^xsd:gYearMonth ;
+    dcterms:type        "Text" ;
+    dcterms:language    "id" ;
+    dcterms:rights      "Creative Commons Attribution 4.0 International License" ;
+    dcterms:identifier  "ISSN 1907-6738" ;
+    dcterms:source      "Jurnal Ilmiah Media Processor Vol.9 No.3" ;
+    dcterms:publisher   "Universitas Dinamika Bangsa" ;
+    dcterms:subject     "Web semantic, E-learning"@id .
