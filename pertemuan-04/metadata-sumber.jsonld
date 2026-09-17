@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "title": "dcterms:title",
+    "creator": "dcterms:creator",
+    "description": "dcterms:description",
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "type": "dcterms:type",
+    "language": "dcterms:language",
+    "rights": "dcterms:rights"
+  },
+  "@id": "https://contoh.github.io/web-semantik/251402004/sumber-belajar",
+  "title": {
+    "@value": "Sumber Belajar Web Semantik",
+    "@language": "id"
+  },
+  "creator": {
+    "@value": "Yabesh Day Siahaan",
+    "@language": "id"
+  },
+  "description": {
+    "@value": "Materi pembelajaran mengenai Web Semantik dan JSON-LD.",
+    "@language": "id"
+  },
+  "created": "2026-09-17",
+  "type": "Text",
+  "language": "id",
+  "rights": "CC BY 4.0"
+}
