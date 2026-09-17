@@ -1,4 +1,4 @@
-# Pertemuan 4 — Metadata dan Interoperabilitas
+# [Pertemuan 4](README.md) — Metadata dan Interoperabilitas
 
 ## Identitas sumber
 - Judul: [PEMANFAATAN TEKNOLOGI WEB SEMATIK DALAM
@@ -6,27 +6,40 @@ PENCARIAN INFORMASI BERBASIS E-LEARNING](https://ejournal.unama.ac.id/index.php/
 - Pembuat: [Hendri, S.Kom, M.S.I](https://www.researchgate.net/profile/Hendri-Hendri)
 - URI sumber: [http://example.org](http://example.org)
 - Jenis sumber: [Jurnal Ilmiah / Artikel Jurnal (Journal Article)](https://ejournal.unama.ac.id/index.php/processor/article/download/239/160/1193)
+
+---
+
 ### Tabel Format
 | Elemen | Yang Diisi | Isi |
 |--------|------------|---------------------------------------------------------------------------------|
 | Judul | Nama sumber | PEMANFAATAN TEKNOLOGI WEB SEMATIK DALAM PENCARIAN INFORMASI BERBASIS E-LEARNING |
 | Pembuat | Orang atau organisasi | Hendri, S.Kom, M.S.I |
 | Deskripsi | Ringkasan 1–2 kalimat | Pembelajaran melalui suatu media teknologi informasi dan komunikasi atau yang dikenal Elearning merupakan sistem yang sedang berkembang di Indonesia. Sistem elearning yang ada saat ini masih menggunakan konsep website pencarian yang berdasarkan kata kunci sehingga aplikasi website Elearning yang ada tidak dapat menampilkan lebih jauh tentang konten pendukung yang memiliki kesamaan konteks dengan konteks yang sedang dipelajarinya. |
-| Tanggal | Tanggal terbit atau pembaruan, ISO 8601 | 2017-08-23 |
+| Tanggal | Tanggal terbit atau pembaruan, ISO 8601 | 2014-10 |
 | Jenis | Bentuk sumber | e-journal |
 | Bahasa | Kode bahasa | id |
 | Hak | Pernyataan lisensi/hak | Creative Commons Attribution 4.0 International License |
 
+---
+
 ## Pemetaan Dublin Core Terms
 | Properti | Nilai | Alasan pemilihan |
 | --- | --- | --- |
-| dcterms:title | [nilai] | [alasan] |
-| dcterms:creator | [nilai] | [alasan] |
-| dcterms:description | [nilai] | [alasan] |
-| dcterms:created | [nilai] | [alasan] |
-| dcterms:type | [nilai] | [alasan] |
-| dcterms:language | [nilai] | [alasan] |
-| dcterms:rights | [nilai] | [alasan] |
+| dcterms:title | Pemanfaatan Teknologi Web Sematik Dalam Pencarian Informasi Berbasis E-Learning | Karena sebagai pengenal dasar akademis tentang jurnal |
+| dcterms:creator | Hendri, S.Kom, M.S.I | Karena sebagai pengenal dasar akademis tentang jurnal |
+| dcterms:description | Pembelajaran melalui suatu media teknologi informasi dan komunikasi atau yang dikenal Elearning merupakan sistem yang sedang berkembang di Indonesia. Sistem elearning yang ada saat ini masih menggunakan konsep website pencarian yang berdasarkan kata kunci sehingga aplikasi website Elearning yang ada tidak dapat menampilkan lebih jauh tentang konten pendukung yang memiliki kesamaan konteks dengan konteks yang sedang dipelajarinya. | Karena menyimpan intisari (abstrak) |
+| dcterms:created | 2014-10 |  Karena sebagai pengenal dasar akademis tentang jurnal |
+| dcterms:type | Text | Karena dapat mendefinisikan bentuk konten |
+| dcterms:language | id | Karena dapat mendefinisikan bentuk bahasa dokumen |
+| dcterms:rights | Creative Commons Attribution 4.0 International License | Karena sebagai kejelasan aspek hukum bahwa aset Linked Data ini berlisensi terbuka dan dapat didistribusikan ulang secara bebas |
+| dcterms:identifier | ISSN 1907-6738 | Karena sebagai pencatat orisinalitas dokumen yang mengaitkannya langsung ke serial cetak ISSN Jurnal Media Processor |
+| dcterms:source | Jurnal Ilmiah Media Processor Vol.9 No.3 | Karena sebagai pencatat orisinalitas dokumen yang mengaitkannya langsung ke serial cetak ISSN Jurnal Media Processor |
+| dcterms:publisher | Universitas Dinamika Bangsa | Sebagai perujuk pada organisasi institusional |
+| dcterms:subject | Web semantic, E-learning | Karena menyimpan kata kunci taksonomi objek data untuk pencarian berbasis konteks |
+
+***Catatan*** : Didasarkan pada standar minimum pencatatan metadata bibliografi artikel ilmiah agar dapat diolah secara cerdas dalam grafik pengetahuan (Knowledge Graph) merupakan alasan umum penggunaan properti, Di dalam dokumentasi data kami ini, dcterms:creator merujuk pada entitas intelektual utama yang memikirkan serta menulis artikel ilmiahnya, yaitu peneliti individu bernama Hendri, S.Kom, M.S.I. Dan sisi lain, dcterms:publisher merujuk pada organisasi institusional, yakni Universitas Dinamika Bangsa, selaku badan hukum yang menerbitkan, mendistribusikan, serta menyebarluaskan karya tersebut melalui wadah jurnal ilmiahnya.
+
+---
 
 ## Hasil validasi
 - JSON-LD Playground: [ringkasan hasil]
