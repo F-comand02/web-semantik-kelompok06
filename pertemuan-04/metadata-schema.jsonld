@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "@id": "https://contoh.github.io/web-semantik/251402004/sumber-belajar",
+  "name": "Sumber Belajar Web Semantik",
+  "description": "Materi pembelajaran mengenai Web Semantik dan JSON-LD.",
+  "inLanguage": "id",
+  "dateCreated": "2026-09-17",
+  "license": "CC BY 4.0"
+}
