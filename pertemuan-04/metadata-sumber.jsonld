@@ -6,27 +6,40 @@
     "description": "dcterms:description",
     "created": {
       "@id": "dcterms:created",
-      "@type": "http://www.w3.org/2001/XMLSchema#date"
+      "@type": "http://www.w3.org/2001/XMLSchema#gYearMonth"
     },
     "type": "dcterms:type",
     "language": "dcterms:language",
-    "rights": "dcterms:rights"
+    "rights": "dcterms:rights",
+    "identifier": "dcterms:identifier",
+    "source": "dcterms:source",
+    "publisher": "dcterms:publisher",
+    "subject": "dcterms:subject"
   },
-  "@id": "https://contoh.github.io/web-semantik/251402004/sumber-belajar",
+
+  "@id": "https://f-comand02.github.io/web-semantik-kelompok06/pertemuan-04/sumber-belajar",
+
   "title": {
-    "@value": "Sumber Belajar Web Semantik",
+    "@value": "Pemanfaatan Teknologi Web Sematik Dalam Pencarian Informasi Berbasis E-Learning",
     "@language": "id"
   },
+
   "creator": {
-    "@value": "Yabesh Day Siahaan",
+    "@value": "Hendri, S.Kom., M.S.I",
     "@language": "id"
   },
+
   "description": {
-    "@value": "Materi pembelajaran mengenai Web Semantik dan JSON-LD.",
+    "@value": "Pembelajaran melalui suatu media teknologi informasi dan komunikasi atau yang dikenal Elearning merupakan sistem yang sedang berkembang di Indonesia. Sistem elearning yang ada saat ini masih menggunakan konsep website pencarian yang berdasarkan kata kunci sehingga aplikasi website Elearning yang ada tidak dapat menampilkan lebih jauh tentang konten pendukung yang memiliki kesamaan konteks dengan konteks yang sedang dipelajarinya.",
     "@language": "id"
   },
-  "created": "2026-09-17",
+
+  "created": "2014-10",
   "type": "Text",
   "language": "id",
-  "rights": "CC BY 4.0"
+  "rights": "Creative Commons Attribution 4.0 International License",
+  "identifier": "ISSN 1907-6738",
+  "source": "Jurnal Ilmiah Media Processor Vol.9 No.3",
+  "publisher": "Universitas Dinamika Bangsa",
+  "subject": "Web semantic, E-learning"
 }
