@@ -1,4 +1,4 @@
-{
+.{
   "@context": {
     "dcterms": "http://purl.org/dc/terms/",
     "title": "dcterms:title",
