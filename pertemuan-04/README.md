@@ -46,20 +46,39 @@ PENCARIAN INFORMASI BERBASIS E-LEARNING](https://ejournal.unama.ac.id/index.php/
 - [JSON-LD Playground](screenshots/jsonld-playground.png) : JSON-LD berhasil diproses tanpa galat sintaks. Hasil pemrosesan menunjukkan bahwa URI subjek yang digunakan adalah `https://f-comand02.github.io/web-semantik-kelompok06/pertemuan-04/sumber-belajar`, sama seperti URI pada metadata Turtle. Data seperti judul, pembuat, deskripsi, tanggal, bahasa, dan hak juga berhasil ditampilkan sebagai RDF.
 ### ![Schema Markup Validator](screenshots/schema-validator.png)
 - [Schema Markup Validator](screenshots/schema-validator.png) : Metadata Schema.org telah disusun menggunakan vocabulary Schema.org dan URI yang sama dengan metadata Turtle dan JSON-LD. Hasil validasi menunjukkan bahwa data dapat diproses oleh Schema Markup Validator.
+- Tabel Perbandingan
+
+| Elemen     | HTML Meta      | Turtle                | JSON-LD                               | Makna                                                                            |
+| ---------- | -------------- | --------------------- | ------------------------------------- | -------------------------------------------------------------------------------- |
+| Judul      | `DC.title`     | `dcterms:title`       | `title` → `dcterms:title`             | Tidak berubah                                                                    |
+| Pembuat    | `DC.creator`   | `dcterms:creator`     | `creator` → `dcterms:creator`         | Tidak berubah                                                                    |
+| Deskripsi  | `description`  | `dcterms:description` | `description` → `dcterms:description` | Tidak berubah                                                                    |
+| Tanggal    | `DC.date`      | `dcterms:created`     | `created` → `dcterms:created`         | Tidak berubah secara informasi, tetapi istilah berubah dari date menjadi created |
+| Bahasa     | `DC.language`  | `dcterms:language`    | `language` → `dcterms:language`       | Tidak berubah                                                                    |
+| Hak        | `DC.rights`    | `dcterms:rights`      | `rights` → `dcterms:rights`           | Tidak berubah                                                                    |
+| Jenis      | `DC.type`      | `dcterms:type`        | `type` → `dcterms:type`               | Tidak berubah                                                                    |
+| Identifier | Tidak tersedia | `dcterms:identifier`  | `identifier` → `dcterms:identifier`   | Tidak berubah, tetapi hanya ada di Turtle dan JSON-LD                            |
+| Sumber     | Tidak tersedia | `dcterms:source`      | `source` → `dcterms:source`           | Tidak berubah, tetapi hanya ada di Turtle dan JSON-LD                            |
+| Penerbit   | Tidak tersedia | `dcterms:publisher`   | `publisher` → `dcterms:publisher`     | Tidak berubah, tetapi hanya ada di Turtle dan JSON-LD                            |
+| Subjek     | Tidak tersedia | `dcterms:subject`     | `subject` → `dcterms:subject`         | Tidak berubah, tetapi hanya ada di Turtle dan JSON-LD                            |
+
+---
 
 ## Refleksi
 
 1. Mengapa URI yang sama penting untuk Turtle dan JSON-LD?
 
-   URI yang sama penting karena digunakan untuk menunjukkan bahwa metadata dalam format Turtle dan JSON-LD mengacu pada resource yang sama. Meskipun format penulisannya berbeda, URI yang sama memungkinkan           aplikasi atau sistem lain menghubungkan kedua metadata tersebut sebagai deskripsi dari sumber yang sama.
+   URI yang sama penting karena digunakan untuk menunjukkan bahwa metadata dalam format Turtle dan JSON-LD mengacu pada resource yang sama. Meskipun format penulisannya berbeda, URI yang sama memungkinkan aplikasi atau sistem lain menghubungkan kedua metadata tersebut sebagai deskripsi dari sumber yang sama.
 
 2. Apa perbedaan peran DC Terms dan schema.org pada pekerjaan ini?
 
-   DC Terms digunakan sebagai vocabulary untuk mendeskripsikan metadata sumber, seperti judul, pembuat, deskripsi, tanggal, bahasa, hak, dan informasi lainnya. Sementara itu, schema.org digunakan untuk              memberikan struktur metadata yang dapat dipahami oleh berbagai aplikasi dan mesin pencari di web. Keduanya menggunakan vocabulary yang berbeda, tetapi dapat digunakan untuk mendeskripsikan resource yang sama.
+   DC Terms digunakan sebagai vocabulary untuk mendeskripsikan metadata sumber, seperti judul, pembuat, deskripsi, tanggal, bahasa, hak, dan informasi lainnya. Sementara itu, schema.org digunakan untuk memberikan struktur metadata yang dapat dipahami oleh berbagai aplikasi dan mesin pencari di web. Keduanya menggunakan vocabulary yang berbeda, tetapi dapat digunakan untuk mendeskripsikan resource yang sama.
 
 3. Sebutkan satu risiko jika metadata HTML, Turtle, dan JSON-LD tidak konsisten.
 
-   Jika metadata HTML, Turtle, dan JSON-LD tidak konsisten, aplikasi dapat memperoleh informasi yang berbeda dari sumber yang sebenarnya sama. Hal tersebut dapat menyebabkan resource sulit dikenali atau             dihubungkan dengan benar sehingga interoperabilitas metadata terganggu.
+   Jika metadata HTML, Turtle, dan JSON-LD tidak konsisten, aplikasi dapat memperoleh informasi yang berbeda dari sumber yang sebenarnya sama. Hal tersebut dapat menyebabkan resource sulit dikenali atau dihubungkan dengan benar sehingga interoperabilitas metadata terganggu.
+
+---
 
 ## Catatan akhir
 Metadata pada HTML, Turtle, dan JSON-LD telah dibuat konsisten dengan menggunakan URI yang sama serta informasi sumber yang sama, seperti judul, pembuat, deskripsi, tanggal, bahasa, dan hak. Meskipun setiap format menggunakan sintaks dan vocabulary yang berbeda, ketiganya tetap mengacu pada resource yang sama sehingga dapat mendukung interoperabilitas metadata.
