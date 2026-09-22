@@ -32,5 +32,12 @@ Jelaskan posisi ontology dalam Semantic Web Layer Cake: [isi jawaban]
 
 ## Refleksi
 1. Apa perbedaan ontology dan taksonomi?
+Jawaban: Taksonomi adalah cara untuk mengelompokkan sesuatu berdasarkan tingkatan atau kategori tertentu. Taksonomi ini fokusnya lebih kepada hubungan pengelompokan dan tingkatan, sedangkan ontology lebih luas cakupannya. Ontology bukan cuma mengelompokkan sesuatu, tapi juga menjelaskan apa saja isinya, bagaimana hubungannya, dan aturan yang berlaku di dalamnya.
+Jadi, perbedaan ontology dan taksonomi secara sederhana yaitu taksonomi lebih fokus pada pengelompokan, sedangkan ontology menjelaskan pengelompokan sekaligus hubungan dan informasi tentang objek tersebut.
+
 2. Mengapa domain pada OWL bukan constraint database?
+Jawaban: Karena domain pada OWL tidak dipakai untuk menolak atau membatasi data yang masuk seperti constraint pada database. Database memakai constraint untuk memastikan data yang diinput sudah sesuai aturan dan tidak salah. Sebaliknya, OWL memakai domain untuk menarik kesimpulan baru seperti contohnya ketika ada suatu data yang dimasukkan, OWL akan otomatis menganggap objek tersebut punya status sesuai domain yang ditentukan. Jadi, domain pada OWL berguna untuk menambah pengetahuan baru berdasarkan hubungan yang ada pada data.
+
+
 3. Mengapa kosakata yang sudah ada sebaiknya dipakai kembali sebelum membuat yang baru?
+Jawaban: Karena menggunakan kembali kosakata yang sudah ada membuat data lebih mudah dipahami, konsisten, digunakan kembali, dan terhubung dengan data lain. Selain itu, kita tidak perlu membuat istilah baru dari awal jika sudah ada kosakata yang sesuai. Dengan menggunakan kosakata yang sudah standar, sistem lain juga lebih mudah mengenali dan memahami data kita. Jadi, menggunakan kembali kosakata yang sudah ada membantu agar data tidak terisolasi dan dapat digunakan lebih luas.
