@@ -13,6 +13,15 @@
 | Property | (Objek property) takesCourse; (1) teaches; (2) enrolledIn; (3) managesLibrary; (4) providesScholarship; (5) usesLaboratory; (6) memberOf (Datatype property) hasNIM; (1) hasName; (2) hasEmail; (3) hasPhoneNumber; (4) hasAddress; (5) hasStudentID; (6) hasCourseCode|
 | Axiom/disjointness | Student disjointWith Lecturer; (1) Course disjointWith Department; (2) Faculty disjointWith Library; (3) Professor disjointWith Student; (4) Scholarship disjointWith Course; (5) Researcher disjointWith UndergraduateStudent |
 
+## Eksplorasi Protégé
+| Jenis | Contoh | Penjelasan |
+|-------|--------|------------|
+| Class | `Pizza` | Class atau kategori untuk pizza |
+| Subclass | `NamedPizza` | Subclass dari `Pizza` |
+| Individual | `America` | Individual dari `Country` |
+| Object Property | `hasTopping` | Menghubungkan `Pizza` dengan `PizzaTopping` |
+| Datatype Property | Tidak ditemukan | Tidak terdapat `owl:DatatypeProperty` pada ontology `pizza.owl` |
+
 ## Layer Cake
 Jelaskan posisi ontology dalam Semantic Web Layer Cake: [isi jawaban]
 
