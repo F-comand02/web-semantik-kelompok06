@@ -43,7 +43,7 @@ PENCARIAN INFORMASI BERBASIS E-LEARNING](https://ejournal.unama.ac.id/index.php/
 
 ## Hasil validasi
 ### ![JSON-LD Playground](screenshots/jsonld-playground.png)
-- [JSON-LD Playground](screenshots/jsonld-playground.png) : JSON-LD berhasil diproses tanpa galat sintaks. Hasil pemrosesan menunjukkan bahwa URI subjek yang digunakan adalah `https://f-comand02.github.io/web-semantik-kelompok06/pertemuan-04/sumber-   belajar`, sama seperti URI pada metadata Turtle. Data seperti judul, pembuat, deskripsi, tanggal, bahasa, dan hak juga berhasil ditampilkan sebagai RDF.
+- [JSON-LD Playground](screenshots/jsonld-playground.png) : JSON-LD berhasil diproses tanpa galat sintaks. Hasil pemrosesan menunjukkan bahwa URI subjek yang digunakan adalah `https://f-comand02.github.io/web-semantik-kelompok06/pertemuan-04/sumber-belajar`, sama seperti URI pada metadata Turtle. Data seperti judul, pembuat, deskripsi, tanggal, bahasa, dan hak juga berhasil ditampilkan sebagai RDF.
 ### ![Schema Markup Validator](screenshots/schema-validator.png)
 - [Schema Markup Validator](screenshots/schema-validator.png) : Metadata Schema.org telah disusun menggunakan vocabulary Schema.org dan URI yang sama dengan metadata Turtle dan JSON-LD. Hasil validasi menunjukkan bahwa data dapat diproses oleh Schema Markup Validator.
 
