@@ -7,3 +7,5 @@
 | Ontology / OWL | Makna domain dan penalaran lebih kaya | Dokumen file pada pertemuan 05: [ontology-kampus.owl](ontology-kampus.owl) (Sekarang) |
 | SPARQL | Query graph RDF | Dokumen contoh penerapan teknologi: `SELECT ?nama WHERE { ?mhs foaf:name ?nama }`  |
 | Rules, Proof, Trust | Aturan, pembuktian, dan kepercayaan | Dokumen contoh penerapan teknologi: Aturan SWRL (*Semantic Web Rule Language*), Tanda Tangan Digital |
+
+---
