@@ -1,15 +1,15 @@
 @prefix : <https://example.org/ontology/usu#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <https://example.org/ontology/usu#> .
 
-<https://example.org/ontology/usu> rdf:type owl:Ontology .
+<https://example.org/ontology/usu>
+    rdf:type owl:Ontology .
+
 
 #################################################################
-#    Object Properties
+# Object Properties
 #################################################################
 
 ###  https://example.org/ontology/usu#enrolledIn
@@ -53,9 +53,24 @@
                 rdfs:domain :Person ;
                 rdfs:range :Laboratory .
 
+:memberOf
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Person ;
+    rdfs:range :Organization .
+
+:managesLibrary
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Organization ;
+    rdfs:range :Library .
+
+:providesScholarship
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Organization ;
+    rdfs:range :Scholarship .
+
 
 #################################################################
-#    Data properties
+# Data Properties
 #################################################################
 
 ###  https://example.org/ontology/usu#hasAddress
@@ -63,11 +78,15 @@
             rdfs:domain :Person ;
             rdfs:range xsd:string .
 
+:hasNIM
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
 
-###  https://example.org/ontology/usu#hasCourseCode
-:hasCourseCode rdf:type owl:DatatypeProperty ;
-               rdfs:domain :Course ;
-               rdfs:range xsd:string .
+:hasStudentID
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
 
 
 ###  https://example.org/ontology/usu#hasEmail
@@ -101,12 +120,24 @@
 
 
 #################################################################
-#    Classes
+# Classes
 #################################################################
 
-###  https://example.org/ontology/usu#AssistantLecturer
-:AssistantLecturer rdf:type owl:Class ;
-                   rdfs:subClassOf :Lecturer .
+:Person
+    rdf:type owl:Class .
+
+:Student
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person .
+
+:Lecturer
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person ;
+    owl:disjointWith :Student .
+
+:AssistantLecturer
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Lecturer .
 
 
 ###  https://example.org/ontology/usu#Course
@@ -152,33 +183,23 @@
 :Professor rdf:type owl:Class ;
            rdfs:subClassOf :Lecturer .
 
+:Researcher
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person .
 
-###  https://example.org/ontology/usu#Researcher
-:Researcher rdf:type owl:Class ;
-            rdfs:subClassOf :Person .
-
-
-###  https://example.org/ontology/usu#Scholarship
-:Scholarship rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Student
-:Student rdf:type owl:Class ;
-         rdfs:subClassOf :Person .
-
-
-###  https://example.org/ontology/usu#UndergraduateStudent
-:UndergraduateStudent rdf:type owl:Class ;
-                      rdfs:subClassOf :Student .
+:GraduateStudent
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Student .
 
 
 #################################################################
-#    Individuals
+# Individuals
 #################################################################
 
-###  https://example.org/ontology/usu#departemen_informatika
-:departemen_informatika rdf:type owl:NamedIndividual ,
-                                 :Department .
+# Department
+:departemen_informatika
+    rdf:type owl:NamedIndividual ,
+             :Department .
 
 
 ###  https://example.org/ontology/usu#dosen_nurul
