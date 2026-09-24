@@ -1,239 +1,228 @@
 @prefix : <https://example.org/ontology/usu#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <https://example.org/ontology/usu#> .
 
-<https://example.org/ontology/usu> rdf:type owl:Ontology .
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  https://example.org/ontology/usu#enrolledIn
-:enrolledIn rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf owl:topObjectProperty ;
-            rdfs:domain :Student ;
-            rdfs:range :Department .
-
-
-###  https://example.org/ontology/usu#managesLibrary
-:managesLibrary rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf owl:topObjectProperty ;
-                rdfs:domain :Organization ;
-                rdfs:range :Library .
-
-
-###  https://example.org/ontology/usu#memberOf
-:memberOf rdf:type owl:ObjectProperty ;
-          rdfs:domain :Person ;
-          rdfs:range :Organization .
-
-
-###  https://example.org/ontology/usu#providesScholarship
-:providesScholarship rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty ;
-                     rdfs:domain :Organization ;
-                     rdfs:range :Scholarship .
-
-
-###  https://example.org/ontology/usu#takesCourse
-:takesCourse rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty ;
-             rdfs:domain :Student ;
-             rdfs:range :Course .
-
-
-###  https://example.org/ontology/usu#teaches
-:teaches rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf owl:topObjectProperty ;
-         rdfs:domain :Lecturer ;
-         rdfs:range :Course .
-
-
-###  https://example.org/ontology/usu#usesLaboratory
-:usesLaboratory rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf owl:topObjectProperty ;
-                rdfs:domain :Person ;
-                rdfs:range :Laboratory .
+<https://example.org/ontology/usu>
+    rdf:type owl:Ontology .
 
 
 #################################################################
-#    Data properties
+# Object Properties
 #################################################################
 
-###  https://example.org/ontology/usu#hasAddress
-:hasAddress rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf owl:topDataProperty ;
-            rdfs:domain :Person ;
-            rdfs:range xsd:string .
+:enrolledIn
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Student ;
+    rdfs:range :Department .
 
+:takesCourse
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Student ;
+    rdfs:range :Course .
 
-###  https://example.org/ontology/usu#hasCourseCode
-:hasCourseCode rdf:type owl:DatatypeProperty ;
-               rdfs:domain :Course ;
-               rdfs:range xsd:string .
+:teaches
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Lecturer ;
+    rdfs:range :Course .
 
+:usesLaboratory
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Person ;
+    rdfs:range :Laboratory .
 
-###  https://example.org/ontology/usu#hasEmail
-:hasEmail rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty ;
-          rdfs:domain :Person ;
-          rdfs:range xsd:string .
+:memberOf
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Person ;
+    rdfs:range :Organization .
 
+:managesLibrary
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Organization ;
+    rdfs:range :Library .
 
-###  https://example.org/ontology/usu#hasNIM
-:hasNIM rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty ;
-        rdfs:domain :Student ;
-        rdfs:range xsd:string .
-
-
-###  https://example.org/ontology/usu#hasName
-:hasName rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty ;
-         rdfs:domain :Person ;
-         rdfs:range xsd:string .
-
-
-###  https://example.org/ontology/usu#hasPhoneNumber
-:hasPhoneNumber rdf:type owl:DatatypeProperty ;
-                rdfs:subPropertyOf owl:topDataProperty ;
-                rdfs:domain :Person ;
-                rdfs:range xsd:string .
-
-
-###  https://example.org/ontology/usu#hasStudentID
-:hasStudentID rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf owl:topDataProperty ;
-              rdfs:domain :Student ;
-              rdfs:range xsd:string .
+:providesScholarship
+    rdf:type owl:ObjectProperty ;
+    rdfs:domain :Organization ;
+    rdfs:range :Scholarship .
 
 
 #################################################################
-#    Classes
+# Data Properties
 #################################################################
 
-###  https://example.org/ontology/usu#AssistantLecturer
-:AssistantLecturer rdf:type owl:Class ;
-                   rdfs:subClassOf :Lecturer .
+:hasName
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
 
+:hasNIM
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
 
-###  https://example.org/ontology/usu#Course
-:Course rdf:type owl:Class .
+:hasStudentID
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
 
+:hasEmail
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
 
-###  https://example.org/ontology/usu#Department
-:Department rdf:type owl:Class .
+:hasPhoneNumber
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
 
+:hasAddress
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
 
-###  https://example.org/ontology/usu#Faculty
-:Faculty rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#GraduateStudent
-:GraduateStudent rdf:type owl:Class ;
-                 rdfs:subClassOf :Student .
-
-
-###  https://example.org/ontology/usu#Laboratory
-:Laboratory rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Lecturer
-:Lecturer rdf:type owl:Class ;
-          rdfs:subClassOf :Person ;
-          owl:disjointWith :Person ,
-                           :Student .
-
-
-###  https://example.org/ontology/usu#Library
-:Library rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Organization
-:Organization rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Person
-:Person rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Professor
-:Professor rdf:type owl:Class ;
-           rdfs:subClassOf :Lecturer .
-
-
-###  https://example.org/ontology/usu#Researcher
-:Researcher rdf:type owl:Class ;
-            rdfs:subClassOf :Person .
-
-
-###  https://example.org/ontology/usu#Scholarship
-:Scholarship rdf:type owl:Class .
-
-
-###  https://example.org/ontology/usu#Student
-:Student rdf:type owl:Class ;
-         rdfs:subClassOf :Person .
-
-
-###  https://example.org/ontology/usu#UndergraduateStudent
-:UndergraduateStudent rdf:type owl:Class ;
-                      rdfs:subClassOf :Student .
-
-
-###  https://example.org/ontology/usu#dosen_nurul
-:dosen_nurul rdf:type owl:Class ;
-             rdfs:subClassOf :Lecturer .
-
-
-###  https://example.org/ontology/usu#mahasiswa_anda
-:mahasiswa_anda rdf:type owl:Class ;
-                rdfs:subClassOf :Student .
-
-
-###  https://example.org/ontology/usu#web_semantik
-:web_semantik rdf:type owl:Class ;
-              rdfs:subClassOf :Department .
+:hasCourseCode
+    rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string .
 
 
 #################################################################
-#    Individuals
+# Classes
 #################################################################
 
-###  https://example.org/ontology/usu#departemen_informatika
-:departemen_informatika rdf:type owl:NamedIndividual ,
-                                 :Department .
+:Person
+    rdf:type owl:Class .
+
+:Student
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person .
+
+:Lecturer
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person ;
+    owl:disjointWith :Student .
+
+:AssistantLecturer
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Lecturer .
+
+:Professor
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Lecturer .
+
+:Researcher
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Person .
+
+:GraduateStudent
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Student .
+
+:UndergraduateStudent
+    rdf:type owl:Class ;
+    rdfs:subClassOf :Student .
+
+:Course
+    rdf:type owl:Class .
+
+:Department
+    rdf:type owl:Class .
+
+:Faculty
+    rdf:type owl:Class .
+
+:Laboratory
+    rdf:type owl:Class .
+
+:Library
+    rdf:type owl:Class .
+
+:Organization
+    rdf:type owl:Class .
+
+:Scholarship
+    rdf:type owl:Class .
 
 
-###  https://example.org/ontology/usu#dosen_nurul
-:dosen_nurul rdf:type owl:NamedIndividual ,
-                      :dosen_nurul ;
-             :teaches :web_semantik .
+#################################################################
+# Individuals
+#################################################################
+
+# Department
+:departemen_informatika
+    rdf:type owl:NamedIndividual ,
+             :Department .
 
 
-###  https://example.org/ontology/usu#lab_jaringan
-:lab_jaringan rdf:type owl:NamedIndividual ,
-                       :Laboratory .
+# Laboratory
+:lab_jaringan
+    rdf:type owl:NamedIndividual ,
+             :Laboratory .
 
 
-###  https://example.org/ontology/usu#mahasiswa_anda
-:mahasiswa_anda rdf:type owl:NamedIndividual ,
-                         :mahasiswa_anda ;
-                :enrolledIn :departemen_informatika ;
-                :takesCourse :web_semantik ;
-                :usesLaboratory :lab_jaringan ;
-                :hasNIM 251402004 ;
-                :hasName "Yabesh Day Siahaan" ;
-                :hasStudentID 251402004 .
+# Course
+:web_semantik
+    rdf:type owl:NamedIndividual ,
+             :Course ;
+    :hasCourseCode "PWS-01" .
 
 
-###  https://example.org/ontology/usu#web_semantik
-:web_semantik rdf:type owl:NamedIndividual ,
-                       :web_semantik .
+# Lecturer
+:dosen_nurul
+    rdf:type owl:NamedIndividual ,
+             :Lecturer ;
+    :hasName "Dosen Nurul" ;
+    :teaches :web_semantik .
 
 
-###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
+#################################################################
+# Students
+#################################################################
+
+:mahasiswa_yabesh
+    rdf:type owl:NamedIndividual ,
+             :Student ;
+    :hasName "Yabesh Day Siahaan" ;
+    :hasNIM "251402004" ;
+    :hasStudentID "251402004" ;
+    :enrolledIn :departemen_informatika ;
+    :takesCourse :web_semantik ;
+    :usesLaboratory :lab_jaringan .
+
+
+:mahasiswa_farel
+    rdf:type owl:NamedIndividual ,
+             :Student ;
+    :hasName "Farel" ;
+    :enrolledIn :departemen_informatika ;
+    :takesCourse :web_semantik ;
+    :usesLaboratory :lab_jaringan .
+
+
+:mahasiswa_william
+    rdf:type owl:NamedIndividual ,
+             :Student ;
+    :hasName "William" ;
+    :enrolledIn :departemen_informatika ;
+    :takesCourse :web_semantik ;
+    :usesLaboratory :lab_jaringan .
+
+
+:mahasiswa_ray
+    rdf:type owl:NamedIndividual ,
+             :Student ;
+    :hasName "Ray" ;
+    :enrolledIn :departemen_informatika ;
+    :takesCourse :web_semantik ;
+    :usesLaboratory :lab_jaringan .
+
+
+:mahasiswa_dzakhi
+    rdf:type owl:NamedIndividual ,
+             :Student ;
+    :hasName "Dzakhi" ;
+    :enrolledIn :departemen_informatika ;
+    :takesCourse :web_semantik ;
+    :usesLaboratory :lab_jaringan .
