@@ -14,14 +14,12 @@
 
 ###  https://example.org/ontology/usu#enrolledIn
 :enrolledIn rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf owl:topObjectProperty ;
             rdfs:domain :Student ;
             rdfs:range :Department .
 
 
 ###  https://example.org/ontology/usu#managesLibrary
 :managesLibrary rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf owl:topObjectProperty ;
                 rdfs:domain :Organization ;
                 rdfs:range :Library .
 
@@ -34,28 +32,24 @@
 
 ###  https://example.org/ontology/usu#providesScholarship
 :providesScholarship rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty ;
                      rdfs:domain :Organization ;
                      rdfs:range :Scholarship .
 
 
 ###  https://example.org/ontology/usu#takesCourse
 :takesCourse rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty ;
              rdfs:domain :Student ;
              rdfs:range :Course .
 
 
 ###  https://example.org/ontology/usu#teaches
 :teaches rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf owl:topObjectProperty ;
          rdfs:domain :Lecturer ;
          rdfs:range :Course .
 
 
 ###  https://example.org/ontology/usu#usesLaboratory
 :usesLaboratory rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf owl:topObjectProperty ;
                 rdfs:domain :Person ;
                 rdfs:range :Laboratory .
 
@@ -66,7 +60,6 @@
 
 ###  https://example.org/ontology/usu#hasAddress
 :hasAddress rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf owl:topDataProperty ;
             rdfs:domain :Person ;
             rdfs:range xsd:string .
 
@@ -79,35 +72,30 @@
 
 ###  https://example.org/ontology/usu#hasEmail
 :hasEmail rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty ;
           rdfs:domain :Person ;
           rdfs:range xsd:string .
 
 
 ###  https://example.org/ontology/usu#hasNIM
 :hasNIM rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :Student ;
         rdfs:range xsd:string .
 
 
 ###  https://example.org/ontology/usu#hasName
 :hasName rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain :Person ;
          rdfs:range xsd:string .
 
 
 ###  https://example.org/ontology/usu#hasPhoneNumber
 :hasPhoneNumber rdf:type owl:DatatypeProperty ;
-                rdfs:subPropertyOf owl:topDataProperty ;
                 rdfs:domain :Person ;
                 rdfs:range xsd:string .
 
 
 ###  https://example.org/ontology/usu#hasStudentID
 :hasStudentID rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain :Student ;
               rdfs:range xsd:string .
 
@@ -145,8 +133,7 @@
 ###  https://example.org/ontology/usu#Lecturer
 :Lecturer rdf:type owl:Class ;
           rdfs:subClassOf :Person ;
-          owl:disjointWith :Person ,
-                           :Student .
+          owl:disjointWith :Student .
 
 
 ###  https://example.org/ontology/usu#Library
@@ -185,21 +172,6 @@
                       rdfs:subClassOf :Student .
 
 
-###  https://example.org/ontology/usu#dosen_nurul
-:dosen_nurul rdf:type owl:Class ;
-             rdfs:subClassOf :Lecturer .
-
-
-###  https://example.org/ontology/usu#mahasiswa_anda
-:mahasiswa_anda rdf:type owl:Class ;
-                rdfs:subClassOf :Student .
-
-
-###  https://example.org/ontology/usu#web_semantik
-:web_semantik rdf:type owl:Class ;
-              rdfs:subClassOf :Department .
-
-
 #################################################################
 #    Individuals
 #################################################################
@@ -211,8 +183,9 @@
 
 ###  https://example.org/ontology/usu#dosen_nurul
 :dosen_nurul rdf:type owl:NamedIndividual ,
-                      :dosen_nurul ;
-             :teaches :web_semantik .
+                      :Lecturer ;
+             :teaches :web_semantik ;
+             :hasName "Dosen Nurul" .
 
 
 ###  https://example.org/ontology/usu#lab_jaringan
@@ -220,20 +193,57 @@
                        :Laboratory .
 
 
-###  https://example.org/ontology/usu#mahasiswa_anda
-:mahasiswa_anda rdf:type owl:NamedIndividual ,
-                         :mahasiswa_anda ;
-                :enrolledIn :departemen_informatika ;
-                :takesCourse :web_semantik ;
-                :usesLaboratory :lab_jaringan ;
-                :hasNIM 251402004 ;
-                :hasName "Yabesh Day Siahaan" ;
-                :hasStudentID 251402004 .
+###  https://example.org/ontology/usu#mahasiswa_dzakhi
+:mahasiswa_dzakhi rdf:type owl:NamedIndividual ,
+                           :Student ;
+                  :enrolledIn :departemen_informatika ;
+                  :takesCourse :web_semantik ;
+                  :usesLaboratory :lab_jaringan ;
+                  :hasName "Dzakhi" .
+
+
+###  https://example.org/ontology/usu#mahasiswa_farel
+:mahasiswa_farel rdf:type owl:NamedIndividual ,
+                          :Student ;
+                 :enrolledIn :departemen_informatika ;
+                 :takesCourse :web_semantik ;
+                 :usesLaboratory :lab_jaringan ;
+                 :hasName "Farel" .
+
+
+###  https://example.org/ontology/usu#mahasiswa_ray
+:mahasiswa_ray rdf:type owl:NamedIndividual ,
+                        :Student ;
+               :enrolledIn :departemen_informatika ;
+               :takesCourse :web_semantik ;
+               :usesLaboratory :lab_jaringan ;
+               :hasName "Ray" .
+
+
+###  https://example.org/ontology/usu#mahasiswa_william
+:mahasiswa_william rdf:type owl:NamedIndividual ,
+                            :Student ;
+                   :enrolledIn :departemen_informatika ;
+                   :takesCourse :web_semantik ;
+                   :usesLaboratory :lab_jaringan ;
+                   :hasName "William" .
+
+
+###  https://example.org/ontology/usu#mahasiswa_yabesh
+:mahasiswa_yabesh rdf:type owl:NamedIndividual ,
+                           :Student ;
+                  :enrolledIn :departemen_informatika ;
+                  :takesCourse :web_semantik ;
+                  :usesLaboratory :lab_jaringan ;
+                  :hasNIM "251402004" ;
+                  :hasName "Yabesh Day Siahaan" ;
+                  :hasStudentID "251402004" .
 
 
 ###  https://example.org/ontology/usu#web_semantik
 :web_semantik rdf:type owl:NamedIndividual ,
-                       :web_semantik .
+                       :Course ;
+              :hasCourseCode "PWS-01" .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
