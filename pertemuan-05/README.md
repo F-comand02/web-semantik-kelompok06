@@ -42,22 +42,13 @@ Mengapa ontology berada di atas RDF/RDFS dan di bawah SPARQL dalam arsitektur in
 ---
 
 ## Perbandingan serialisasi
-Perbandingan Turtle dan RDF/XML
-- Perbedaan Sintaks
-
-1. Turtle memiliki sintaks yang lebih ringkas dan menggunakan prefix
-   seperti `@prefix`, sedangkan RDF/XML menggunakan struktur tag XML
-   seperti `<rdf:RDF>`, `<owl:Class>`, dan sebagainya.
-
-2. Turtle menuliskan hubungan antar resource dalam bentuk triple yang
-   lebih sederhana, sedangkan RDF/XML menggunakan elemen dan atribut XML
-   untuk merepresentasikan subject, predicate, dan object.
-
-- Kesamaan Makna
-
-Kedua format merepresentasikan ontology yang sama. Class, property,
-individual, dan IRI dasar yang terdapat dalam ontology tetap memiliki
-makna dan hubungan yang sama meskipun cara penulisannya berbeda.
+- [Turtle](ontology-kampus.ttl): 
+  * Kami gunakan format deklarasi '@prefix' yang ringkas di awal dokumen untuk mendefinisikan namespace.
+  * Kami gunakan tanda titik koma '(;)' untuk memisahkan beberapa predikat-objek dari subjek yang sama, serta tanda titik '(.)' sebagai akhir dari sebuah pernyataan triplet.
+- [RDF/XML](ontology-kampus.rdf): 
+  * Terlihat menggunakan struktur berbasis tag XML seperti elemen <rdf:RDF> sebagai pembungkus utama dan atribut xmlns untuk deklarasi namespace.
+  * Terlihat ada hubungan predikat dan objek direpresentasikan melalui struktur bersarang (nested tags) seperti elemen <owl:NamedIndividual> yang membungkus properti di dalamnya.
+- Kesamaan makna: Kedua dokumen memiliki semantik yang identik (100% sama). Keduanya merepresentasikan struktur graf pengetahuan (knowledge graph) yang sama, yang mendefinisikan kelas seperti Student dan Lecturer, properti objek seperti enrolledIn dan takesCourse, serta individual data universitas yang sama (seperti mahasiswa_yabesh dengan NIM 251402004 dan dosen_nurul yang mengajar mata kuliah web_semantik).
 
 ---
 
