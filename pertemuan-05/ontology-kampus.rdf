@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://example.org/ontology/usu#"
+     xml:base="https://example.org/ontology/usu"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="https://example.org/ontology/usu"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://example.org/ontology/usu#enrolledIn -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#enrolledIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Student"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Department"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#managesLibrary -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#managesLibrary">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Organization"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Library"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#memberOf -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#memberOf">
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#providesScholarship -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#providesScholarship">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Organization"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Scholarship"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#takesCourse -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#takesCourse">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Student"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Course"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#teaches -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#teaches">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Lecturer"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Course"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#usesLaboratory -->
+
+    <owl:ObjectProperty rdf:about="https://example.org/ontology/usu#usesLaboratory">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="https://example.org/ontology/usu#Laboratory"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://example.org/ontology/usu#hasAddress -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasAddress">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasCourseCode -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasCourseCode">
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Course"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasEmail -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasEmail">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasNIM -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasNIM">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasName -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasName">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasPhoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasPhoneNumber">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://example.org/ontology/usu#hasStudentID -->
+
+    <owl:DatatypeProperty rdf:about="https://example.org/ontology/usu#hasStudentID">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="https://example.org/ontology/usu#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://example.org/ontology/usu#AssistantLecturer -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#AssistantLecturer">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Lecturer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#Course -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Course"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Department -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Department"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Faculty -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Faculty"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#GraduateStudent -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#GraduateStudent">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#Laboratory -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Laboratory"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Lecturer -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Lecturer">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Person"/>
+        <owl:disjointWith rdf:resource="https://example.org/ontology/usu#Person"/>
+        <owl:disjointWith rdf:resource="https://example.org/ontology/usu#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#Library -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Library"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Organization -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Organization"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Person -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Person"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Professor -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Professor">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Lecturer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#Researcher -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Researcher">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#Scholarship -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Scholarship"/>
+    
+
+
+    <!-- https://example.org/ontology/usu#Student -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#Student">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#UndergraduateStudent -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#UndergraduateStudent">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#dosen_nurul -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#dosen_nurul">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Lecturer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#mahasiswa_anda -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#mahasiswa_anda">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- https://example.org/ontology/usu#web_semantik -->
+
+    <owl:Class rdf:about="https://example.org/ontology/usu#web_semantik">
+        <rdfs:subClassOf rdf:resource="https://example.org/ontology/usu#Department"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://example.org/ontology/usu#departemen_informatika -->
+
+    <owl:NamedIndividual rdf:about="https://example.org/ontology/usu#departemen_informatika">
+        <rdf:type rdf:resource="https://example.org/ontology/usu#Department"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://example.org/ontology/usu#dosen_nurul -->
+
+    <owl:NamedIndividual rdf:about="https://example.org/ontology/usu#dosen_nurul">
+        <rdf:type rdf:resource="https://example.org/ontology/usu#dosen_nurul"/>
+        <teaches rdf:resource="https://example.org/ontology/usu#web_semantik"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://example.org/ontology/usu#lab_jaringan -->
+
+    <owl:NamedIndividual rdf:about="https://example.org/ontology/usu#lab_jaringan">
+        <rdf:type rdf:resource="https://example.org/ontology/usu#Laboratory"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://example.org/ontology/usu#mahasiswa_anda -->
+
+    <owl:NamedIndividual rdf:about="https://example.org/ontology/usu#mahasiswa_anda">
+        <rdf:type rdf:resource="https://example.org/ontology/usu#mahasiswa_anda"/>
+        <enrolledIn rdf:resource="https://example.org/ontology/usu#departemen_informatika"/>
+        <takesCourse rdf:resource="https://example.org/ontology/usu#web_semantik"/>
+        <usesLaboratory rdf:resource="https://example.org/ontology/usu#lab_jaringan"/>
+        <hasNIM rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">251402004</hasNIM>
+        <hasName>Yabesh Day Siahaan</hasName>
+        <hasStudentID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">251402004</hasStudentID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://example.org/ontology/usu#web_semantik -->
+
+    <owl:NamedIndividual rdf:about="https://example.org/ontology/usu#web_semantik">
+        <rdf:type rdf:resource="https://example.org/ontology/usu#web_semantik"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
