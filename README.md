@@ -35,7 +35,7 @@ Di sini kami tidak hanya menyimpan hasil akhir tugas, tetapi juga mendokumentasi
 - [Pertemuan 02](pertemuan-02/)
 - [Pertemuan 03](pertemuan-03/)
 - [Pertemuan 04](pertemuan-04/)
-
+- [Pertemuan 05](pertemuan-05/)
 ---
 
 # 🧠 Pengantar Web Semantik & Knowledge Graph di Era AI
