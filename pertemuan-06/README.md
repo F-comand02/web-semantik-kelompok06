@@ -349,6 +349,46 @@ Contoh penggunaan:
 - Pernyataan yang sama: [isi]
 
 ## Refleksi
-1. Kapan object harus berupa IRI dan kapan berupa literal?
-2. Mengapa prefix membantu keterbacaan tanpa mengubah IRI?
-3. Sebutkan satu kesalahan pemodelan yang Anda hindari pada graf ini.
+
+### Kapan object harus berupa IRI dan kapan berupa literal?
+
+Object berupa IRI ketika menyatakan hubungan/relasi antara dua resource yang masing-masing punya identitas sendiri dan bisa diberi properti tambahan — misalnya `ex:ida ex:mengajar ex:web_semantik` (baik dosen maupun mata kuliah adalah resource yang bisa dirujuk kembali dan dideskripsikan lebih lanjut).
+
+Object berupa literal ketika menyatakan nilai data konkret yang deskriptif dan tidak perlu dirujuk sebagai resource tersendiri — misalnya `foaf:name "Muhammad Isa..."` atau `ex:sks 3` (nama dan jumlah SKS adalah nilai akhir/atomic, bukan entitas yang punya relasi lain).
+
+### Mengapa Prefix Membantu Keterbacaan Tanpa Mengubah IRI
+
+Prefix (seperti `ex:` atau `foaf:`) hanyalah singkatan tampilan (*syntactic sugar*), bukan bagian dari identitas data sebenarnya.
+
+### IRI Sesungguhnya Tetap Utuh
+
+Ketika kita menulis:
+
+```python
+g.bind("ex", EX)
+```
+
+IRI `https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida` tidak berubah menjadi apa pun yang lain. Fungsi `bind()` hanya memberi tahu serializer (misalnya saat memanggil `g.serialize(format="turtle")`) bahwa setiap kali muncul IRI berawalan `https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#`, tampilkan sebagai `ex:` di file `.ttl`.
+
+### Contoh Perbandingan
+
+Tanpa prefix (IRI panjang ditulis berulang):
+
+```turtle
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida>
+    a <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Lacturer> ;
+    <http://xmlns.com/foaf/0.1/name> "Muhammad Isa Dadi Hasibuan, S.Kom., M.Kom" .
+```
+
+Dengan prefix (ringkas dan mudah dibaca manusia):
+
+```turtle
+ex:ida a ex:Lecturer ;
+    foaf:name "Muhammad Isa Dadi Hasibuan, S.Kom., M.Kom" .
+```
+
+Kesimpulan: `ex:ida` dan `<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida>` merujuk ke resource yang persis sama. Parser RDF akan mengekspansi `ex:ida` kembali menjadi IRI lengkapnya saat membaca file. Prefix hanya memengaruhi bagaimana IRI ditulis/dibaca oleh manusia, sama sekali tidak memengaruhi identitas resource dalam graf — IRI penuh tetap menjadi kunci sebenarnya.
+
+### Sebutkan satu kesalahan pemodelan yang Anda hindari pada graf ini.
+
+Kesalahan yang dihindari adalah tidak menjadikan literal sebagai subject. Misalnya, nilai `"Web Semantik"` (nama mata kuliah) atau angka `3` (jumlah SKS) tidak pernah dijadikan subject dari triple lain — keduanya selalu diposisikan sebagai object, sementara yang menjadi subject adalah resource ber-IRI seperti `ex:web_semantik`. Selain itu, jumlah SKS dimodelkan dengan tipe data yang benar (`xsd:integer`) alih-alih sebagai string biasa, sehingga makna datanya tetap konsisten dan bisa diproses/divalidasi secara semantik oleh aplikasi lain.
