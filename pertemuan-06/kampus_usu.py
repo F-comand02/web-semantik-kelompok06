@@ -90,4 +90,10 @@ g.serialize("kampus_usu.ttl", format="turtle")
 print("Menyimpan data dalam format JSON-LD...")
 g.serialize("kampus_usu.jsonld", format="json-ld", indent=2)
 
+from rdflib.namespace import RDF
+
+print("Daftar dosen:")
+for subject, predicate, obj in g.triples((None, RDF.type, EX.Lecturer)):
+    print(subject)
+
 # Output setelah kami run kan itu tertera ada jumlah triple sebanyak '51'
