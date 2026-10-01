@@ -89,3 +89,5 @@ print("Menyimpan data dalam format Turtle...")
 g.serialize("kampus_usu.ttl", format="turtle")
 print("Menyimpan data dalam format JSON-LD...")
 g.serialize("kampus_usu.jsonld", format="json-ld", indent=2)
+
+# Output setelah kami run kan itu tertera ada jumlah triple sebanyak '51'
