@@ -20,39 +20,59 @@ g.add((EX.ida, EX.mengajar, EX.web_semantik))
 g.add((EX.usu, RDF.type, EX.University))
 g.add((EX.usu, FOAF.name, Literal("Universitas Sumatera Utara", lang="id")))
 
-# Dosen tambahan (nama contoh, ganti sesuai kebutuhan)
-g.add((EX.budi, RDF.type, EX.Lecturer))
-g.add((EX.budi, FOAF.name, Literal("Umaya Ramadhani Putri Nasution S.TI., M.Kom", lang="id")))
-g.add((EX.sari, RDF.type, EX.Lecturer))
-g.add((EX.sari, FOAF.name, Literal("Ivan Jaya S.Si., M.Kom.", lang="id")))
+# Dosen tambahan 
+g.add((EX.umay, RDF.type, EX.Lecturer))
+g.add((EX.umay, FOAF.name, Literal("Umaya Ramadhani Putri Nasution S.TI., M.Kom", lang="id")))
+g.add((EX.ivan, RDF.type, EX.Lecturer))
+g.add((EX.ivan, FOAF.name, Literal("Ivan Jaya S.Si., M.Kom.", lang="id")))
 
-# Mata kuliah tambahan (nama contoh)
+# Mata kuliah tambahan 
 g.add((EX.basis_data, RDF.type, EX.Course))
 g.add((EX.basis_data, FOAF.name, Literal("Basis Data", lang="id")))
 g.add((EX.pemrograman_web, RDF.type, EX.Course))
 g.add((EX.pemrograman_web, FOAF.name, Literal("Pemrograman Web", lang="id")))
 
-# Relasi mengajar (object berupa IRI, bukan string)
-g.add((EX.budi, EX.mengajar, EX.basis_data))
-g.add((EX.sari, EX.mengajar, EX.pemrograman_web))
+# Relasi mengajar 
+g.add((EX.umay, EX.mengajar, EX.basis_data))
+g.add((EX.ivan, EX.mengajar, EX.pemrograman_web))
 
 # Relasi bekerja di
 g.add((EX.ida, EX.bekerjaDi, EX.usu))
-g.add((EX.budi, EX.bekerjaDi, EX.usu))
-g.add((EX.sari, EX.bekerjaDi, EX.usu))
+g.add((EX.umay, EX.bekerjaDi, EX.usu))
+g.add((EX.ivan, EX.bekerjaDi, EX.usu))
 
 # Mahasiswa dan relasi ke mata kuliah
 g.add((EX.mhs251402069, RDF.type, EX.Student))
 g.add((EX.mhs251402069, FOAF.name, Literal("Farel Yamotaro Hia", lang="id")))
 g.add((EX.mhs251402069, EX.mengambil, EX.web_semantik))
 g.add((EX.mhs251402069, EX.mengambil, EX.basis_data))
+g.add((EX.mhs251402069, EX.mengambil, EX.pemrograman_web))
 
 g.add((EX.mhs251402004, RDF.type, EX.Student))
 g.add((EX.mhs251402004, FOAF.name, Literal("Yabesh Day Siahaan", lang="id")))
 g.add((EX.mhs251402004, EX.mengambil, EX.web_semantik))
 g.add((EX.mhs251402004, EX.mengambil, EX.basis_data))
+g.add((EX.mhs251402004, EX.mengambil, EX.pemrograman_web))
 
-# Jumlah kredit (literal bertipe integer)
+g.add((EX.mhs251402046, RDF.type, EX.Student))
+g.add((EX.mhs251402046, FOAF.name, Literal("Ray Nathan Geereno Saragih", lang="id")))
+g.add((EX.mhs251402046, EX.mengambil, EX.web_semantik))
+g.add((EX.mhs251402046, EX.mengambil, EX.basis_data))
+g.add((EX.mhs251402046, EX.mengambil, EX.pemrograman_web))
+
+g.add((EX.mhs251402128, RDF.type, EX.Student))
+g.add((EX.mhs251402128, FOAF.name, Literal("Naufal Muhammad Dzaki", lang="id")))
+g.add((EX.mhs251402128, EX.mengambil, EX.web_semantik))
+g.add((EX.mhs251402128, EX.mengambil, EX.basis_data))
+g.add((EX.mhs251402128, EX.mengambil, EX.pemrograman_web))
+
+g.add((EX.mhs251402052, RDF.type, EX.Student))
+g.add((EX.mhs251402052, FOAF.name, Literal("William Fransisco sihotang", lang="id")))
+g.add((EX.mhs251402052, EX.mengambil, EX.web_semantik))
+g.add((EX.mhs251402052, EX.mengambil, EX.basis_data))
+g.add((EX.mhs251402052, EX.mengambil, EX.pemrograman_web))
+
+# Jumlah kredit 
 g.add((EX.web_semantik, EX.jumlahKredit, Literal(3, datatype=XSD.integer)))
 g.add((EX.basis_data, EX.jumlahKredit, Literal(3, datatype=XSD.integer)))
 g.add((EX.pemrograman_web, EX.jumlahKredit, Literal(2, datatype=XSD.integer)))
