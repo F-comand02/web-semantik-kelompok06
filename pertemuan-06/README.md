@@ -344,9 +344,14 @@ Contoh penggunaan:
 ---
 
 ## Perbandingan serialisasi
-- Turtle: [pengamatan]
-- JSON-LD: [pengamatan]
-- Pernyataan yang sama: [isi]
+![Turtle](screenshots/output-turtle.png)
+- **[Turtle](screenshots/output-turtle.png)**: Lebih ringkas dan mudah dibaca karena menggunakan prefix `ex` dan `foaf`. Triple untuk setiap entitas dikelompokkan, dan literal bahasa serta tipe data ditulis langsung, misalnya `"Senin"@id` dan `3` sebagai integer.
+
+<img src="https://github.com/user-attachments/assets/a3ae0a27-18c9-43d8-822a-de1b53b876e8" style="max-width: 100%;" alt="JSON-LD">
+
+- **[JSON-LD](https://github.com/user-attachments/assets/a2ec1afb-7dab-44c0-8162-26e6dca2bd03)**
+: Struktur lebih panjang dan eksplisit. URI ditulis lengkap, sementara entitas dan properti ditampilkan dengan `@id`, `@type`, dan array. Bahasa dan tipe data literal dinyatakan dengan `@language` dan `@type`.
+- **Pernyataan yang sama**: Kedua format merepresentasikan graf RDF yang sama. Contohnya, Ray Nathan Geereno Saragih adalah mahasiswa dan mengambil Web Semantik, Basis Data, serta Pemrograman Web. Perbedaan urutan atau bentuk penulisan tidak mengubah maknanya.
 
 ---
 
