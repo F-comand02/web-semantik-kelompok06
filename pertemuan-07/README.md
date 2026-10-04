@@ -12,10 +12,10 @@
 - Source: [isi]
 
 ## Perbandingan
-- Format paling mudah dibaca manusia: [isi dan alasan]
-- Format untuk HTML/API: [isi dan alasan]
-- Perbedaan reifikasi klasik dan RDF-star: [isi]
-
+- Format paling mudah dibaca manusia: **Turtle**, karena sintaksnya ringkas dan mudah dipahami.
+- Format untuk HTML/API: **JSON-LD**, karena mudah diintegrasikan dengan aplikasi web dan API.
+- Perbedaan reifikasi klasik dan RDF-star: **Reifikasi klasik** menggunakan beberapa triple tambahan untuk menjelaskan sebuah triple, sedangkan **RDF-star** memungkinkan triple disisipkan langsung ke dalam triple lain sehingga lebih ringkas.
+  
 ## Refleksi
 1. Mengapa named graph berguna saat menggabungkan data dari sumber berbeda?
 2. Mengapa provenance penting untuk sebuah triple?
