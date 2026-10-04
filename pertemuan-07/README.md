@@ -14,13 +14,13 @@
 ## Langkah 3: Merekam Provenance dengan Reifikasi Klasik
 Reifikasi klasik lebih verbose karena membutuhkan beberapa triple tambahan untuk menjelaskan sebuah pernyataan. Kita harus membuat resource khusus, misalnya `ex:pernyataan1`, lalu mendefinisikan `rdf:type`, `rdf:subject`, `rdf:predicate`, dan `rdf:object`. Setelah itu, metadata seperti `dct:creator` dan `dct:date` ditambahkan ke resource tersebut.
 
-Sementara itu, RDF-star lebih ringkas karena memungkinkan kita memberikan metadata langsung pada triple yang ingin dianotasi, tanpa harus membuat resource reifikasi dan menuliskan empat triple tambahan untuk mendeskripsikan pernyataan tersebut.
+Sementara itu, RDF-star lebih ringkas karena memungkinkan kita memberikan metadata langsung pada triple yang ingin dijelaskan, tanpa harus membuat resource reifikasi dan menuliskan empat triple tambahan untuk mendeskripsikan pernyataan tersebut.
 
 Contoh RDF-star:
 
 `<< ex:ida ex:mengajar ex:web_semantik >> dct:creator ex:ida .`
 
-Secara konsep, kedua pendekatan tersebut memungkinkan kita memberikan metadata pada sebuah pernyataan. Perbedaannya, reifikasi klasik menggunakan resource dan beberapa triple tambahan, sedangkan RDF-star menggunakan sintaks yang lebih sederhana dan mudah dibaca.
+Secara konsep, kedua hal tersebut memungkinkan kita memberikan metadata pada sebuah pernyataan. Perbedaannya, reifikasi klasik menggunakan resource dan beberapa triple tambahan, sedangkan RDF-star menggunakan sintaks yang lebih sederhana dan mudah dibaca.
 
 
 ## Artefak
@@ -41,6 +41,12 @@ Secara konsep, kedua pendekatan tersebut memungkinkan kita memberikan metadata p
 - Perbedaan reifikasi klasik dan RDF-star: **Reifikasi klasik** menggunakan beberapa triple tambahan untuk menjelaskan sebuah triple, sedangkan **RDF-star** memungkinkan triple disisipkan langsung ke dalam triple lain sehingga lebih ringkas.
   
 ## Refleksi
-1. Mengapa named graph berguna saat menggabungkan data dari sumber berbeda?
-2. Mengapa provenance penting untuk sebuah triple?
-3. Format apa yang Anda pilih untuk git diff, dan mengapa?
+1. **Mengapa named graph berguna saat menggabungkan data dari sumber berbeda?**
+   Named graph berguna untuk memisahkan data berdasarkan sumber atau kelompoknya sehingga data lebih terorganisir dan mudah dikelola.
+
+2. **Mengapa provenance penting untuk sebuah triple?**
+   Provenance penting untuk mengetahui siapa pembuat data, kapan dibuat, dan dari mana sumbernya sehingga keaslian data dapat ditelusuri.
+
+3. **Format apa yang Anda pilih untuk git diff, dan mengapa?**
+   Saya memilih Turtle (`.ttl`) karena sintaksnya mudah dibaca dan perubahan pada triple lebih mudah dibandingkan saat menggunakan format lain seperti JSON-LD.
+
