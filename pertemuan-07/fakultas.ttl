@@ -1,4 +1,4 @@
-@prefix ex: <https://contoh.github.io/web-semantik/251402004/kampus#> .
+@prefix ex: <https://f-comand02.github.io/web-semantik/251402004/kampus#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 ex:fasilkom a ex:Faculty ;
