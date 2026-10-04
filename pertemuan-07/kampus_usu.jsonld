@@ -1,0 +1,267 @@
+[
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mhs251402046",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Student"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Ray Nathan Geereno Saragih"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengambil": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Course"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Basis Data"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#hariKuliah": [
+      {
+        "@language": "id",
+        "@value": "Selasa"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#jumlahKredit": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 3
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mhs251402052",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Student"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "William Fransisco sihotang"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengambil": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mhs251402128",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Student"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Naufal Muhammad Dzaki"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengambil": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Lecturer"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Muhammad Isa Dadi Hasibuan S.Kom., M.Kom"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#bekerjaDi": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#usu"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengajar": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ivan",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Lecturer"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Ivan Jaya S.Si., M.Kom."
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#bekerjaDi": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#usu"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengajar": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Course"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Pemrograman Web"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#hariKuliah": [
+      {
+        "@language": "id",
+        "@value": "Rabu"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#jumlahKredit": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 2
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mhs251402004",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Student"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Yabesh Day Siahaan"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengambil": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#umay",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Lecturer"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Umaya Ramadhani Putri Nasution S.TI., M.Kom"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#bekerjaDi": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#usu"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengajar": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Course"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Web Semantik"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#hariKuliah": [
+      {
+        "@language": "id",
+        "@value": "Senin"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#jumlahKredit": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 3
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mhs251402069",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Student"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Farel Yamotaro Hia"
+      }
+    ],
+    "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#mengambil": [
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web"
+      },
+      {
+        "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik"
+      }
+    ]
+  },
+  {
+    "@id": "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#usu",
+    "@type": [
+      "https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#University"
+    ],
+    "http://xmlns.com/foaf/0.1/name": [
+      {
+        "@language": "id",
+        "@value": "Universitas Sumatera Utara"
+      }
+    ]
+  }
+]
