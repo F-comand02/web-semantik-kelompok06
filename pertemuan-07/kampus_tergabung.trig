@@ -1,1 +1,97 @@
 
+@prefix ex: <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://f-comand02.github.io/graph/kampus> {
+
+    ex:ida a ex:Lecturer ;
+        foaf:name "Muhammad Isa Dadi Hasibuan S.Kom., M.Kom"@id ;
+        ex:bekerjaDi ex:usu ;
+        ex:mengajar ex:web_semantik .
+
+    ex:ivan a ex:Lecturer ;
+        foaf:name "Ivan Jaya S.Si., M.Kom."@id ;
+        ex:bekerjaDi ex:usu ;
+        ex:mengajar ex:pemrograman_web .
+
+    ex:mhs251402004 a ex:Student ;
+        foaf:name "Yabesh Day Siahaan"@id ;
+        ex:mengambil ex:basis_data,
+            ex:pemrograman_web,
+            ex:web_semantik .
+
+    ex:mhs251402046 a ex:Student ;
+        foaf:name "Ray Nathan Geereno Saragih"@id ;
+        ex:mengambil ex:basis_data,
+            ex:pemrograman_web,
+            ex:web_semantik .
+
+    ex:mhs251402052 a ex:Student ;
+        foaf:name "William Fransisco sihotang"@id ;
+        ex:mengambil ex:basis_data,
+            ex:pemrograman_web,
+            ex:web_semantik .
+
+    ex:mhs251402069 a ex:Student ;
+        foaf:name "Farel Yamotaro Hia"@id ;
+        ex:mengambil ex:basis_data,
+            ex:pemrograman_web,
+            ex:web_semantik .
+
+    ex:mhs251402128 a ex:Student ;
+        foaf:name "Naufal Muhammad Dzaki"@id ;
+        ex:mengambil ex:basis_data,
+            ex:pemrograman_web,
+            ex:web_semantik .
+
+    ex:umay a ex:Lecturer ;
+        foaf:name "Umaya Ramadhani Putri Nasution S.TI., M.Kom"@id ;
+        ex:bekerjaDi ex:usu ;
+        ex:mengajar ex:basis_data .
+
+    ex:usu a ex:University ;
+        foaf:name "Universitas Sumatera Utara"@id .
+
+    ex:basis_data a ex:Course ;
+        foaf:name "Basis Data"@id ;
+        ex:hariKuliah "Selasa"@id ;
+        ex:jumlahKredit 3 .
+
+    ex:pemrograman_web a ex:Course ;
+        foaf:name "Pemrograman Web"@id ;
+        ex:hariKuliah "Rabu"@id ;
+        ex:jumlahKredit 2 .
+
+    ex:web_semantik a ex:Course ;
+        foaf:name "Web Semantik"@id ;
+        ex:hariKuliah "Senin"@id ;
+        ex:jumlahKredit 3 .
+
+  
+    ex:pernyataan1 a rdf:Statement ;
+        rdf:subject ex:ida ;
+        rdf:predicate ex:mengajar ;
+        rdf:object ex:web_semantik ;
+        dct:creator ex:ida ;
+        dct:date "2026-10-01"^^xsd:date ;
+        dct:source "Data akademik kampus" .
+}
+
+<https://f-comand02.github.io/graph/fakultas> {
+
+    ex:fasilkom a ex:Faculty ;
+        foaf:name "Fakultas Ilmu Komputer dan Teknologi Informasi"@id ;
+        ex:memilikiDepartemen ex:ti ;
+        ex:berlokasiDi "Medan"@id .
+
+    ex:ti a ex:Department ;
+        foaf:name "Teknologi Informasi"@id ;
+        ex:beradaDi ex:usu ;
+        ex:bagianDari ex:fasilkom .
+
+    ex:usu a ex:University ;
+        foaf:name "Universitas Sumatera Utara"@id .
+}
