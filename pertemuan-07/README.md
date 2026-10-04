@@ -17,10 +17,11 @@
 - Named graph: https://f-comand02.github.io/graph/kampus dan https://f-comand02.github.io/graph/fakultas
 
 ## Reifikasi dan provenance
-- Triple yang dianotasi: [isi]
-- Creator: [isi]
-- Date: [isi]
-- Source: [isi]
+
+- Triple yang dianotasi: `ex:ida ex:mengajar ex:web_semantik`
+- Creator: `ex:ida`
+- Date: `2026-10-01`
+- Source: `Data akademik kampus`
 
 ## Perbandingan
 - Format paling mudah dibaca manusia: **Turtle**, karena sintaksnya ringkas dan mudah dipahami.
