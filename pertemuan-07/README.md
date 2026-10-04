@@ -12,9 +12,9 @@
 | N-Quads | Menambahkan konteks graf | Menyimpan data dari beberapa named graph dalam satu dataset. |
 
 ## Artefak
-- Graf asal: [jumlah triple]
+- Graf asal: 66 triple
 - Format ekspor: Turtle, JSON-LD, N-Triples
-- Named graph: [nama graf 1] dan [nama graf 2]
+- Named graph: https://f-comand02.github.io/graph/kampus dan https://f-comand02.github.io/graph/fakultas
 
 ## Reifikasi dan provenance
 - Triple yang dianotasi: [isi]
