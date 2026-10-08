@@ -1,4 +1,3 @@
-
 @prefix ex: <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
