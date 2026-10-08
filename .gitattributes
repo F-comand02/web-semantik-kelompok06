@@ -1,1 +1,4 @@
 *.owl linguist-language=Turtle
+*.nt linguist-language=Turtle
+*.nq linguist-language=Turtle
+*.trig linguist-language=TriG
