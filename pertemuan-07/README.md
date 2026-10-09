@@ -1,4 +1,4 @@
-# Pertemuan 7 - Serialisasi RDF
+# [Pertemuan 7](README.md) - Serialisasi RDF
 
 
 ## Langkah 1: Membandingkan Serialisasi RDF
