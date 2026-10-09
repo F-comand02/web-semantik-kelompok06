@@ -77,6 +77,12 @@
         dct:creator ex:ida ;
         dct:date "2026-10-01"^^xsd:date ;
         dct:source "Data akademik kampus" .
+
+    # --- Tes ---
+    # <<ex:ivan ex:mengajar ex:pemrograman_web>> 
+    #     dct:creator ex:ivan ;
+    #     dct:date "2026-10-09"^^xsd:date ;
+    #     dct:source "KRS Online Mahasiswa" .
 }
 
 <https://f-comand02.github.io/graph/fakultas> {
