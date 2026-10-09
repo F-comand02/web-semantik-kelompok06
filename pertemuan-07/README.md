@@ -24,7 +24,7 @@ Secara konsep, kedua hal tersebut memungkinkan kita memberikan metadata pada seb
 
 
 ## Artefak
-- Graf asal: 66 triple
+- Graf asal: 68 triple
 - Format ekspor: Turtle, JSON-LD, N-Triples
 - Named graph: https://f-comand02.github.io/graph/kampus dan https://f-comand02.github.io/graph/fakultas
 
