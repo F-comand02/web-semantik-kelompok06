@@ -1,8 +1,8 @@
 SELECT ?universitas ?universitasLabel ?kota ?kotaLabel
 WHERE {
-  ?universitas wdt:P31 wd:Q3918 ;
-               wdt:P17 wd:Q252 ;
-               wdt:P131 ?kota .
+  ?universitas wdt:P31 wd:Q3918 ; #instance of: university
+               wdt:P17 wd:Q252 ;  #country: Indonesia
+               wdt:P131 ?kota .   #located in: ?kota
 
   ?universitas rdfs:label ?universitasLabel .
   ?kota rdfs:label ?kotaLabel .
