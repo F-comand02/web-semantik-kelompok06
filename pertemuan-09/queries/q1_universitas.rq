@@ -1,0 +1,11 @@
+SELECT ?universitas ?universitasLabel ?kota ?kotaLabel
+WHERE {
+  ?universitas wdt:P31 wd:Q3918 .# instance of: university
+  ?universitas wdt:P17 wd:Q252 . # country: Indonesia
+  ?universitas wdt:P131 ?kota .  # located in: ?kota
+
+ SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "id,en".
+  }
+}
+LIMIT 20
