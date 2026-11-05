@@ -1,7 +1,5 @@
-# Pertemuan 9 - SPARQL Dasar: Tell & Ask dan Endpoint
-
+# [Pertemuan 9](README.md) - SPARQL Dasar: Tell & Ask dan Endpoint
 ## Langkah 1 - Tabel binding
-
 | Tahap | ?dosen | ?mk | ?namaMK |
 |-------|--------|-----|---------|
 | Pola 1, baris 1 | ex:budi | ex:tif2305 | – |
