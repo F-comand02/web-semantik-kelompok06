@@ -134,9 +134,80 @@ Dengan demikian, langkah ini membantu memahami cara kerja query ASK, SELECT, ser
 - Penjelasan perbedaan: Tidak ada perubahan jumlah baris. Hal ini karena kedua query sama-sama menampilkan maksimal 20 baris sesuai LIMIT 20. Penambahan P279* memperluas pencarian dengan mencakup objek yang termasuk kategori universitas melalui hubungan subkelas, tetapi jumlah hasil yang ditampilkan tetap dibatasi maksimal 20 baris.
 
 ## Langkah 5 - Endpoint dari Python
-- agent=UA: [isi]
-- setReturnFormat(JSON): [isi]
-- b.get("kotaLabel", {}): [isi]
+
+Pada langkah ini dilakukan pengambilan data dari Wikidata menggunakan Python melalui SPARQL Endpoint. Program menggunakan library SPARQLWrapper untuk mengirim query SPARQL dan mengambil hasilnya dalam format JSON.
+
+### 1. User-Agent (agent=UA)
+
+Kode yang digunakan:
+
+```python
+UA = "KelasWebSemantik/1.0 (email_pengembang)"
+
+sparql = SPARQLWrapper(
+    "https://query.wikidata.org/sparql",
+    agent=UA
+)
+```
+
+**Penjelasan:**
+
+User-Agent digunakan sebagai identitas aplikasi ketika mengakses endpoint Wikidata. Informasi ini membantu server mengetahui aplikasi yang melakukan permintaan data.
+
+### 2. Format Hasil JSON (setReturnFormat)
+
+Kode yang digunakan:
+
+```python
+sparql.setReturnFormat(JSON)
+```
+
+**Penjelasan:**
+
+Perintah `setReturnFormat(JSON)` digunakan untuk menentukan format hasil query menjadi JSON (JavaScript Object Notation).
+
+Format JSON memudahkan Python dalam membaca dan mengolah data hasil query SPARQL.
+
+Untuk mengambil hasil query digunakan:
+
+```python
+hasil = sparql.queryAndConvert()
+baris = hasil["results"]["bindings"]
+```
+
+### 3. Mengambil Label Kota
+
+Kode yang digunakan:
+
+```python
+b.get("kotaLabel", {}).get("value", "")
+```
+
+**Penjelasan:**
+
+Kode tersebut digunakan untuk mengambil nilai label kota dari hasil query Wikidata.
+
+Keterangan:
+- `b` merupakan satu baris data hasil query.
+- `get("kotaLabel", {})` mengambil data label kota.
+- `get("value", "")` mengambil nilai teks dari label kota.
+- Jika data tidak ditemukan, program akan mengembalikan string kosong.
+
+Penggunaan `get()` membuat program lebih aman ketika terdapat data yang tidak memiliki label kota.
+
+### 4. Hasil Pengujian
+
+Berdasarkan hasil pengambilan data dari Wikidata, diperoleh sebanyak 20 baris data universitas.
+
+Data yang diperoleh berisi informasi universitas dan kota. Hasil query kemudian disimpan dalam file CSV dengan nama `hasil_universitas.csv`.
+
+### Kesimpulan Langkah 5
+
+Berdasarkan percobaan yang dilakukan, dapat disimpulkan bahwa Python dapat digunakan untuk mengambil data dari Wikidata melalui SPARQL Endpoint.
+
+Penggunaan User-Agent membantu mengidentifikasi aplikasi, JSON mempermudah pengolahan hasil query, dan fungsi `get()` digunakan untuk mengambil nilai label kota.
+
+Hasil pengambilan data dapat disimpan dalam format CSV sehingga lebih mudah dibaca dan digunakan kembali.
 
 ## Refleksi
 1. Di titik mana SPARQL berbeda dari SQL?
