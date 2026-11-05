@@ -210,6 +210,47 @@ Penggunaan User-Agent membantu mengidentifikasi aplikasi, JSON mempermudah pengo
 Hasil pengambilan data dapat disimpan dalam format CSV sehingga lebih mudah dibaca dan digunakan kembali.
 
 ## Refleksi
-1. Di titik mana SPARQL berbeda dari SQL?
-2. Kapan Anda memakai graf lokal (rdflib) dan kapan endpoint publik?
-3. Sebutkan satu hasil query yang mengejutkan dan jelaskan penyebabnya.
+
+### 1. Di titik mana SPARQL berbeda dari SQL?
+
+SPARQL berbeda dari SQL terutama pada cara mengakses dan mengolah data.
+
+SQL digunakan untuk mengambil data dari database relasional yang terdiri dari tabel, baris, dan kolom. Sementara itu, SPARQL digunakan untuk mengambil informasi dari graf RDF yang terdiri dari subject, predicate, dan object (triple).
+
+Dalam SQL, pencarian data biasanya menggunakan SELECT, FROM, dan JOIN. Sedangkan SPARQL menggunakan pola triple untuk mencari hubungan antarentitas.
+
+Perbedaan lainnya adalah SPARQL lebih cocok untuk menghubungkan data dari berbagai sumber melalui URI dan relasi semantik.
+
+### 2. Kapan Anda memakai graf lokal (RDFLib) dan kapan endpoint publik?
+
+Saya menggunakan graf lokal dengan RDFLib ketika ingin mengelola, menguji, dan memanipulasi data RDF sendiri tanpa harus bergantung pada koneksi internet.
+
+Graf lokal juga cocok digunakan ketika data masih dalam tahap pengembangan, membutuhkan pengujian query, atau menggunakan data yang bersifat khusus.
+
+Sementara itu, endpoint publik digunakan ketika membutuhkan informasi dari sumber eksternal seperti Wikidata. Dengan endpoint publik, saya dapat mengambil data yang lebih luas dan menghubungkan informasi dari berbagai entitas.
+
+Jadi, graf lokal lebih cocok untuk pengolahan data sendiri, sedangkan endpoint publik lebih cocok untuk mencari dan memperoleh informasi dari sumber data terbuka.
+
+### 3. Sebutkan satu hasil query yang mengejutkan dan jelaskan penyebabnya.
+
+Salah satu hasil query yang cukup mengejutkan adalah ketika pola:
+
+```sparql
+?mk ex:nama "Web Semantik" .
+```
+
+menghasilkan 0 baris, padahal pada graf RDF terdapat data dengan nama "Web Semantik".
+
+Hal tersebut terjadi karena literal pada graf RDF ditulis menggunakan tag bahasa Indonesia, yaitu `"Web Semantik"@id`, sedangkan query menggunakan `"Web Semantik"` tanpa tag bahasa.
+
+Perbedaan tag bahasa menyebabkan kedua literal tersebut tidak cocok ketika dilakukan pencocokan pola.
+
+Dari percobaan ini, saya memahami bahwa RDF memperhatikan tag bahasa pada literal, bukan hanya isi teksnya.
+
+### Kesimpulan Refleksi
+
+Melalui praktikum ini, saya mendapatkan pemahaman bahwa SPARQL memiliki cara kerja yang berbeda dari SQL karena berfokus pada hubungan antarentitas dalam graf RDF.
+
+Saya juga memahami kapan harus menggunakan graf lokal dan endpoint publik serta pentingnya memperhatikan detail penulisan query, terutama dalam penggunaan literal dan tag bahasa.
+
+Praktikum ini memberikan pengalaman dalam mengelola, mencari, dan menghubungkan data menggunakan teknologi Web Semantik.
