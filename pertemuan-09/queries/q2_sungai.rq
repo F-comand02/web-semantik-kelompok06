@@ -1,0 +1,11 @@
+SELECT ?sungai ?sungaiLabel ?panjang
+WHERE {
+  ?sungai wdt:P31 wd:Q4022 .            # instance of: river
+  ?sungai wdt:P17 wd:Q252 .            # country: Indonesia
+  ?sungai wdt:P2043 ?panjang .          # length: ?panjang
+  
+   ?sungai rdfs:label ?sungaiLabel .
+  FILTER(LANG(?sungaiLabel) = "id")
+}
+ORDER BY DESC(?panjang)
+LIMIT 5
