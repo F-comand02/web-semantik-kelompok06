@@ -25,9 +25,9 @@
 - Fakta yang ditambahkan: [isi]
 
 ## Langkah 4 - Wikidata
-- Jumlah baris Q1 dengan wdt:P31: [isi]
-- Jumlah baris Q1 dengan wdt:P31/wdt:P279*: [isi]
-- Penjelasan perbedaan: [isi]
+- Jumlah baris Q1 dengan wdt:P31: 20 Baris
+- Jumlah baris Q1 dengan wdt:P31/wdt:P279*: 20 Baris
+- Penjelasan perbedaan: Tidak ada perubahan jumlah baris. Hal ini karena kedua query sama-sama menampilkan maksimal 20 baris sesuai LIMIT 20. Penambahan P279* memperluas pencarian dengan mencakup objek yang termasuk kategori universitas melalui hubungan subkelas, tetapi jumlah hasil yang ditampilkan tetap dibatasi maksimal 20 baris.
 
 ## Langkah 5 - Endpoint dari Python
 - agent=UA: [isi]
