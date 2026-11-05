@@ -124,9 +124,9 @@ Berdasarkan percobaan yang telah dilakukan, dapat disimpulkan bahwa:
 Dengan demikian, langkah ini membantu memahami cara kerja query ASK, SELECT, serta konsep asumsi dunia terbuka dalam SPARQL.
 
 ## Langkah 3 - Query lokal
-- IRI dasar graf: [isi]
-- Jumlah triple awal / akhir: [isi] / [isi]
-- Fakta yang ditambahkan: [isi]
+- IRI dasar graf: https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#
+- Jumlah triple awal / akhir: 51 / 54
+- Fakta yang ditambahkan: ex:ida ex:mengajar ex:praktik_sparql. Mata kuliah ex:praktik_sparql ditambahkan sebagai ex:Course, dengan nama “Praktik SPARQL (contoh Langkah 3)”.
 
 ## Langkah 4 - Wikidata
 - Jumlah baris Q1 dengan wdt:P31: 20 Baris
