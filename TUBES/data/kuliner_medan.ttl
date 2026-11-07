@@ -1,0 +1,128 @@
+@prefix ex:     <http://kuliner-medan.org/ontology#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# ==========================================
+# DEKLARASI KELAS & KATEGORI (ONTOLOGY)
+# ==========================================
+ex:Kuliner      rdfs:subClassOf schema:Recipe .
+ex:Kategori     rdfs:subClassOf rdfs:Class .
+ex:Restoran     rdfs:subClassOf schema:Restaurant .
+
+ex:KatMakananBerat a ex:Kategori ; rdfs:label "Makanan Berat" .
+ex:KatOlehOleh     a ex:Kategori ; rdfs:label "Oleh-Oleh Khas" .
+ex:KatMinuman      a ex:Kategori ; rdfs:label "Minuman Khas" .
+ex:KatCamilan      a ex:Kategori ; rdfs:label "Camilan & Street Food" .
+
+# ==========================================
+# ENTITAS KULINER MEDAN (10 DATA)
+# ==========================================
+
+# 1. Soto Medan
+ex:SotoMedan a ex:Kuliner ;
+    rdfs:label "Soto Medan" ;
+    schema:description "Soto berkuah santan gurih berwarna kuning dengan rempah khas dan isian daging sapi atau ayam." ;
+    schema:image "https://images.unsplash.com/photo-1541832676-9b763b0239ab" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:RestoSotoSinarPagi .
+
+# 2. Bika Ambon
+ex:BikaAmbon a ex:Kuliner ;
+    rdfs:label "Bika Ambon" ;
+    schema:description "Kue khas Medan berwarna kuning berongga-rongga dengan tekstur kenyal dan aroma daun jeruk serta serai." ;
+    schema:image "https://images.unsplash.com/photo-1605807646983-377bc5a76493" ;
+    ex:kategori ex:KatOlehOleh ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:TokoZulaikha .
+
+# 3. Lontong Medan
+ex:LontongMedan a ex:Kuliner ;
+    rdfs:label "Lontong Medan" ;
+    schema:description "Lontong dengan kuah sayur tauco, sambal goreng teri kacang, rendang, telur balado, dan kerupuk merah." ;
+    schema:image "https://images.unsplash.com/photo-1565299585323-38d6b0865b47" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:LontongKakLin .
+
+# 4. Durian Pancake
+ex:DurianPancake a ex:Kuliner ;
+    rdfs:label "Durian Pancake" ;
+    schema:description "Pancake gulung tipis berisi daging buah durian Medan asli yang manis dan krim lembut." ;
+    schema:image "https://images.unsplash.com/photo-1587314168485-3236d6710814" ;
+    ex:kategori ex:KatOlehOleh ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:NelayanDurian .
+
+# 5. Mie Gomak
+ex:MieGomak a ex:Kuliner ;
+    rdfs:label "Mie Gomak" ;
+    schema:description "Mie lidi khas Batak berkuah santan pedas dengan bumbu khas andaliman yang memberikan sensasi getir segar." ;
+    schema:image "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:WarungMieGomakMedan .
+
+# 6. Teh Susu Telur (TST)
+ex:TST a ex:Kuliner ;
+    rdfs:label "Teh Susu Telur (TST)" ;
+    schema:description "Minuman penambah stamina khas Medan berbahan dasar teh pekat, susu kental manis, dan kocokan kuning telur." ;
+    schema:image "https://images.unsplash.com/photo-1576092768241-dec231879fc3" ;
+    ex:kategori ex:KatMinuman ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:TSTPakHaji .
+
+# 7. Bolu Meranti
+ex:BoluMeranti a ex:Kuliner ;
+    rdfs:label "Bolu Meranti" ;
+    schema:description "Bolu gulung legendaris khas Medan dengan tekstur lembut dan varian isian keju, cokelat, atau mocha." ;
+    schema:image "https://images.unsplash.com/photo-1578985545062-69928b1d9587" ;
+    ex:kategori ex:KatOlehOleh ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:TokoBoluMeranti .
+
+# 8. Bihun Bebek
+ex:BihunBebek a ex:Kuliner ;
+    rdfs:label "Bihun Bebek Medan" ;
+    schema:description "Bihun lembut disajikan dengan irisan daging bebek empuk dan kuah kaldu herbal obat tiongkok yang harum." ;
+    schema:image "https://images.unsplash.com/photo-1569718212165-3a8278d5f624" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:isHalal false ;
+    ex:rekomendasiTempat ex:BihunBebekAsie .
+
+# 9. Pokat Kocok
+ex:PokatKocok a ex:Kuliner ;
+    rdfs:label "Pokat Kocok Medan" ;
+    schema:description "Minuman es alpukat kocok kasar disiram santan gurih, es serut, dan gula merah cair pekat." ;
+    schema:image "https://images.unsplash.com/photo-1553530666-ba11a7da3888" ;
+    ex:kategori ex:KatMinuman ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:PokatKocokSimpangGriya .
+
+# 10. Sate Membang Muda
+ex:SateMembangMuda a ex:Kuliner ;
+    rdfs:label "Sate Kerang Medan" ;
+    schema:description "Sate kerang bumbu rempah kecokelatan yang manis gurih, cocok dimakan sebagai pelengkap lontong atau nasi." ;
+    schema:image "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd" ;
+    ex:kategori ex:KatCamilan ;
+    ex:isHalal true ;
+    ex:rekomendasiTempat ex:SateKerangRahmat .
+
+# ==========================================
+# DATA RESTORAN & LOKASI GEOGRAFIS
+# ==========================================
+ex:RestoSotoSinarPagi a ex:Restoran ;
+    schema:name "Soto Sinar Pagi" ;
+    schema:address "Jl. Sei Deli No.2D, Medan" ;
+    schema:geo [ schema:latitude "3.5975" ; schema:longitude "98.6722" ] .
+
+ex:TokoZulaikha a ex:Restoran ;
+    schema:name "Bika Ambon Zulaikha" ;
+    schema:address "Jl. Mojopahit No.62, Medan" ;
+    schema:geo [ schema:latitude "3.5831" ; schema:longitude "98.6654" ] .
+
+ex:LontongKakLin a ex:Restoran ;
+    schema:name "Lontong Kak Lin" ;
+    schema:address "Jl. Cik Ditiro No.8, Medan" ;
+    schema:geo [ schema:latitude "3.5802" ; schema:longitude "98.6710" ] .
