@@ -1,20 +1,22 @@
-# [Pertemuan 11](mandiri069/) - Tugas Mandiri: Dari Endpoint ke Graf Lokal
+# [Pertemuan 11](README.md) - Tugas Mandiri: Dari Endpoint ke Graf Lokal
 
 ## Bagian A - LIMIT dan triple
-- Triple dengan LIMIT 10: 30
+- [Triple dengan LIMIT 10: 30](a-limit10.png)
 - Triple dengan LIMIT 30: 90
 - Baris SELECT LIMIT 10 / kota berbeda: 10 / 10
 - Mengapa tidak (atau mengapa tepat) 30 triple: Hasil CONSTRUCT dari saya tepat mencapai 30 triple karena dari 10 baris hasil SELECT (Solution Bindings), seluruh nilai entitas `?kota` bersifat unik (terdapat 10 kota berbeda) dan masing-masing entitas hanya memiliki tepat 1 label nama (`rdfs:label`) serta 1 nilai populasi (`ex:populasi`). Karena template CONSTRUCT mendefinisikan 3 pola triple per baris entitas ($10 \text{ solution} \times 3 \text{ pola template} = 30 \text{ triple}$) dan tidak ada duplikasi entitas/triple kembar yang tereliminasi oleh sifat set RDF Graph, maka batas atas teoritis sebesar 30 triple terpenuhi sepenuhnya.
 
 ---
 
-## Bagian B - DBpedia ke Turtle
+## Bagian B - [DBpedia](b-dbpedia.png) ke Turtle
 - Output demo_c.py: 48 triple, film tanpa tanggal: 16
-```PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python demo_c.py
+```
+PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python demo_c.py
 48 triple
 Film tanpa tanggal: 16
 ```
-```PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python
+```
+PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python
 Python 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 Ctrl click to launch VS Code Native REPL (https://aka.ms/python-native-repl)
@@ -28,49 +30,60 @@ Ctrl click to launch VS Code Native REPL (https://aka.ms/python-native-repl)
 ...     
 Film tanpa tanggal: 16
 >>> exit()
-
+```
 - Sumber data: DBpedia
-- Triple yang tetap tercetak untuk film tanpa tanggal: 
-  Triple dari saya lakukan yang tetap tercetak adalah `?film a schema:Movie`, `schema:name ?judul`, dan `schema:director ?sutradara`. Sedangkan triple `schema:datePublished ?rilis` tidak tercetak. Hal ini terjadi karena klausa `OPTIONAL { ?film dbo:releaseDate ?rilis }` pada WHERE clause tidak menemukan nilai `?rilis` untuk film tersebut, sehingga variabel `?rilis` bernilai *unbound*. SPARQL tidak mencetak triple jika salah satu elemennya *unbound* dan klausa OPTIONAL menjamin tidak ada pesan error (*non-matching variables stay unbound*).
+- Triple yang tetap tercetak untuk film tanpa tanggal:
+  Triple dari saya lakukan yang tetap tercetak adalah `?film a schema:Movie`, `schema:name ?judul`, dan `schema:director ?sutradara`. Sedangkan triple `schema:datePublished ?rilis` tidak tercetak. Hal ini terjadi karena klausa `OPTIONAL { ?film dbo:releaseDate ?rilis
+  }` pada WHERE clause tidak menemukan nilai `?rilis` untuk film tersebut, sehingga variabel `?rilis` bernilai *unbound*. SPARQL tidak mencetak triple jika salah satu elemennya *unbound* dan klausa OPTIONAL menjamin tidak ada pesan error (*non-matching variables stay
+  unbound*).
 - Query lokal tanpa internet: 
-  Kueri lokal setelah saya coba, `Q_TANPA_TANGGAL` yang dijalankan pada `film_nolan.ttl` berhasil karena proses parsing dan query SPARQL dieksekusi secara *in-memory* oleh pustaka `rdflib` menggunakan data lokal yang sudah tersimpan. Namun, saat `demo_c.py` dijalankan ulang secara keseluruhan tanpa internet, program mengalami crash/error `urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>` pada baris `sp.queryAndConvert()` karena script mencoba melakukan *request* HTTP ke endpoint eksternal DBpedia (`https://dbpedia.org/sparql`) yang tidak dapat diakses tanpa jaringan.
-- Mengapa dbo:Film memberi 0 pada film_nolan.ttl: 
-  Karena pada disitu file `film_nolan.ttl` merupakan hasil transformasi/konstruksi graf RDF dari klausa `CONSTRUCT` yang telah memetakan entitas film menjadi bertipe `schema:Movie` (`?film a schema:Movie`). Di dalam file `film_nolan.ttl` tidak ada triple yang menggunakan predicate-object `rdf:type dbo:Film`. Oleh karena itu, jika kueri kedua mencari entitas bertipe `dbo:Film`, hasil pencarian (*solution bindings*) akan bernilai 0.
+  Kueri lokal setelah saya coba, `Q_TANPA_TANGGAL` yang dijalankan pada `film_nolan.ttl` berhasil karena proses parsing dan query SPARQL dieksekusi secara *in-memory* oleh pustaka `rdflib` menggunakan data lokal yang sudah tersimpan. Namun, saat `demo_c.py`
+  dijalankan ulang secara keseluruhan tanpa internet, program mengalami crash/error `urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>` pada baris `sp.queryAndConvert()` karena script mencoba melakukan *request* HTTP ke endpoint eksternal
+  DBpedia (`https://dbpedia.org/sparql`) yang tidak dapat diakses tanpa jaringan.
+- Mengapa dbo:
+  Film memberi 0 pada film_nolan.ttl: 
+  Karena pada disitu file `film_nolan.ttl` merupakan hasil transformasi/konstruksi graf RDF dari klausa `CONSTRUCT` yang telah memetakan entitas film menjadi bertipe `schema:Movie` (`?film a schema:Movie`). Di dalam file `film_nolan.ttl` tidak ada triple yang
+  menggunakan predicate-object `rdf:type dbo:Film`. Oleh karena itu, jika kueri kedua mencari entitas bertipe `dbo:Film`, hasil pencarian (*solution bindings*) akan bernilai 0.
 
 ---
 
 ## Bagian C - Materialisasi
 - Output demo_d.py:
-``` C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python demo_d.py
+```
+C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python demo_d.py
 Sebelum: 0
 Sesudah: 3
 Ada Rina: 3
-
+```
 - Mengapa Ada Rina bernilai 3: 
-  Karena nilai `Ada Rina` tetap 3 itu adalah proses materialisasi (pemetaan aturan `CONSTRUCT` yang inferensial) **hanya dijalankan satu kali di awal** sebelum data Rina ditambahkan ke dalam graf. Ketika data entitas `ex:rina a ex:DosenTetap` dimasukkan ke dalam graf `g`, triple turunan bahwa Rina juga merupakan `foaf:Person` belum pernah di-generate/ditambahkan. Tanpa adanya eksekusi ulang aturan materialisasi (atau tanpa adanya *reasoner* yang berjalan secara dinamis), graf tidak secara otomatis mematerialisasikan tipe implisit Rina menjadi `foaf:Person`.
-- Output materialisasi_ulang.py:
-```PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python materialisasi_ulang.py
+  Karena nilai `Ada Rina` tetap 3 itu adalah proses materialisasi (pemetaan aturan `CONSTRUCT` yang inferensial) **hanya dijalankan satu kali di awal** sebelum data Rina ditambahkan ke dalam graf. Ketika data entitas `ex:rina a ex:DosenTetap` dimasukkan ke dalam graf
+  `g`, triple turunan bahwa Rina juga merupakan `foaf:Person` belum pernah di-generate/ditambahkan. Tanpa adanya eksekusi ulang aturan materialisasi (atau tanpa adanya *reasoner* yang berjalan secara dinamis), graf tidak secara otomatis mematerialisasikan tipe
+  implisit Rina menjadi `foaf:Person`.
+- [Output materialisasi_ulang.py:](c-materialisasi.png)
+```
+PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python materialisasi_ulang.py
 Putaran 1: 4 triple baru | Person: 3
 Rina masuk | Person: 3
 Putaran 2 | Person: 4
 Triple turunan disimpan terpisah: 6
-
+```
 - Tiga triple yang bukan baru: 
   Contoh di dapat tiga triple yang sudah ada (bukan triple baru) adalah triple tipe asli (*explicit typing*) milik entitas yang sudah didefinisikan langsung di file `kampus.ttl`, yaitu:
   1. `<...budi> a ex:DosenTetap`
   2. `<...siti> a ex:DosenKontrak`
   3. `<...joko> a ex:Mahasiswa`
   
-  Garis jalur `a/rdfs:subClassOf*` yang mencetak triple ini adalah **panjang jalur nol (`* = 0`)**, yaitu klausa `?x a ?x_type` di mana entitas memetakan tipenya sendiri ke superkelas pada tingkat yang sama (`?super` bernilai kelas asal dari entitas itu sendiri). Karena triple ini sudah ada di dalam graf asal `kampus.ttl`, maka `t not in g` bernilai *False* dan triple tersebut tidak dimasukkan ke dalam daftar triple baru.
-
+  Garis jalur `a/rdfs:subClassOf*` yang mencetak triple ini adalah **panjang jalur nol (`* = 0`)**, yaitu klausa `?x a ?x_type` di mana entitas memetakan tipenya sendiri ke superkelas pada tingkat yang sama (`?super` bernilai kelas asal dari entitas itu sendiri).
+  Karena triple ini sudah ada di dalam graf asal `kampus.ttl`, maka `t not in g` bernilai *False* dan triple tersebut tidak dimasukkan ke dalam daftar triple baru.
 - Kegunaan kampus_turunan.ttl dan langkah manual yang tersisa: 
-- **Kegunaan:** Untuk nanti memisahkan triple hasil inferensi/turunan ke file `kampus_turunan.ttl` secara independen dari triple fakta dasar (*asserted facts*) berguna untuk pemeliharaan data (*decoupling data*). Jika hirarki ontologi berubah (misalnya `ex:Dosen` tidak lagi dianggap subkelas dari `foaf:Person`), kita cukup menghapus atau me-reset file `kampus_turunan.ttl` tanpa merusak atau kehilangan data asli kampus.
-- **Langkah Manual yang Tersisa:** Saya memuat langkah manual yang harus dilakukan adalah menghapus (*reset/clear*) graf turunan lama (`kampus_turunan.ttl`), lalu menjalankan ulang script aturan materialisasi dari awal berdasarkan ontologi baru agar triple turunan yang sudah usang tidak lagi mengotori dataset.
+- ***Kegunaan:*** Untuk nanti memisahkan triple hasil inferensi/turunan ke file `kampus_turunan.ttl` secara independen dari triple fakta dasar (*asserted facts*) berguna untuk pemeliharaan data (*decoupling data*). Jika hirarki ontologi berubah (misalnya `ex:Dosen` tidak lagi dianggap subkelas dari `foaf:Person`), kita cukup menghapus atau me-reset file `kampus_turunan.ttl` tanpa merusak atau kehilangan data asli kampus.
+- ***Langkah Manual yang Tersisa:*** Saya memuat langkah manual yang harus dilakukan adalah menghapus (*reset/clear*) graf turunan lama (`kampus_turunan.ttl`), lalu menjalankan ulang script aturan materialisasi dari awal berdasarkan ontologi baru agar triple turunan yang sudah usang tidak lagi mengotori dataset.
 
 ---
 
 ## Bagian D - Diagnosis
-```Output:
+Output:
+```
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python jalankan.py film.ttl rusak_a.rq
 0 triple
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python jalankan.py film.ttl rusak_b.rq
@@ -81,14 +94,15 @@ PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompo
   dbr:Mira_Lesmana ex:nama "Mira Lesmana" .
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python jalankan.py kota.ttl rusak_c.rq
 0 triple
-
+```
 | Query | Hasil mesin | Gejala | Penyebab (baris yang salah) | Hasil setelah diperbaiki |
 | --- | --- | --- | --- | --- |
 | rusak_a | 0 triple | Graf kosong, tanpa error | Perbedaan nama variabel antara `CONSTRUCT` (`?film`) dan `WHERE` (`?f`) pada baris 2-3 | 3 triple, satu judul per film Nolan |
 | rusak_b | 4 triple | Triplenya lebih 1 dari target / dua nilai yang tampak sama | Penggunaan predikat alternatif `foaf:name|rdfs:label|schema:name` tanpa filter bahasa pada baris 4 mencocokkan dua label untuk Christopher Nolan | 3 triple, tepat satu ex:nama per orang |
 | rusak_c | 0 triple | Superkelas tidak ditemukan / Graf kosong | Penggunaan predikat `a ex:Permukiman` tanpa jalur `rdfs:subClassOf*` pada baris 4 gagal mendeteksi entitas yang merupakan subkelas dari Permukiman | 3 triple: Medan, Surabaya, Tomok |
 
-```Output perbaikan:
+Output perbaikan:
+```
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python jalankan.py film.ttl perbaikan_a.rq
 3 triple
   dbr:Following ex:judul "Following"@en .
@@ -105,8 +119,7 @@ PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompo
   ex:Surabaya rdf:type ex:Permukiman .
   ex:Tomok rdf:type ex:Permukiman .
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069>
-
-
+```
 ---
 
 ## Bagian E - Etika dan diskusi
