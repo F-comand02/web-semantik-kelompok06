@@ -1,14 +1,14 @@
 # [Pertemuan 11](README.md) - Tugas Mandiri: Dari Endpoint ke Graf Lokal
 
 ## Bagian A - LIMIT dan triple
-- [Triple dengan LIMIT 10: 30](a-limit10.png)
+- [Triple dengan LIMIT 10: 30](screenshots/a-limit10.png)
 - Triple dengan LIMIT 30: 90
 - Baris SELECT LIMIT 10 / kota berbeda: 10 / 10
 - Mengapa tidak (atau mengapa tepat) 30 triple: Hasil CONSTRUCT dari saya tepat mencapai 30 triple karena dari 10 baris hasil SELECT (Solution Bindings), seluruh nilai entitas `?kota` bersifat unik (terdapat 10 kota berbeda) dan masing-masing entitas hanya memiliki tepat 1 label nama (`rdfs:label`) serta 1 nilai populasi (`ex:populasi`). Karena template CONSTRUCT mendefinisikan 3 pola triple per baris entitas ($10 \text{ solution} \times 3 \text{ pola template} = 30 \text{ triple}$) dan tidak ada duplikasi entitas/triple kembar yang tereliminasi oleh sifat set RDF Graph, maka batas atas teoritis sebesar 30 triple terpenuhi sepenuhnya.
 
 ---
 
-## Bagian B - [DBpedia](b-dbpedia.png) ke Turtle
+## Bagian B - [DBpedia](screenshots/b-dbpedia.png) ke Turtle
 - Output demo_c.py: 48 triple, film tanpa tanggal: 16
 ```
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python demo_c.py
@@ -59,7 +59,7 @@ Ada Rina: 3
   Karena nilai `Ada Rina` tetap 3 itu adalah proses materialisasi (pemetaan aturan `CONSTRUCT` yang inferensial) **hanya dijalankan satu kali di awal** sebelum data Rina ditambahkan ke dalam graf. Ketika data entitas `ex:rina a ex:DosenTetap` dimasukkan ke dalam graf
   `g`, triple turunan bahwa Rina juga merupakan `foaf:Person` belum pernah di-generate/ditambahkan. Tanpa adanya eksekusi ulang aturan materialisasi (atau tanpa adanya *reasoner* yang berjalan secara dinamis), graf tidak secara otomatis mematerialisasikan tipe
   implisit Rina menjadi `foaf:Person`.
-- [Output materialisasi_ulang.py:](c-materialisasi.png)
+- [Output materialisasi_ulang.py:](screenshots/c-materialisasi.png)
 ```
 PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-11\mandiri069> python materialisasi_ulang.py
 Putaran 1: 4 triple baru | Person: 3
