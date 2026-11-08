@@ -1,0 +1,27 @@
+@prefix ex: <http://contoh.id/kampus/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:andi a ex:Mahasiswa,
+        foaf:Person ;
+    foaf:name "Andi Nasution" .
+
+ex:budi a ex:Dosen,
+        ex:DosenTetap,
+        foaf:Person ;
+    foaf:name "Budi Santoso" .
+
+ex:rina a ex:Dosen,
+        ex:DosenTetap,
+        foaf:Person .
+
+ex:sari a ex:Dosen,
+        foaf:Person ;
+    foaf:name "Sari Lubis" .
+
+ex:Mahasiswa rdfs:subClassOf foaf:Person .
+
+ex:DosenTetap rdfs:subClassOf ex:Dosen .
+
+ex:Dosen rdfs:subClassOf foaf:Person .
+
