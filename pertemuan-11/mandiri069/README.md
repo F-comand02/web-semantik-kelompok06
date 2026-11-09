@@ -1,5 +1,12 @@
 # [Pertemuan 11](README.md) - Tugas Mandiri: Dari Endpoint ke Graf Lokal
 
+**Nama:** Farel Yamotaro Hia 
+**NIM:** 251402069  
+**Mata Kuliah:** Web Semantik Mandiri
+**Kom:** A
+
+---
+
 ## Bagian A - LIMIT dan triple
 - [Triple dengan LIMIT 10: 30](screenshots/a-limit10.png)
 - Triple dengan LIMIT 30: 90
