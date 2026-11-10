@@ -1,0 +1,24 @@
+# --- rusak_a.rq ---
+# Tujuan (film.ttl): judul film Nolan sebagai ex:judul
+CONSTRUCT { ?film ex:judul ?j . }
+WHERE {
+  ?f dbo:director dbr:Christopher_Nolan ;
+     rdfs:label ?j .
+}
+
+
+# --- rusak_b.rq ---
+# Tujuan (film.ttl): satu ex:nama per orang
+CONSTRUCT { ?o ex:nama ?n . }
+WHERE {
+  VALUES ?o { dbr:Christopher_Nolan dbr:Joko_Anwar dbr:Mira_Lesmana }
+  ?o foaf:name|rdfs:label|schema:name ?n .
+}
+
+
+# --- rusak_c.rq ---
+# Tujuan (kota.ttl): semua permukiman sebagai ex:Permukiman
+CONSTRUCT { ?x a ex:Permukiman . }
+WHERE {
+  ?x a ex:Permukiman .
+}
