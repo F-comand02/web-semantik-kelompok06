@@ -1,10 +1,10 @@
 # Pertemuan 11 - Tugas Mandiri: Dari Endpoint ke Graf Lokal
 
 ## Bagian A - LIMIT dan triple
-- Triple dengan LIMIT 10: [isi]
-- Triple dengan LIMIT 30: [isi]
-- Baris SELECT LIMIT 10 / kota berbeda: [isi] / [isi]
-- Mengapa tidak (atau mengapa tepat) 30 triple: [jawaban]
+- Triple dengan LIMIT 10: 30
+- Triple dengan LIMIT 30: 90
+- Baris SELECT LIMIT 10 / kota berbeda: 10
+- Mengapa tidak (atau mengapa tepat) 30 triple: iya, Karena LIMIT 10 membatasi jumlah solusi menjadi maksimal 10, sedangkan setiap solusi hanya menghasilkan 3 pola triple. 3x10= 30
 
 ## Bagian B - DBpedia ke Turtle
 - Output demo_c.py: [isi] triple, film tanpa tanggal: [isi]
