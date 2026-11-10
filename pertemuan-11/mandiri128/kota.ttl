@@ -1,0 +1,20 @@
+# Data contoh Pertemuan 11 (REKAAN untuk latihan; angka populasi ilustrasi, bukan data resmi)
+@prefix ex:   <http://contoh.id/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Permukiman       rdfs:subClassOf ex:Tempat .
+ex:Kota             rdfs:subClassOf ex:Permukiman .
+ex:Desa             rdfs:subClassOf ex:Permukiman .
+ex:KotaMetropolitan rdfs:subClassOf ex:Kota .
+ex:KotaDiIndonesia  rdfs:subClassOf ex:Kota .
+
+ex:Medan a ex:KotaMetropolitan , ex:KotaDiIndonesia ;
+    ex:populasi 2435252 , 2097610 ;
+    rdfs:label "Medan"@id .
+
+ex:Surabaya a ex:KotaDiIndonesia ;
+    ex:populasi 2874314 ;
+    rdfs:label "Surabaya"@id .
+
+ex:Tomok a ex:Desa ;
+    rdfs:label "Tomok"@id .
