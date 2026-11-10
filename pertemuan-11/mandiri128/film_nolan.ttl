@@ -1,0 +1,67 @@
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix ns1: <https://schema.org/> .
+
+dbr:Batman_Begins a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Batman Begins"@en .
+
+dbr:Doodlebug_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Doodlebug (film)"@en .
+
+dbr:Dunkirk_\(2017_film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Dunkirk (2017 film)"@en .
+
+dbr:Following a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Following"@en .
+
+dbr:Inception a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Inception"@en .
+
+dbr:Insomnia_\(2002_film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Insomnia (2002 film)"@en .
+
+dbr:Interstellar_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Interstellar (film)"@en .
+
+dbr:Larceny_\(1996_film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Larceny (1996 film)"@en .
+
+dbr:Memento_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Memento (film)"@en .
+
+dbr:Oppenheimer_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Oppenheimer (film)"@en .
+
+dbr:Quay_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Quay (film)"@en .
+
+dbr:Tenet_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "Tenet (film)"@en .
+
+dbr:The_Dark_Knight a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "The Dark Knight"@en .
+
+dbr:The_Dark_Knight_Rises a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "The Dark Knight Rises"@en .
+
+dbr:The_Odyssey_\(2026_film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "The Odyssey (2026 film)"@en .
+
+dbr:The_Prestige_\(film\) a ns1:Movie ;
+    ns1:director dbr:Christopher_Nolan ;
+    ns1:name "The Prestige (film)"@en .
+
