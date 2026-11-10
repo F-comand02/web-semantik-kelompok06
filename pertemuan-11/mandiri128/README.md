@@ -7,11 +7,11 @@
 - Mengapa tidak (atau mengapa tepat) 30 triple: iya, Karena LIMIT 10 membatasi jumlah solusi menjadi maksimal 10, sedangkan setiap solusi hanya menghasilkan 3 pola triple. 3x10= 30
 
 ## Bagian B - DBpedia ke Turtle
-- Output demo_c.py: [isi] triple, film tanpa tanggal: [isi]
-- Sumber data: DBpedia / data contoh film.ttl
-- Triple yang tetap tercetak untuk film tanpa tanggal: [jawaban]
-- Query lokal tanpa internet: [jawaban]
-- Mengapa dbo:Film memberi 0 pada film_nolan.ttl: [jawaban]
+- Output demo_c.py: 48 triple, film tanpa tanggal: 16
+- Sumber data: DBpedia / film_nolan.ttl
+- Triple yang tetap tercetak untuk film tanpa tanggal: Untuk film yang tidak memiliki dbo:releaseDate, triple ?film a schema:Movie, schema:name ?judul, dan schema:director dbr:Christopher_Nolan tetap tercetak karena informasi tersebut tersedia. Sementara itu, triple schema:datePublished ?rilis tidak tercetak karena data tanggal rilis tidak ditemukan. Tidak ada pesan error karena penggunaan OPTIONAL memungkinkan data tanggal rilis tidak tersedia tanpa menggagalkan keseluruhan query.
+- Query lokal tanpa internet: Query Q_TANPA_TANGGAL tetap berhasil dijalankan ketika internet dimatikan karena query tersebut menggunakan data dari file lokal film_nolan.ttl, bukan mengambil data langsung dari DBpedia.Namun, jika seluruh program demo_c.py dijalankan ulang tanpa internet, program akan gagal pada bagian pengambilan data dari DBpedia karena membutuhkan koneksi internet untuk mengirim query dan menerima hasilnya.
+- Mengapa dbo:Film memberi 0 pada film_nolan.ttl: Query kedua menggunakan schema:Movie karena tipe film yang disimpan dalam film_nolan.ttl adalah schema:Movie, bukan dbo:Film. Keduanya berasal dari vocabulary yang berbeda. Oleh karena itu, jika menggunakan dbo:Film, hasilnya 0 karena tipe tersebut tidak tersimpan dalam file Turtle.
 
 ## Bagian C - Materialisasi
 - Output demo_d.py: [isi]
