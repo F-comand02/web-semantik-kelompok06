@@ -1,0 +1,35 @@
+# Data contoh Pertemuan 11 (REKAAN untuk latihan, bukan isi DBpedia sebenarnya)
+@prefix dbo:    <http://dbpedia.org/ontology/> .
+@prefix dbr:    <http://dbpedia.org/resource/> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+dbr:Following a dbo:Film ;
+    dbo:director dbr:Christopher_Nolan ;
+    dbo:producer dbr:Christopher_Nolan ;
+    dbo:releaseDate "1998-09-12"^^xsd:date ;
+    rdfs:label "Following"@en .
+
+dbr:Memento a dbo:Film ;
+    dbo:director dbr:Christopher_Nolan ;
+    dbo:releaseDate "2000-09-05"^^xsd:date , "2001-03-16"^^xsd:date ;
+    dbo:budget 9000000 ;
+    rdfs:label "Memento"@en .
+
+dbr:Insomnia a dbo:Film ;
+    dbo:director dbr:Christopher_Nolan ;
+    dbo:budget 46000000 ;
+    rdfs:label "Insomnia"@en .
+
+dbr:Man_of_Steel a dbo:Film ;
+    dbo:producer dbr:Christopher_Nolan ;
+    rdfs:label "Man of Steel"@en .
+
+dbr:Christopher_Nolan foaf:name "Christopher Nolan" ;
+    rdfs:label "Christopher Nolan"@en ;
+    dbo:birthPlace dbr:London .
+
+dbr:Joko_Anwar rdfs:label "Joko Anwar"@id .
+dbr:Mira_Lesmana schema:name "Mira Lesmana" .
