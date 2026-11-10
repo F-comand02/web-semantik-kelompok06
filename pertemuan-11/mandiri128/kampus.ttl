@@ -1,0 +1,12 @@
+# Data contoh Demo D Pertemuan 11 (REKAAN)
+@prefix ex:   <http://contoh.id/kampus/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:DosenTetap rdfs:subClassOf ex:Dosen .
+ex:Dosen      rdfs:subClassOf foaf:Person .
+ex:Mahasiswa  rdfs:subClassOf foaf:Person .
+
+ex:budi a ex:DosenTetap ; foaf:name "Budi Santoso" .
+ex:sari a ex:Dosen      ; foaf:name "Sari Lubis" .
+ex:andi a ex:Mahasiswa  ; foaf:name "Andi Nasution" .
