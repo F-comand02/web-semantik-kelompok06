@@ -14,11 +14,28 @@
 - Mengapa dbo:Film memberi 0 pada film_nolan.ttl: Query kedua menggunakan schema:Movie karena tipe film yang disimpan dalam film_nolan.ttl adalah schema:Movie, bukan dbo:Film. Keduanya berasal dari vocabulary yang berbeda. Oleh karena itu, jika menggunakan dbo:Film, hasilnya 0 karena tipe tersebut tidak tersimpan dalam file Turtle.
 
 ## Bagian C - Materialisasi
-- Output demo_d.py: [isi]
-- Mengapa Ada Rina bernilai 3: [jawaban]
-- Output materialisasi_ulang.py: [isi]
-- Tiga triple yang bukan baru: [jawaban]
-- Kegunaan kampus_turunan.ttl dan langkah manual yang tersisa: [jawaban]
+
+### 1. Output demo_d.py
+Sebelum: 0
+Sesudah: 3
+Ada Rina: 3
+
+### 2. Mengapa Ada Rina bernilai 3?
+Karena setelah Rina ditambahkan, aturan materialisasi belum dijalankan kembali. Akibatnya, tipe foaf:Person untuk Rina belum terbentuk sehingga jumlah Person tetap 3.
+
+### 3. Output materialisasi_ulang.py
+Putaran 1: 4 triple baru | Person: 3
+Rina masuk | Person: 3
+Putaran 2 | Person: 4
+Triple turunan disimpan terpisah: 6
+
+### 4. Tiga triple yang bukan baru
+Tiga triple tersebut sudah ada di graf awal (kampus.ttl). Hal ini terjadi karena penggunaan rdfs:subClassOf* memungkinkan jalur nol langkah, sehingga tipe awal juga dihasilkan kembali. Namun, triple tersebut tidak dihitung sebagai triple baru karena sudah ada di graf.
+
+### 5. Kegunaan kampus_turunan.ttl dan langkah manual yang tersisa
+File kampus_turunan.ttl berguna untuk menyimpan triple hasil inferensi secara terpisah dari data asli.
+
+Langkah manual yang masih diperlukan adalah menjalankan ulang aturan materialisasi setiap kali ada data baru agar triple turunannya ikut diperbarui.
 
 ## Bagian D - Diagnosis
 | Query | Hasil mesin | Gejala | Penyebab (baris yang salah) | Hasil setelah diperbaiki |
