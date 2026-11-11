@@ -40,9 +40,9 @@ Langkah manual yang masih diperlukan adalah menjalankan ulang aturan materialisa
 ## Bagian D - Diagnosis
 | Query | Hasil mesin | Gejala | Penyebab (baris yang salah) | Hasil setelah diperbaiki |
 |-------|-------------|--------|-----------------------------|--------------------------|
-| rusak_a | [isi] | [isi] | [isi] | [isi] |
-| rusak_b | [isi] | [isi] | [isi] | [isi] |
-| rusak_c | [isi] | [isi] | [isi] | [isi] |
+| rusak_a | 0         | Graf kosong tanpa error | Variabel ?film pada CONSTRUCT berbeda dengan ?f pada WHERE, sehingga variabel tidak terikat.	| 3 |
+| rusak_b | 4 | Triple lebih banyak dari target | Christopher Nolan memiliki dua nilai nama yang cocok, yaitu foaf:name dan rdfs:label dengan tag bahasa berbeda.| 3 |
+| rusak_c | 0 | Superkelas tidak ditemukan|Query hanya mencari tipe ex:Permukiman secara langsung dan tidak menelusuri hubungan rdfs:subClassOf.| 3 |
 
 ## Bagian E - Etika dan diskusi
 | Aturan | a_kota_limit.rq | demo_c.py |
