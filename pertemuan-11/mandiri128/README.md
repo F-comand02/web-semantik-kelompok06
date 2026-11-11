@@ -63,10 +63,20 @@ LIMIT 10
 ```
 Query tersebut melanggar aturan 4 karena kedua ujung property path menggunakan variabel bebas, yaitu ?awal dan ?akhir, tanpa titik awal atau target yang spesifik. Hal ini dapat menyebabkan endpoint menelusuri hubungan yang sangat luas dan membutuhkan banyak sumber daya. Penggunaan LIMIT 10 tidak selalu mencegah beban pemrosesan yang besar karena pembatasan hasil tidak menjamin pembatasan proses pencarian.
 ### Diskusi 1 - Taksonomi berubah
-[150-250 kata]
+Pada perbandingan `kampus_v4.ttl` dari C1 dengan `kampus_turunan.ttl` dari C2, terdapat beberapa triple hasil materialisasi yang perlu diperiksa kembali. Pada `kampus_v4.ttl`, Andi memiliki tipe `ex:Mahasiswa`, Budi memiliki tipe `ex:Dosen` dan `ex:DosenTetap`, sedangkan Sari memiliki tipe `ex:Dosen`. Berdasarkan hierarki subclass, ketiganya dapat memiliki tipe turunan `foaf:Person`, karena `ex:Mahasiswa` dan `ex:Dosen` merupakan subclass dari `foaf:Person`.
+
+Namun, pada `kampus_turunan.ttl` terdapat data Rina dengan tipe `ex:Dosen` dan `foaf:Person`, sedangkan Rina tidak ditemukan dalam data sumber `kampus_v4.ttl`. Oleh karena itu, kedua triple milik Rina tersebut tidak dapat dibuktikan berdasarkan data C1 dan perlu diperiksa apakah berasal dari data lama atau sumber lain.
+
+Untuk menemukannya, saya membandingkan hasil materialisasi dengan data sumber dan memeriksa hubungan `rdf:type` serta `rdfs:subClassOf`. Jika hierarki kelas berubah, hasil inferensi lama harus dihitung ulang agar tidak menyimpan informasi yang sudah tidak sesuai. Dengan demikian, materialisasi perlu diperbarui setiap kali taksonomi mengalami perubahan.
 
 ### Diskusi 2 - SELECT atau CONSTRUCT
-[150-250 kata]
+Untuk membuat dashboard populasi kota, saya memilih SELECT karena hasil yang dibutuhkan berupa data terstruktur dalam bentuk tabel, seperti nama kota dan jumlah penduduk. Dengan SELECT, data dapat langsung ditampilkan dan diolah untuk kebutuhan dashboard, misalnya pengurutan berdasarkan jumlah penduduk atau perbandingan antarwilayah.
+
+Sementara itu, CONSTRUCT lebih cocok digunakan ketika ingin menggabungkan data dari tiga sumber menjadi sebuah graf RDF baru dengan struktur dan kosakata yang seragam. Hasilnya dapat digunakan kembali sebagai knowledge graph atau diproses dengan query lain.
+
+Pilihan tersebut juga didasarkan pada temuan di Bagian A. Pada data kota, Medan memiliki dua nilai populasi, yaitu 2.435.252 dan 2.097.610. Hal ini menunjukkan bahwa data dari sumber berbeda bisa memiliki nilai yang tidak sama sehingga perlu dilakukan validasi sebelum ditampilkan. Selain itu, pada query rusak_b.rq, satu orang dapat memiliki lebih dari satu nama karena query mengambil data dari beberapa properti, yaitu foaf:name, rdfs:label, dan schema:name. Christopher Nolan, misalnya, memiliki dua nilai nama dengan tag bahasa yang berbeda.
+
+Oleh karena itu, penggabungan data tidak cukup hanya mengumpulkan seluruh nilai. Data perlu dibersihkan, diperiksa bahasa literalnya, dan disesuaikan agar tidak menghasilkan informasi ganda atau bertentangan.
 
 ### Cek diri
 | Pernyataan | Bukti dari tugas ini |
