@@ -51,12 +51,16 @@ Langkah manual yang masih diperlukan adalah menjalankan ulang aturan materialisa
 | 2 LIMIT |Diterapkan dengan LIMIT 10 untuk membatasi hasil query maksimal 10 data. |Belum dapat dipastikan karena query yang dijalankan berasal dari file q_demo_b.rq, sehingga perlu memeriksa isi file tersebut.|
 | 3 Simpan, jangan ulangi | Tidak terlihat proses penyimpanan hasil query ke file lokal.|Hasil query disimpan ke film_nolan.ttl, kemudian dibaca kembali menggunakan RDFLib. Namun, script masih menghubungi endpoint setiap kali dijalankan ulang.|
 | 4 Jangkar jalur |Diterapkan melalui wdt:P31/wdt:P279* wd:Q515, karena menggunakan wd:Q515 sebagai target tetap pada property path.|Belum dapat dipastikan karena property path terdapat dalam file q_demo_b.rq, yang belum diperiksa.|
-- Versi yang melanggar aturan 4 (tidak dijalankan) dan alasannya: SELECT ?awal ?akhir
+- Versi yang melanggar aturan 4 (tidak dijalankan) dan alasannya:
+ ```sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?awal ?akhir
 WHERE {
-  ?awal (wdt:P279|wdt:P31)* ?akhir .
+    ?awal (wdt:P279|wdt:P31)* ?akhir .
 }
 LIMIT 10
-
+```
 Query tersebut melanggar aturan 4 karena kedua ujung property path menggunakan variabel bebas, yaitu ?awal dan ?akhir, tanpa titik awal atau target yang spesifik. Hal ini dapat menyebabkan endpoint menelusuri hubungan yang sangat luas dan membutuhkan banyak sumber daya. Penggunaan LIMIT 10 tidak selalu mencegah beban pemrosesan yang besar karena pembatasan hasil tidak menjamin pembatasan proses pencarian.
 ### Diskusi 1 - Taksonomi berubah
 [150-250 kata]
