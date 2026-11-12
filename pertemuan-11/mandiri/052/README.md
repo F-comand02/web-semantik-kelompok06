@@ -1,5 +1,9 @@
 # Pertemuan 11 - Tugas Mandiri: Dari Endpoint ke Graf Lokal
 
+**Nama:** William Fransisco Sihotang
+**NIM:** 251402052  
+**Mata Kuliah:** Web Semantik
+
 Data film.ttl, kota.ttl, dan kampus.ttl adalah data rekaan dari paket latihan, bukan salinan data resmi endpoint. Program lokal dijalankan dari folder pertemuan-11/mandiri/052.
 
 ## Bagian A - LIMIT dan triple
