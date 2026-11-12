@@ -4,8 +4,6 @@
 **NIM:** 251402052  
 **Mata Kuliah:** Web Semantik
 
-Data film.ttl, kota.ttl, dan kampus.ttl adalah data rekaan dari paket latihan, bukan salinan data resmi endpoint. Program lokal dijalankan dari folder pertemuan-11/mandiri/052.
-
 ## Bagian A - LIMIT dan triple
 
 - Triple dengan LIMIT 10: **30** (diukur 12 November 2026).
@@ -88,6 +86,3 @@ Untuk dashboard populasi, saya memilih SELECT karena dashboard membutuhkan kolom
 | 4. Jalur + dan * menelusuri hierarki tanpa menyebut perantara. | C: aturan a/rdfs:subClassOf* menyimpulkan tipe Person melalui kelas antara; putaran pertama menambah empat triple baru dan putaran kedua dua triple. |
 | 5. Materialisasi menyimpan kesimpulan, tetapi harus dihitung ulang. | C: C1 tetap menampilkan 3 Person setelah Rina masuk; C2 menjalankan putaran kedua dan menghasilkan 4 Person serta enam triple turunan. |
 
-## Screenshot
-
-Folder screenshots/ sudah disediakan. Simpan screenshot yang kamu ambil sendiri di sana dengan nama a-limit10.png, b-dbpedia.png, dan c-materialisasi.png.
