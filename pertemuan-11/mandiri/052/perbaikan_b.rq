@@ -1,0 +1,19 @@
+# Pilih satu nama per orang dengan prioritas foaf:name, rdfs:label, schema:name.
+CONSTRUCT { ?o ex:nama ?n . }
+WHERE {
+  VALUES ?o { dbr:Christopher_Nolan dbr:Joko_Anwar dbr:Mira_Lesmana }
+  {
+    ?o foaf:name ?n .
+  }
+  UNION
+  {
+    ?o rdfs:label ?n .
+    FILTER NOT EXISTS { ?o foaf:name ?namaFoaf }
+  }
+  UNION
+  {
+    ?o schema:name ?n .
+    FILTER NOT EXISTS { ?o foaf:name ?namaFoaf }
+    FILTER NOT EXISTS { ?o rdfs:label ?namaRdfs }
+  }
+}

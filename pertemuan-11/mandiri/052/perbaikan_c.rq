@@ -1,0 +1,5 @@
+# Telusuri tipe kota/permukiman sampai kelas Permukiman.
+CONSTRUCT { ?x a ex:Permukiman . }
+WHERE {
+  ?x a/rdfs:subClassOf* ex:Permukiman .
+}

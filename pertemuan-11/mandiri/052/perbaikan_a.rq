@@ -1,0 +1,6 @@
+# ?f di WHERE tidak mengikat ?film di template. Selaraskan variabelnya.
+CONSTRUCT { ?film ex:judul ?j . }
+WHERE {
+  ?film dbo:director dbr:Christopher_Nolan ;
+        rdfs:label ?j .
+}

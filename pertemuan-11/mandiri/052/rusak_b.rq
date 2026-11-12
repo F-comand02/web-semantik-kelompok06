@@ -1,0 +1,6 @@
+# Tujuan (film.ttl): satu ex:nama per orang
+CONSTRUCT { ?o ex:nama ?n . }
+WHERE {
+  VALUES ?o { dbr:Christopher_Nolan dbr:Joko_Anwar dbr:Mira_Lesmana }
+  ?o foaf:name|rdfs:label|schema:name ?n .
+}
