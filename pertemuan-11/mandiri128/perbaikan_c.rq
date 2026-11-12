@@ -1,4 +1,0 @@
-CONSTRUCT { ?x a ex:Permukiman . }
-WHERE {
-    ?x a/rdfs:subClassOf* ex:Permukiman .
-}

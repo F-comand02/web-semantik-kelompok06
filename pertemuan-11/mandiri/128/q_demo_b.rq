@@ -1,0 +1,17 @@
+PREFIX dbo:    <http://dbpedia.org/ontology/>
+PREFIX dbr:    <http://dbpedia.org/resource/>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+CONSTRUCT {
+  ?film a schema:Movie ;
+        schema:name ?judul ;
+        schema:director dbr:Christopher_Nolan ;
+        schema:datePublished ?rilis .
+}
+WHERE {
+  ?film a dbo:Film ;
+        dbo:director dbr:Christopher_Nolan ;
+        rdfs:label ?judul .
+  FILTER ( LANG(?judul) = "en" )
+  OPTIONAL { ?film dbo:releaseDate ?rilis }
+}

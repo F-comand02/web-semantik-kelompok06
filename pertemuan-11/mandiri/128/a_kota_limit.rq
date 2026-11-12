@@ -1,0 +1,15 @@
+# Demo A: kota di Indonesia sebagai graf ex:
+PREFIX ex: <http://contoh.id/>
+CONSTRUCT {
+  ?kota a ex:Kota ;
+        rdfs:label ?namaKota ;
+        ex:populasi ?populasi .
+}
+WHERE {
+  ?kota wdt:P31/wdt:P279* wd:Q515 ;
+        wdt:P17 wd:Q252 ;
+        wdt:P1082 ?populasi ;
+        rdfs:label ?namaKota .
+  FILTER ( LANG(?namaKota) = "id" )
+}
+LIMIT 10

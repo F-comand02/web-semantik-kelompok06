@@ -1,5 +1,0 @@
-CONSTRUCT { ?film ex:judul ?j . }
-WHERE {
-  ?film dbo:director dbr:Christopher_Nolan ;
-        rdfs:label ?j .
-}
