@@ -1,0 +1,5 @@
+SELECT ?kelas ?kelasLabel WHERE {
+  ?kelas wdt:P279+ wd:Q3918 .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "id,en" . }
+}
+LIMIT 30
