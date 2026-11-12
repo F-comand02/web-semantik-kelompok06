@@ -1,0 +1,15 @@
+PREFIX ex: <https://contoh.github.io/web-semantik/251402046/kampus#>
+
+CONSTRUCT {
+  ?univ a ex:Universitas ;
+        ex:nama ?nama ;
+        ex:lokasi ?kota .
+}
+WHERE {
+  ?univ wdt:P31/wdt:P279* wd:Q3918 ;
+        wdt:P17 wd:Q252 ;
+        wdt:P131 ?kota ;
+        rdfs:label ?nama .
+  FILTER ( LANG(?nama) = "id" )
+}
+LIMIT 50
