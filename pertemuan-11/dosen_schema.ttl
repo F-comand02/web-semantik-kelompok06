@@ -1,0 +1,11 @@
+@prefix schema: <https://schema.org/> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida> a schema:Person ;
+    schema:name "Muhammad Isa Dadi Hasibuan S.Kom., M.Kom"@id .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ivan> a schema:Person ;
+    schema:name "Ivan Jaya S.Si., M.Kom."@id .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#umay> a schema:Person ;
+    schema:name "Umaya Ramadhani Putri Nasution S.TI., M.Kom"@id .
+
