@@ -39,6 +39,8 @@ Di sini kami tidak hanya menyimpan hasil akhir tugas, tetapi juga mendokumentasi
 - [Pertemuan 06](pertemuan-06/)
 - [Pertemuan 07](pertemuan-07/)
 - [Pertemuan 09](pertemuan-09/)
+- [Pertemuan 10](404)
+- [Pertemuan 11](pertemuan-11/)
 - [TUBES](TUBES/)
 ---
 
