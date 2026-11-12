@@ -21,10 +21,10 @@
 ## Langkah 2 - Tebak lalu cek
 | Soal | Tebakan | Hasil mesin | Penjelasan bila meleset |
 |------|---------|-------------|-------------------------|
-| A    | [isi]   | [isi]       | [isi]                   |
-| B    | [isi]   | [isi]       | [isi]                   |
-| C    | [isi]   | [isi]       | [isi]                   |
-| D    | [isi]   | [isi]       | [isi]                   |
+| A    |     3   | 3           | -                       |
+| B    | 4       | 4           | -                       |
+| C    | 3       | 3           | -                       |
+| D    |  1      | 0           | Ternyata yang punya ex:tendik itu tidak punya ex:nama jadinya dia kosong karena gabisa buat RDF dengan perintah construct dan itu tidak eror karena Optional              |
 
 ## Langkah 3 - Graf kampus lokal
 - Berkas sumber dan IRI dasar graf: `pertemuan-09/kampus_usu_v2.ttl` . IRI dasar: `https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#`
