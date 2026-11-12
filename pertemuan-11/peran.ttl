@@ -1,0 +1,11 @@
+@prefix ex:   <http://contoh.id/kampus/>; .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>; .
+
+ex:DosenTetap rdfs:subClassOf ex:Dosen .
+ex:DosenTamu  rdfs:subClassOf ex:Dosen .
+ex:Dosen      rdfs:subClassOf ex:Pegawai .
+ex:Tendik     rdfs:subClassOf ex:Pegawai .
+
+ex:budi a ex:DosenTetap ; ex:nama "Budi"@id .
+ex:sari a ex:DosenTetap , ex:DosenTamu ; ex:nama "Sari"@id .
+ex:rudi a ex:Tendik .
