@@ -1,0 +1,170 @@
+@prefix ex: <https://contoh.github.io/web-semantik/251402046/kampus#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+
+wd:Q19731008 a ex:Universitas ;
+    ex:lokasi wd:Q3651721 ;
+    ex:nama "Politeknik Swadharma"@id .
+
+wd:Q19731009 a ex:Universitas ;
+    ex:lokasi wd:Q193374 ;
+    ex:nama "Politeknik Trisila Dharma Jakarta"@id .
+
+wd:Q19731010 a ex:Universitas ;
+    ex:lokasi wd:Q192994 ;
+    ex:nama "Politeknik Tugu Jakarta"@id .
+
+wd:Q19731011 a ex:Universitas ;
+    ex:lokasi wd:Q4201416 ;
+    ex:nama "Politeknik Unggul LP3M Medan"@id .
+
+wd:Q19731015 a ex:Universitas ;
+    ex:lokasi wd:Q4195463 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Maluku"@id .
+
+wd:Q19731017 a ex:Universitas ;
+    ex:lokasi wd:Q4197525 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Banjarmasin"@id .
+
+wd:Q19731018 a ex:Universitas ;
+    ex:lokasi wd:Q3658736,
+        wd:Q3659229 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Banten"@id .
+
+wd:Q19731022 a ex:Universitas ;
+    ex:lokasi wd:Q11462,
+        wd:Q3298211 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Surabaya"@id .
+
+wd:Q19732705 a ex:Universitas ;
+    ex:lokasi wd:Q2281404 ;
+    ex:nama "Politeknik Energi dan Mineral Akamigas"@id .
+
+wd:Q20427183 a ex:Universitas ;
+    ex:lokasi wd:Q3860560,
+        wd:Q3860780 ;
+    ex:nama "Politeknik Negeri Cilacap"@id .
+
+wd:Q25454637 a ex:Universitas ;
+    ex:lokasi wd:Q192994 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Jakarta II"@id .
+
+wd:Q25457414 a ex:Universitas ;
+    ex:lokasi wd:Q3361940,
+        wd:Q8518809 ;
+    ex:nama "Politeknik Pembangunan Pertanian Malang"@id .
+
+wd:Q25457507 a ex:Universitas ;
+    ex:lokasi wd:Q3298211 ;
+    ex:nama "Politeknik NSC Surabaya"@id .
+
+wd:Q25460646 a ex:Universitas ;
+    ex:lokasi wd:Q4990269 ;
+    ex:nama "Politeknik Keselamatan Transportasi Jalan"@id .
+
+wd:Q25465836 a ex:Universitas ;
+    ex:lokasi wd:Q11314291 ;
+    ex:nama "Politeknik Negeri Madura"@id .
+
+wd:Q25470437 a ex:Universitas ;
+    ex:lokasi wd:Q4189426 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Tanjung Karang"@id .
+
+wd:Q280361 a ex:Universitas ;
+    ex:lokasi wd:Q12699724,
+        wd:Q13545109 ;
+    ex:nama "Universitas Andalas"@id .
+
+wd:Q29131 a ex:Universitas ;
+    ex:lokasi wd:Q4195463 ;
+    ex:nama "IAIN Ambon"@id .
+
+wd:Q29460537 a ex:Universitas ;
+    ex:lokasi wd:Q4990269 ;
+    ex:nama "Politeknik Harapan Bersama"@id .
+
+wd:Q31134308 a ex:Universitas ;
+    ex:lokasi wd:Q4193682 ;
+    ex:nama "Politeknik Santo Wilhelmus"@id .
+
+wd:Q37426333 a ex:Universitas ;
+    ex:lokasi wd:Q14126,
+        wd:Q5062 ;
+    ex:nama "Politeknik Kesehatan Mataram"@id .
+
+wd:Q3846721 a ex:Universitas ;
+    ex:lokasi wd:Q10389,
+        wd:Q212142 ;
+    ex:nama "Institut Teknologi Telkom"@id .
+
+wd:Q3958218 a ex:Universitas ;
+    ex:lokasi wd:Q9633065 ;
+    ex:nama "Universitas Syiah Kuala"@id .
+
+wd:Q4027436 a ex:Universitas ;
+    ex:lokasi wd:Q12477930,
+        wd:Q13545109 ;
+    ex:nama "Politeknik Negeri Padang"@id .
+
+wd:Q4188785 a ex:Universitas ;
+    ex:lokasi wd:Q4990138 ;
+    ex:nama "Institut Seni Indonesia Surakarta"@id .
+
+wd:Q4200297 a ex:Universitas ;
+    ex:lokasi wd:Q4198110,
+        wd:Q8131 ;
+    ex:nama "Universitas Sriwijaya"@id .
+
+wd:Q4200341 a ex:Universitas ;
+    ex:lokasi wd:Q4250985 ;
+    ex:nama "Universitas Sumatera Utara"@id .
+
+wd:Q4200627 a ex:Universitas ;
+    ex:lokasi wd:Q4990010 ;
+    ex:nama "Universitas Diponegoro"@id .
+
+wd:Q4250919 a ex:Universitas ;
+    ex:lokasi wd:Q12269549 ;
+    ex:nama "Universitas Negeri Malang"@id .
+
+wd:Q4250926 a ex:Universitas ;
+    ex:lokasi wd:Q192737 ;
+    ex:nama "Universitas Trisakti"@id .
+
+wd:Q4263077 a ex:Universitas ;
+    ex:lokasi wd:Q4119682 ;
+    ex:nama "Universitas Muhammadiyah Magelang"@id .
+
+wd:Q478044 a ex:Universitas ;
+    ex:lokasi wd:Q12696927 ;
+    ex:nama "Universitas Hasanuddin"@id .
+
+wd:Q47927 a ex:Universitas ;
+    ex:lokasi wd:Q12269549 ;
+    ex:nama "Universitas Muhammadiyah Malang"@id .
+
+wd:Q52635371 a ex:Universitas ;
+    ex:lokasi wd:Q3700890 ;
+    ex:nama "Politeknik Kesehatan Kementerian Kesehatan Pontianak"@id .
+
+wd:Q534515 a ex:Universitas ;
+    ex:lokasi wd:Q10396,
+        wd:Q192876 ;
+    ex:nama "Universitas Indonesia"@id .
+
+wd:Q56390099 a ex:Universitas ;
+    ex:lokasi wd:Q12479673 ;
+    ex:nama "Politeknik Raflesia"@id .
+
+wd:Q56390827 a ex:Universitas ;
+    ex:lokasi wd:Q12710335 ;
+    ex:nama "Politeknik Pariwisata Makassar"@id .
+
+wd:Q56399085 a ex:Universitas ;
+    ex:lokasi wd:Q1727617 ;
+    ex:nama "Politeknik Piksi Ganesha Bandung"@id .
+
+wd:Q600107 a ex:Universitas ;
+    ex:lokasi wd:Q10128,
+        wd:Q3659036 ;
+    ex:nama "Universitas Swiss German"@id .
+
