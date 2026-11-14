@@ -1,0 +1,28 @@
+@prefix ex:   <http://contoh.id/latihan12/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# --- Bagian RDFS (Langkah 1) ---
+ex:membimbing rdfs:domain ex:Dosen ;
+              rdfs:range  ex:Mahasiswa ;
+              rdfs:subPropertyOf ex:mengenal .
+ex:DosenTamu  rdfs:subClassOf ex:Dosen .
+ex:Dosen      rdfs:subClassOf ex:Pegawai .
+ex:Pegawai    rdfs:subClassOf ex:Orang .
+ex:Mahasiswa  rdfs:subClassOf ex:Orang .
+
+ex:budi ex:membimbing ex:andi .
+ex:sari a ex:DosenTamu .
+ex:andi a ex:MahasiswaBerprestasi .
+
+# --- Bagian OWL (Langkah 2) ---
+ex:beradaDi        a owl:TransitiveProperty .
+ex:mengajarBersama a owl:SymmetricProperty .
+ex:dibimbing       owl:inverseOf ex:membimbing .
+ex:Orang           owl:disjointWith ex:Tempat .
+
+ex:ruang301 ex:beradaDi ex:gedungC .
+ex:gedungC  ex:beradaDi ex:fasilkom .
+ex:fasilkom ex:beradaDi ex:usu .
+ex:usu      ex:beradaDi ex:medan .
+ex:budi ex:mengajarBersama ex:sari .

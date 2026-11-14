@@ -1,0 +1,5 @@
+# Q8 - universitas di Indonesia, hanya instance langsung (jalankan di query.wikidata.org)
+SELECT (COUNT(DISTINCT ?univ) AS ?n) WHERE {
+  ?univ wdt:P31 wd:Q3918 ;      # P31 = instance of, Q3918 = universitas
+        wdt:P17 wd:Q252 .       # P17 = negara, Q252 = Indonesia
+}

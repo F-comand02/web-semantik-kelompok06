@@ -1,0 +1,22 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Lecturer> rdfs:subClassOf foaf:Person .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#basis_data> a <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#MataKuliah> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ida> a foaf:Person,
+        <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Pegawai> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#ivan> a foaf:Person,
+        <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Pegawai> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#pemrograman_web> a <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#MataKuliah> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#praktik_sparql> a <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#MataKuliah> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#umay> a foaf:Person,
+        <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#Pegawai> .
+
+<https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#web_semantik> a <https://f-comand02.github.io/web-semantik-kelompok06/251402004/kampus#MataKuliah> .
+
