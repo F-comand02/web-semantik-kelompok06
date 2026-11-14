@@ -30,8 +30,6 @@ D OWL RL False
 (.venv) PS C:\Users\ASUS\OneDrive\Documents\web-semantik-kelompok06\web-semantik-kelompok06\pertemuan-12> 
 ```
 
-## Langkah 2 - Tebak lalu cek
-
 | Soal | Profil | Tebakan | Hasil mesin | Penjelasan bila meleset |
 |------|--------|---------|-------------|-------------------------|
 | A | RDFS | 3 baris (`ex:budi`, `ex:andi`, `ex:sari`) | `3 baris` | - *(Tebakan tepat; semua diturunkan melalui rantai `rdfs:domain`/`rdfs:range` dan `rdfs:subClassOf` hingga ke `ex:Orang`)* |
