@@ -1,0 +1,649 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://kuliner-medan.org/ontology#"
+     xml:base="http://kuliner-medan.org/ontology"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:ex="http://kuliner-medan.org/ontology#"
+     xmlns:sh="http://www.w3.org/ns/shacl#"
+     xmlns:dbr="http://dbpedia.org/resource/"
+     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:schema="http://schema.org/">
+    <owl:Ontology>
+        <dc:creator>251402069 - Farel Yamotaro Hia
+251402004 - Yabesh Day Siahaan
+251402046 - Ray Nathan Geereno Saragih
+251402052 - William Fransisco Sihotang
+251402128 - Naufal Muhammad Dzaki</dc:creator>
+        <dc:description xml:lang="en">We Modeling 60 Medan traditional dishes, 71 venues &amp; branches, named WGS84 GPS coordinates, all 21 official Medan districts and 151 official kelurahan, 15 culinary hubs, 50 ingredients, 12 cultural heritages, and 10 cooking techniques.</dc:description>
+        <owl:versionInfo>4.6.0</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#bagianDariKecamatan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#bagianDariKecamatan">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kelurahan"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
+        <rdfs:label xml:lang="id">bagian dari kecamatan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#bahanKhasBudaya -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#bahanKhasBudaya">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PengaruhBudaya"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#BahanUtama"/>
+        <rdfs:label xml:lang="id">memiliki bahan khas budaya</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#beradaDiKawasan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#beradaDiKawasan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KawasanKuliner"/>
+        <rdfs:label xml:lang="id">berada di kawasan kuliner</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berbatasanDengan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berbatasanDengan">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
+        <rdfs:label xml:lang="id">berbatasan dengan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDi -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDi">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
+        <rdfs:label xml:lang="id">berlokasi di kecamatan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDiKelurahan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDiKelurahan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kelurahan"/>
+        <rdfs:label xml:lang="id">berlokasi di kelurahan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#cabangDari -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#cabangDari">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:label xml:lang="id">cabang dari</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kategori -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kategori">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kategori"/>
+        <rdfs:label xml:lang="id">memiliki kategori</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kawasanDiKecamatan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kawasanDiKecamatan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KawasanKuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
+        <rdfs:label xml:lang="id">kawasan berada di kecamatan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#memilikiBahan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#memilikiBahan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#BahanUtama"/>
+        <rdfs:label xml:lang="id">memiliki bahan utama</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#memilikiPenghargaan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#memilikiPenghargaan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PenghargaanKuliner"/>
+        <rdfs:label xml:lang="id">memiliki pengakuan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#menyajikan -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#menyajikan">
+        <owl:inverseOf rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rekomendasiTempat"/>
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="id">menyajikan</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#pasanganCocok -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#pasanganCocok">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="id">pasangan kuliner cocok</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#pengaruhBudaya -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#pengaruhBudaya">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PengaruhBudaya"/>
+        <rdfs:label xml:lang="id">dipengaruhi budaya</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#profilRasa -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#profilRasa">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#ProfilRasa"/>
+        <rdfs:label xml:lang="id">memiliki profil rasa</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rekomendasiTempat -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rekomendasiTempat">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:label xml:lang="id">rekomendasi tempat</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tagDiet -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tagDiet">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TagDiet"/>
+        <rdfs:label xml:lang="id">memiliki tag diet</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#teknikMasak -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#teknikMasak">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TeknikMasak"/>
+        <rdfs:label xml:lang="id">menggunakan teknik masak</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#varianDari -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#varianDari">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="id">varian dari</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#waktuSajian -->
+
+    <owl:ObjectProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#waktuSajian">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#WaktuSajian"/>
+        <rdfs:label xml:lang="id">waktu sajian</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://schema.org/containedInPlace -->
+
+    <owl:ObjectProperty rdf:about="http://schema.org/containedInPlace"/>
+    
+
+
+    <!-- http://schema.org/geo -->
+
+    <owl:ObjectProperty rdf:about="http://schema.org/geo"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMax -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMax">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMin -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMin">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#isHalal -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#isHalal">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#jamBuka -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#jamBuka">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kisaranHarga -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kisaranHarga">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#metodeMasak -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#metodeMasak">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rasaDominan -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rasaDominan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rating -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rating">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tahunBerdiri -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tahunBerdiri">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tahunPenghargaan -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tahunPenghargaan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PenghargaanKuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tingkatKepedasan -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tingkatKepedasan">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tingkatPopularitas -->
+
+    <owl:DatatypeProperty rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tingkatPopularitas">
+        <rdfs:domain rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://schema.org/address -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/address"/>
+    
+
+
+    <!-- http://schema.org/description -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/description"/>
+    
+
+
+    <!-- http://schema.org/image -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/image"/>
+    
+
+
+    <!-- http://schema.org/latitude -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/latitude"/>
+    
+
+
+    <!-- http://schema.org/longitude -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/longitude"/>
+    
+
+
+    <!-- http://schema.org/name -->
+
+    <owl:DatatypeProperty rdf:about="http://schema.org/name"/>
+    
+
+
+    <!-- http://www.w3.org/2003/01/geo/wgs84_pos#lat -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#lat"/>
+    
+
+
+    <!-- http://www.w3.org/2003/01/geo/wgs84_pos#long -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#long"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#BahanUtama -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#BahanUtama">
+        <rdfs:label xml:lang="id">Bahan Utama &amp; Rempah</rdfs:label>
+        <rdfs:label xml:lang="en">Primary Ingredient &amp; Spice</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kategori -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kategori">
+        <rdfs:label xml:lang="en">Culinary Category</rdfs:label>
+        <rdfs:label xml:lang="id">Kategori Kuliner</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KawasanKuliner -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KawasanKuliner">
+        <rdfs:subClassOf rdf:resource="http://schema.org/Place"/>
+        <rdfs:label xml:lang="en">Culinary Hub</rdfs:label>
+        <rdfs:label xml:lang="id">Kawasan Kuliner</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan">
+        <rdfs:subClassOf rdf:resource="http://schema.org/AdministrativeArea"/>
+        <rdfs:label xml:lang="id">Kecamatan</rdfs:label>
+        <rdfs:label xml:lang="en">Medan District</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kelurahan -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kelurahan">
+        <rdfs:subClassOf rdf:resource="http://schema.org/AdministrativeArea"/>
+        <rdfs:label xml:lang="id">Kelurahan</rdfs:label>
+        <rdfs:label xml:lang="en">Medan Urban Village</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner">
+        <rdfs:subClassOf rdf:resource="http://schema.org/Recipe"/>
+        <rdfs:label xml:lang="id">Kuliner Medan</rdfs:label>
+        <rdfs:label xml:lang="en">Medan Culinary Dish</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Makanan -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Makanan">
+        <rdfs:subClassOf rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="en">Food Dish</rdfs:label>
+        <rdfs:label xml:lang="id">Hidangan Makanan</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Minuman -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Minuman">
+        <rdfs:subClassOf rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="en">Beverage &amp; Dessert</rdfs:label>
+        <rdfs:label xml:lang="id">Minuman &amp; Es</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#OlehOleh -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#OlehOleh">
+        <rdfs:subClassOf rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+        <rdfs:label xml:lang="en">Culinary Souvenir</rdfs:label>
+        <rdfs:label xml:lang="id">Produk Oleh-Oleh</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PengaruhBudaya -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PengaruhBudaya">
+        <rdfs:label xml:lang="en">Cultural Heritage Influence</rdfs:label>
+        <rdfs:label xml:lang="id">Pengaruh Budaya</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PenghargaanKuliner -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PenghargaanKuliner">
+        <rdfs:label xml:lang="en">Culinary Recognition</rdfs:label>
+        <rdfs:label xml:lang="id">Penghargaan &amp; Festival Kuliner</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#ProfilRasa -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#ProfilRasa">
+        <rdfs:label xml:lang="en">Flavor Profile</rdfs:label>
+        <rdfs:label xml:lang="id">Profil Rasa</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran">
+        <rdfs:subClassOf rdf:resource="http://schema.org/Restaurant"/>
+        <rdfs:label xml:lang="en">Culinary Venue</rdfs:label>
+        <rdfs:label xml:lang="id">Restoran / Tempat Kuliner</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TagDiet -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TagDiet">
+        <rdfs:label xml:lang="en">Dietary &amp; Preference Tag</rdfs:label>
+        <rdfs:label xml:lang="id">Tag Diet &amp; Preferensi</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TeknikMasak -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TeknikMasak">
+        <rdfs:label xml:lang="en">Cooking Technique</rdfs:label>
+        <rdfs:label xml:lang="id">Teknik Memasak</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TitikKoordinat -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TitikKoordinat">
+        <rdfs:subClassOf rdf:resource="http://schema.org/GeoCoordinates"/>
+        <rdfs:label xml:lang="en">Geographic Coordinates</rdfs:label>
+        <rdfs:label xml:lang="id">Titik Koordinat GPS</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#WaktuSajian -->
+
+    <owl:Class rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#WaktuSajian">
+        <rdfs:label xml:lang="en">Serving Time</rdfs:label>
+        <rdfs:label xml:lang="id">Waktu Sajian</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://schema.org/AdministrativeArea -->
+
+    <owl:Class rdf:about="http://schema.org/AdministrativeArea"/>
+    
+
+
+    <!-- http://schema.org/GeoCoordinates -->
+
+    <owl:Class rdf:about="http://schema.org/GeoCoordinates"/>
+    
+
+
+    <!-- http://schema.org/Place -->
+
+    <owl:Class rdf:about="http://schema.org/Place"/>
+    
+
+
+    <!-- http://schema.org/Recipe -->
+
+    <owl:Class rdf:about="http://schema.org/Recipe"/>
+    
+
+
+    <!-- http://schema.org/Restaurant -->
+
+    <owl:Class rdf:about="http://schema.org/Restaurant"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
