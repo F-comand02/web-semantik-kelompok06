@@ -1,0 +1,152 @@
+@prefix ex:     <http://kuliner-medan.org/ontology#> .
+@prefix schema: <http://schema.org/> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix dc:     <http://purl.org/dc/elements/1.1/> .
+
+# ==============================================================================
+# ONTOLOGY METADATA (W3C OWL 2 / RDFS)
+# Medan Culinary Information System - Group 06 Semantic Web Project
+# ==============================================================================
+<http://kuliner-medan.org/ontology> a owl:Ontology ;
+    dc:title "Medan Culinary Knowledge Graph Ontology"@en ,
+             "Ontologi Knowledge Graph Kuliner Medan"@id ;
+    dc:description "OWL 2 and RDFS vocabulary modeling Medan traditional cuisine, ingredients, cultural influences, culinary venues, districts, and halal status."@en ;
+    dc:creator "Farel Yamotaro Hia (251402069) - Group 06" ;
+    owl:versionInfo "2.0.0" .
+
+# ==============================================================================
+# 1. CLASSES (owl:Class & rdfs:subClassOf)
+# ==============================================================================
+ex:Kuliner a owl:Class ;
+    rdfs:subClassOf schema:Recipe ;
+    rdfs:label "Kuliner Medan"@id , "Medan Culinary Dish"@en ;
+    rdfs:comment "A traditional or iconic dish, snack, or beverage originating from or popularized in Medan, North Sumatra."@en .
+
+ex:Kategori a owl:Class ;
+    rdfs:label "Kategori Kuliner"@id , "Culinary Category"@en ;
+    rdfs:comment "Classification group for Medan culinary items (e.g., Main Course, Souvenirs, Beverages)."@en .
+
+ex:Restoran a owl:Class ;
+    rdfs:subClassOf schema:Restaurant ;
+    rdfs:label "Restoran / Tempat Kuliner"@id , "Culinary Venue / Restaurant"@en ;
+    rdfs:comment "A physical restaurant, warung, cafe, or bakery in Medan serving one or more culinary dishes."@en .
+
+ex:BahanUtama a owl:Class ;
+    rdfs:label "Bahan Utama"@id , "Primary Ingredient"@en ;
+    rdfs:comment "Key ingredient or signature spice used to prepare a Medan culinary dish."@en .
+
+ex:PengaruhBudaya a owl:Class ;
+    rdfs:label "Pengaruh Budaya"@id , "Cultural Heritage Influence"@en ;
+    rdfs:comment "Ethnic or cultural culinary tradition that shaped the dish (e.g., Melayu, Batak, Tionghoa-Medan, India-Tamil)."@en .
+
+ex:Kecamatan a owl:Class ;
+    rdfs:subClassOf schema:AdministrativeArea ;
+    rdfs:label "Kecamatan"@id , "Medan District"@en ;
+    rdfs:comment "Administrative district (Kecamatan) within Medan City, North Sumatra."@en .
+
+ex:WaktuSajian a owl:Class ;
+    rdfs:label "Waktu Sajian"@id , "Serving Time"@en ;
+    rdfs:comment "Typical meal time when the dish is enjoyed (Breakfast, Lunch, Dinner, All Day)."@en .
+
+# ==============================================================================
+# 2. OBJECT PROPERTIES (Relationships Between Entities)
+# ==============================================================================
+ex:kategori a owl:ObjectProperty ;
+    rdfs:label "memiliki kategori"@id , "has category"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:Kategori .
+
+ex:rekomendasiTempat a owl:ObjectProperty ;
+    rdfs:label "rekomendasi tempat"@id , "recommended venue"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:Restoran ;
+    owl:inverseOf ex:menyajikan .
+
+ex:menyajikan a owl:ObjectProperty ;
+    rdfs:label "menyajikan"@id , "serves dish"@en ;
+    rdfs:domain ex:Restoran ;
+    rdfs:range ex:Kuliner ;
+    owl:inverseOf ex:rekomendasiTempat .
+
+ex:memilikiBahan a owl:ObjectProperty ;
+    rdfs:label "memiliki bahan utama"@id , "has primary ingredient"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:BahanUtama .
+
+ex:pengaruhBudaya a owl:ObjectProperty ;
+    rdfs:label "dipengaruhi budaya"@id , "cultural influence"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:PengaruhBudaya .
+
+ex:berlokasiDi a owl:ObjectProperty ;
+    rdfs:label "berlokasi di kecamatan"@id , "located in district"@en ;
+    rdfs:domain ex:Restoran ;
+    rdfs:range ex:Kecamatan .
+
+ex:waktuSajian a owl:ObjectProperty ;
+    rdfs:label "waktu sajian"@id , "serving time"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:WaktuSajian .
+
+ex:pasanganCocok a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "pasangan kuliner cocok"@id , "pairs well with"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range ex:Kuliner ;
+    rdfs:comment "Symmetric semantic link connecting dishes or beverages traditionally enjoyed together."@en .
+
+# ==============================================================================
+# 3. DATATYPE PROPERTIES (Literal Attributes)
+# ==============================================================================
+ex:isHalal a owl:DatatypeProperty ;
+    rdfs:label "status halal"@id , "is halal"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:boolean .
+
+ex:tingkatKepedasan a owl:DatatypeProperty ;
+    rdfs:label "tingkat kepedasan (0-5)"@id , "spice level (0-5)"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:integer .
+
+ex:hargaMin a owl:DatatypeProperty ;
+    rdfs:label "harga minimum (IDR)"@id , "minimum price (IDR)"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:integer .
+
+ex:hargaMax a owl:DatatypeProperty ;
+    rdfs:label "harga maksimum (IDR)"@id , "maximum price (IDR)"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:integer .
+
+ex:kisaranHarga a owl:DatatypeProperty ;
+    rdfs:label "kisaran harga"@id , "price range"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:string .
+
+ex:rasaDominan a owl:DatatypeProperty ;
+    rdfs:label "rasa dominan"@id , "dominant flavor"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:string .
+
+ex:metodeMasak a owl:DatatypeProperty ;
+    rdfs:label "metode masak"@id , "cooking method"@en ;
+    rdfs:domain ex:Kuliner ;
+    rdfs:range xsd:string .
+
+ex:jamBuka a owl:DatatypeProperty ;
+    rdfs:label "jam buka"@id , "opening hours"@en ;
+    rdfs:domain ex:Restoran ;
+    rdfs:range xsd:string .
+
+ex:rating a owl:DatatypeProperty ;
+    rdfs:label "rating pengunjung"@id , "visitor rating"@en ;
+    rdfs:domain ex:Restoran ;
+    rdfs:range xsd:decimal .
+
+ex:tahunBerdiri a owl:DatatypeProperty ;
+    rdfs:label "tahun berdiri"@id , "established year"@en ;
+    rdfs:domain ex:Restoran ;
+    rdfs:range xsd:integer .

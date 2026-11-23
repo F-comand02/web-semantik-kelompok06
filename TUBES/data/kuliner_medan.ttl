@@ -1,128 +1,910 @@
 @prefix ex:     <http://kuliner-medan.org/ontology#> .
 @prefix schema: <http://schema.org/> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo:    <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix dbr:    <http://dbpedia.org/resource/> .
 
-# ==========================================
-# DEKLARASI KELAS & KATEGORI (ONTOLOGY)
-# ==========================================
-ex:Kuliner      rdfs:subClassOf schema:Recipe .
-ex:Kategori     rdfs:subClassOf rdfs:Class .
-ex:Restoran     rdfs:subClassOf schema:Restaurant .
+# ==============================================================================
+# 1. CULINARY CATEGORIES (6 CATEGORIES)
+# ==============================================================================
+ex:KatMakananBerat a ex:Kategori ;
+    rdfs:label "Makanan Berat"@id , "Main Course"@en ;
+    schema:description "Hidangan utama khas Medan yang mengenyangkan dan kaya rempah."@id .
 
-ex:KatMakananBerat a ex:Kategori ; rdfs:label "Makanan Berat" .
-ex:KatOlehOleh     a ex:Kategori ; rdfs:label "Oleh-Oleh Khas" .
-ex:KatMinuman      a ex:Kategori ; rdfs:label "Minuman Khas" .
-ex:KatCamilan      a ex:Kategori ; rdfs:label "Camilan & Street Food" .
+ex:KatOlehOleh a ex:Kategori ;
+    rdfs:label "Oleh-Oleh Khas"@id , "Signature Souvenirs"@en ;
+    schema:description "Kue dan panganan ikonik Medan yang populer sebagai buah tangan."@id .
 
-# ==========================================
-# ENTITAS KULINER MEDAN (10 DATA)
-# ==========================================
+ex:KatMinuman a ex:Kategori ;
+    rdfs:label "Minuman Khas"@id , "Traditional Beverages"@en ;
+    schema:description "Minuman segar, hangat, dan penambah stamina khas Kota Medan."@id .
+
+ex:KatCamilan a ex:Kategori ;
+    rdfs:label "Camilan & Street Food"@id , "Snacks & Street Food"@en ;
+    schema:description "Jajanan pasar dan street food legendaris Medan."@id .
+
+ex:KatSarapan a ex:Kategori ;
+    rdfs:label "Sarapan Khas"@id , "Medan Breakfast"@en ;
+    schema:description "Menu sarapan pagi favorit warga lokal Kota Medan."@id .
+
+ex:KatKulinerMalam a ex:Kategori ;
+    rdfs:label "Kuliner Malam"@id , "Night Culinary"@en ;
+    schema:description "Hidangan ikonik yang paling nikmat disantap pada malam hari di Medan."@id .
+
+# ==============================================================================
+# 2. CULTURAL HERITAGE INFLUENCES (6 CULTURES)
+# ==============================================================================
+ex:BudayaMelayu a ex:PengaruhBudaya ;
+    rdfs:label "Melayu Deli"@id , "Deli Malay"@en ;
+    owl:sameAs dbr:Malay_cuisine .
+
+ex:BudayaBatakToba a ex:PengaruhBudaya ;
+    rdfs:label "Batak Toba"@id , "Toba Batak"@en ;
+    owl:sameAs dbr:Batak_cuisine .
+
+ex:BudayaBatakKaro a ex:PengaruhBudaya ;
+    rdfs:label "Batak Karo"@id , "Karo Batak"@en ;
+    owl:sameAs dbr:Karo_people .
+
+ex:BudayaTionghoaMedan a ex:PengaruhBudaya ;
+    rdfs:label "Tionghoa-Medan"@id , "Medan Chinese"@en ;
+    owl:sameAs dbr:Chinese_Indonesian_cuisine .
+
+ex:BudayaIndiaTamil a ex:PengaruhBudaya ;
+    rdfs:label "India-Tamil"@id , "Tamil Indian"@en ;
+    owl:sameAs dbr:Indian_Indonesian_cuisine .
+
+ex:BudayaJawaMedan a ex:PengaruhBudaya ;
+    rdfs:label "Akulturasi Jawa-Medan"@id , "Javanese-Medan Fusion"@en ;
+    owl:sameAs dbr:Indonesian_cuisine .
+
+# ==============================================================================
+# 3. SERVING TIMES (4 TIMES)
+# ==============================================================================
+ex:WaktuSarapan a ex:WaktuSajian ;
+    rdfs:label "Sarapan (Pagi)"@id , "Breakfast (Morning)"@en .
+
+ex:WaktuMakanSiang a ex:WaktuSajian ;
+    rdfs:label "Makan Siang"@id , "Lunch"@en .
+
+ex:WaktuMakanMalam a ex:WaktuSajian ;
+    rdfs:label "Makan Malam"@id , "Dinner"@en .
+
+ex:WaktuSepanjangHari a ex:WaktuSajian ;
+    rdfs:label "Sepanjang Hari"@id , "All Day"@en .
+
+# ==============================================================================
+# 4. MEDAN DISTRICTS / KECAMATAN (10 DISTRICTS)
+# ==============================================================================
+ex:KecMedanPetisah a ex:Kecamatan ;
+    rdfs:label "Medan Petisah"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanBaru a ex:Kecamatan ;
+    rdfs:label "Medan Baru"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanMaimun a ex:Kecamatan ;
+    rdfs:label "Medan Maimun"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanBarat a ex:Kecamatan ;
+    rdfs:label "Medan Barat"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanKota a ex:Kecamatan ;
+    rdfs:label "Medan Kota"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanPolonia a ex:Kecamatan ;
+    rdfs:label "Medan Polonia"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanTimur a ex:Kecamatan ;
+    rdfs:label "Medan Timur"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanArea a ex:Kecamatan ;
+    rdfs:label "Medan Area"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanHelvetia a ex:Kecamatan ;
+    rdfs:label "Medan Helvetia"@id ;
+    schema:containedInPlace dbr:Medan .
+
+ex:KecMedanSunggal a ex:Kecamatan ;
+    rdfs:label "Medan Sunggal"@id ;
+    schema:containedInPlace dbr:Medan .
+
+# ==============================================================================
+# 5. PRIMARY INGREDIENTS & SIGNATURE SPICES (20 INGREDIENTS)
+# ==============================================================================
+ex:BahanSantan a ex:BahanUtama ;
+    rdfs:label "Santan Kelapa"@id , "Coconut Milk"@en ;
+    owl:sameAs dbr:Coconut_milk .
+
+ex:BahanAndaliman a ex:BahanUtama ;
+    rdfs:label "Andaliman (Merica Batak)"@id , "Andaliman Pepper"@en ;
+    owl:sameAs dbr:Zanthoxylum_acanthopodium .
+
+ex:BahanTauco a ex:BahanUtama ;
+    rdfs:label "Tauco Medan"@id , "Fermented Soybean Paste"@en ;
+    owl:sameAs dbr:Tauco .
+
+ex:BahanDurian a ex:BahanUtama ;
+    rdfs:label "Durian Medan"@id , "Medan Durian"@en ;
+    owl:sameAs dbr:Durian .
+
+ex:BahanDaunJeruk a ex:BahanUtama ;
+    rdfs:label "Daun Jeruk Purut"@id , "Kaffir Lime Leaf"@en .
+
+ex:BahanDagingSapi a ex:BahanUtama ;
+    rdfs:label "Daging Sapi"@id , "Beef"@en .
+
+ex:BahanDagingBebek a ex:BahanUtama ;
+    rdfs:label "Daging Bebek"@id , "Duck Meat"@en .
+
+ex:BahanDagingBabi a ex:BahanUtama ;
+    rdfs:label "Daging Babi"@id , "Pork"@en .
+
+ex:BahanIkanMas a ex:BahanUtama ;
+    rdfs:label "Ikan Mas"@id , "Common Carp"@en .
+
+ex:BahanKerang a ex:BahanUtama ;
+    rdfs:label "Kerang Dara"@id , "Blood Cockles"@en .
+
+ex:BahanAlpukat a ex:BahanUtama ;
+    rdfs:label "Alpukat Mentega"@id , "Avocado"@en .
+
+ex:BahanGulaAren a ex:BahanUtama ;
+    rdfs:label "Gula Aren / Gula Merah"@id , "Palm Sugar"@en .
+
+ex:BahanMieLidi a ex:BahanUtama ;
+    rdfs:label "Mie Lidi"@id , "Stick Noodles"@en .
+
+ex:BahanKariRempah a ex:BahanUtama ;
+    rdfs:label "Rempah Kari India-Melayu"@id , "Curry Spices"@en .
+
+ex:BahanKopiSidikalang a ex:BahanUtama ;
+    rdfs:label "Kopi Sidikalang"@id , "Sidikalang Coffee"@en .
+
+ex:BahanTehPekat a ex:BahanUtama ;
+    rdfs:label "Teh Hitam Pekat"@id , "Strong Black Tea"@en .
+
+ex:BahanBerasKetan a ex:BahanUtama ;
+    rdfs:label "Beras Ketan"@id , "Glutinous Rice"@en .
+
+ex:BahanKwetiau a ex:BahanUtama ;
+    rdfs:label "Kwetiau Beras"@id , "Flat Rice Noodles"@en .
+
+ex:BahanBihun a ex:BahanUtama ;
+    rdfs:label "Bihun Halus"@id , "Rice Vermicelli"@en .
+
+ex:BahanTepungTapioka a ex:BahanUtama ;
+    rdfs:label "Tepung Tapioka & Sagu"@id , "Tapioca Flour"@en .
+
+# ==============================================================================
+# 6. MEDAN CULINARY DISHES (24 RICH ENTITIES)
+# ==============================================================================
 
 # 1. Soto Medan
 ex:SotoMedan a ex:Kuliner ;
-    rdfs:label "Soto Medan" ;
-    schema:description "Soto berkuah santan gurih berwarna kuning dengan rempah khas dan isian daging sapi atau ayam." ;
-    schema:image "https://images.unsplash.com/photo-1541832676-9b763b0239ab" ;
+    rdfs:label "Soto Medan"@id , "Medan Coconut Beef Soup"@en ;
+    schema:description "Soto berkuah santan kental berwarna kuning kehijauan dengan rempah jintan, kapulaga, dan isian daging sapi, ayam, atau udang."@id ;
+    schema:image "https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatMakananBerat ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanSantan , ex:BahanDagingSapi , ex:BahanDaunJeruk ;
     ex:isHalal true ;
-    ex:rekomendasiTempat ex:RestoSotoSinarPagi .
+    ex:tingkatKepedasan 2 ;
+    ex:hargaMin 35000 ;
+    ex:hargaMax 55000 ;
+    ex:kisaranHarga "Rp 35.000 - Rp 55.000" ;
+    ex:rasaDominan "Gurih Rempah & Creamy" ;
+    ex:metodeMasak "Rebus & Tumis Rempah" ;
+    ex:pasanganCocok ex:SateKerangMedan ;
+    ex:rekomendasiTempat ex:RestoSotoSinarPagi ;
+    owl:sameAs dbr:Soto_Medan .
 
 # 2. Bika Ambon
 ex:BikaAmbon a ex:Kuliner ;
-    rdfs:label "Bika Ambon" ;
-    schema:description "Kue khas Medan berwarna kuning berongga-rongga dengan tekstur kenyal dan aroma daun jeruk serta serai." ;
-    schema:image "https://images.unsplash.com/photo-1605807646983-377bc5a76493" ;
+    rdfs:label "Bika Ambon"@id , "Bika Ambon Honeycomb Cake"@en ;
+    schema:description "Kue khas Medan berwarna kuning keemasan dengan tekstur bersarang kenyal dan aroma harum daun jeruk serta serai."@id ;
+    schema:image "https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatOlehOleh ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanSantan , ex:BahanDaunJeruk , ex:BahanTepungTapioka ;
     ex:isHalal true ;
-    ex:rekomendasiTempat ex:TokoZulaikha .
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 55000 ;
+    ex:hargaMax 95000 ;
+    ex:kisaranHarga "Rp 55.000 - Rp 95.000 / kotak" ;
+    ex:rasaDominan "Manis Harum & Kenyal" ;
+    ex:metodeMasak "Fermentasi & Panggang" ;
+    ex:pasanganCocok ex:KopiApek ;
+    ex:rekomendasiTempat ex:TokoZulaikha ;
+    owl:sameAs dbr:Bika_ambon .
 
 # 3. Lontong Medan
 ex:LontongMedan a ex:Kuliner ;
-    rdfs:label "Lontong Medan" ;
-    schema:description "Lontong dengan kuah sayur tauco, sambal goreng teri kacang, rendang, telur balado, dan kerupuk merah." ;
-    schema:image "https://images.unsplash.com/photo-1565299585323-38d6b0865b47" ;
-    ex:kategori ex:KatMakananBerat ;
+    rdfs:label "Lontong Medan"@id , "Medan Savory Rice Cake"@en ;
+    schema:description "Lontong disajikan dengan sayur labu santan, tauco udang, sambal teri kacang, mie gomak goreng, telur balado, dan kerupuk merah."@id ;
+    schema:image "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatSarapan ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSarapan ;
+    ex:memilikiBahan ex:BahanSantan , ex:BahanTauco ;
     ex:isHalal true ;
-    ex:rekomendasiTempat ex:LontongKakLin .
+    ex:tingkatKepedasan 3 ;
+    ex:hargaMin 18000 ;
+    ex:hargaMax 32000 ;
+    ex:kisaranHarga "Rp 18.000 - Rp 32.000" ;
+    ex:rasaDominan "Gurih, Pedas & Kompleks" ;
+    ex:metodeMasak "Rebus & Tumis Tauco" ;
+    ex:pasanganCocok ex:SateKerangMedan ;
+    ex:rekomendasiTempat ex:LontongKakLin ;
+    owl:sameAs dbr:Lontong .
 
 # 4. Durian Pancake
 ex:DurianPancake a ex:Kuliner ;
-    rdfs:label "Durian Pancake" ;
-    schema:description "Pancake gulung tipis berisi daging buah durian Medan asli yang manis dan krim lembut." ;
-    schema:image "https://images.unsplash.com/photo-1587314168485-3236d6710814" ;
+    rdfs:label "Pancake Durian Medan"@id , "Medan Durian Crepe Pancake"@en ;
+    schema:description "Kulit crepe tipis lembut berisi daging buah durian Medan asli yang legit dipadu krim kocok dingin."@id ;
+    schema:image "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatOlehOleh ;
+    ex:pengaruhBudaya ex:BudayaJawaMedan ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanDurian ;
     ex:isHalal true ;
-    ex:rekomendasiTempat ex:NelayanDurian .
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 75000 ;
+    ex:hargaMax 120000 ;
+    ex:kisaranHarga "Rp 75.000 - Rp 120.000 / kotak" ;
+    ex:rasaDominan "Manis Legit & Creamy" ;
+    ex:metodeMasak "Panggang Tipis & Dinginkan" ;
+    ex:pasanganCocok ex:PokatKocok ;
+    ex:rekomendasiTempat ex:UcokDurianMedan ;
+    owl:sameAs dbr:Durian .
 
 # 5. Mie Gomak
 ex:MieGomak a ex:Kuliner ;
-    rdfs:label "Mie Gomak" ;
-    schema:description "Mie lidi khas Batak berkuah santan pedas dengan bumbu khas andaliman yang memberikan sensasi getir segar." ;
-    schema:image "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841" ;
-    ex:kategori ex:KatMakananBerat ;
+    rdfs:label "Mie Gomak"@id , "Batak Andaliman Stick Noodles"@en ;
+    schema:description "Mie lidi khas Batak yang dijuluki Spageti Batak dengan kuah santan kental berbumbu andaliman yang getir pedas."@id ;
+    schema:image "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatSarapan ;
+    ex:pengaruhBudaya ex:BudayaBatakToba ;
+    ex:waktuSajian ex:WaktuSarapan ;
+    ex:memilikiBahan ex:BahanMieLidi , ex:BahanAndaliman , ex:BahanSantan ;
     ex:isHalal true ;
-    ex:rekomendasiTempat ex:WarungMieGomakMedan .
+    ex:tingkatKepedasan 4 ;
+    ex:hargaMin 12000 ;
+    ex:hargaMax 22000 ;
+    ex:kisaranHarga "Rp 12.000 - Rp 22.000" ;
+    ex:rasaDominan "Pedas Getir Andaliman & Gurih" ;
+    ex:metodeMasak "Rebus & Kuah Santan" ;
+    ex:pasanganCocok ex:TST ;
+    ex:rekomendasiTempat ex:WarungMieGomakPetisah ;
+    owl:sameAs dbr:Mie_gomak .
 
 # 6. Teh Susu Telur (TST)
 ex:TST a ex:Kuliner ;
-    rdfs:label "Teh Susu Telur (TST)" ;
-    schema:description "Minuman penambah stamina khas Medan berbahan dasar teh pekat, susu kental manis, dan kocokan kuning telur." ;
-    schema:image "https://images.unsplash.com/photo-1576092768241-dec231879fc3" ;
+    rdfs:label "Teh Susu Telur (TST)"@id , "Medan Egg Milk Tea"@en ;
+    schema:description "Minuman hangat penambah stamina khas Medan dari kocokan kuning telur ayam kampung, susu kental manis, dan seduhan teh hitam pekat."@id ;
+    schema:image "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatMinuman ;
+    ex:pengaruhBudaya ex:BudayaIndiaTamil ;
+    ex:waktuSajian ex:WaktuMakanMalam ;
+    ex:memilikiBahan ex:BahanTehPekat ;
     ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 15000 ;
+    ex:hargaMax 25000 ;
+    ex:kisaranHarga "Rp 15.000 - Rp 25.000" ;
+    ex:rasaDominan "Manis Creamy & Hangat" ;
+    ex:metodeMasak "Kocok & Seduh Panas" ;
+    ex:pasanganCocok ex:MartabakPiring ;
     ex:rekomendasiTempat ex:TSTPakHaji .
 
 # 7. Bolu Meranti
 ex:BoluMeranti a ex:Kuliner ;
-    rdfs:label "Bolu Meranti" ;
-    schema:description "Bolu gulung legendaris khas Medan dengan tekstur lembut dan varian isian keju, cokelat, atau mocha." ;
-    schema:image "https://images.unsplash.com/photo-1578985545062-69928b1d9587" ;
+    rdfs:label "Bolu Meranti"@id , "Meranti Swiss Roll Cake"@en ;
+    schema:description "Bolu gulung legendaris khas Medan bertekstur ekstra lembut dengan pilihan isian keju parut melimpah, moka, nanas, dan cokelat."@id ;
+    schema:image "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatOlehOleh ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanTepungTapioka ;
     ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 85000 ;
+    ex:hargaMax 135000 ;
+    ex:kisaranHarga "Rp 85.000 - Rp 135.000 / kotak" ;
+    ex:rasaDominan "Manis Lembut & Gurih Keju" ;
+    ex:metodeMasak "Panggang Oven" ;
+    ex:pasanganCocok ex:KopiApek ;
     ex:rekomendasiTempat ex:TokoBoluMeranti .
 
-# 8. Bihun Bebek
+# 8. Bihun Bebek Medan
 ex:BihunBebek a ex:Kuliner ;
-    rdfs:label "Bihun Bebek Medan" ;
-    schema:description "Bihun lembut disajikan dengan irisan daging bebek empuk dan kuah kaldu herbal obat tiongkok yang harum." ;
-    schema:image "https://images.unsplash.com/photo-1569718212165-3a8278d5f624" ;
+    rdfs:label "Bihun Bebek Medan"@id , "Medan Herbal Duck Vermicelli"@en ;
+    schema:description "Bihun halus disajikan dengan suwiran daging bebek empuk, bawang putih goreng, selada, dan kuah kaldu herbal obat Tionghoa yang pekat."@id ;
+    schema:image "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatMakananBerat ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanBihun , ex:BahanDagingBebek ;
     ex:isHalal false ;
+    ex:tingkatKepedasan 1 ;
+    ex:hargaMin 55000 ;
+    ex:hargaMax 85000 ;
+    ex:kisaranHarga "Rp 55.000 - Rp 85.000" ;
+    ex:rasaDominan "Gurih Kaldu Herbal & Harum" ;
+    ex:metodeMasak "Rebus Lambat (Slow Simmer)" ;
     ex:rekomendasiTempat ex:BihunBebekAsie .
 
-# 9. Pokat Kocok
+# 9. Pokat Kocok Medan
 ex:PokatKocok a ex:Kuliner ;
-    rdfs:label "Pokat Kocok Medan" ;
-    schema:description "Minuman es alpukat kocok kasar disiram santan gurih, es serut, dan gula merah cair pekat." ;
-    schema:image "https://images.unsplash.com/photo-1553530666-ba11a7da3888" ;
+    rdfs:label "Pokat Kocok Medan"@id , "Medan Mashed Avocado Ice"@en ;
+    schema:description "Minuman es alpukat mentega kocok kasar disiram santan gurih, es serut halus, susu cokelat, dan gula merah cair pekat."@id ;
+    schema:image "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatMinuman ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanAlpukat , ex:BahanSantan , ex:BahanGulaAren ;
     ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 15000 ;
+    ex:hargaMax 25000 ;
+    ex:kisaranHarga "Rp 15.000 - Rp 25.000" ;
+    ex:rasaDominan "Manis Segar & Creamy" ;
+    ex:metodeMasak "Kocok Segar & Es Serut" ;
     ex:rekomendasiTempat ex:PokatKocokSimpangGriya .
 
-# 10. Sate Membang Muda
-ex:SateMembangMuda a ex:Kuliner ;
-    rdfs:label "Sate Kerang Medan" ;
-    schema:description "Sate kerang bumbu rempah kecokelatan yang manis gurih, cocok dimakan sebagai pelengkap lontong atau nasi." ;
-    schema:image "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd" ;
+# 10. Sate Kerang Medan
+ex:SateKerangMedan a ex:Kuliner ;
+    rdfs:label "Sate Kerang Medan"@id , "Medan Spiced Cockle Satay"@en ;
+    schema:description "Sate kerang dara yang dimasak tanpa dibakar melainkan diungkep dengan bumbu rempah kelapa parut kecokelatan yang manis gurih."@id ;
+    schema:image "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=80" ;
     ex:kategori ex:KatCamilan ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanKerang , ex:BahanGulaAren ;
     ex:isHalal true ;
+    ex:tingkatKepedasan 2 ;
+    ex:hargaMin 25000 ;
+    ex:hargaMax 50000 ;
+    ex:kisaranHarga "Rp 25.000 - Rp 50.000 / porsi" ;
+    ex:rasaDominan "Manis Gurih & Rempah" ;
+    ex:metodeMasak "Ungkep Rempah" ;
     ex:rekomendasiTempat ex:SateKerangRahmat .
 
-# ==========================================
-# DATA RESTORAN & LOKASI GEOGRAFIS
-# ==========================================
+# 11. Mie Balap Medan
+ex:MieBalap a ex:Kuliner ;
+    rdfs:label "Mie Balap Medan"@id , "Medan Fast-Wok Seafood Noodles"@en ;
+    schema:description "Mie kuning, bihun, atau kwetiau goreng super cepat di atas tungku kayu bakar dengan telur, udang, cumi, dan sambal cabai merah segar."@id ;
+    schema:image "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatSarapan ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSarapan ;
+    ex:memilikiBahan ex:BahanKwetiau , ex:BahanBihun ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 3 ;
+    ex:hargaMin 15000 ;
+    ex:hargaMax 28000 ;
+    ex:kisaranHarga "Rp 15.000 - Rp 28.000" ;
+    ex:rasaDominan "Gurih Smoky (Wok Hei) & Pedas" ;
+    ex:metodeMasak "Tumis Api Besar" ;
+    ex:pasanganCocok ex:KopiApek ;
+    ex:rekomendasiTempat ex:MieBalapMail .
+
+# 12. Kari Bihun Tabona
+ex:KariBihunTabona a ex:Kuliner ;
+    rdfs:label "Kari Bihun Tabona"@id , "Tabona Indian-Medan Curry Vermicelli"@en ;
+    schema:description "Bihun lembut disiram kuah kari kental kaya rempah India-Melayu dengan pilihan daging ayam kampung atau daging sapi empuk."@id ;
+    schema:image "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:pengaruhBudaya ex:BudayaIndiaTamil ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanBihun , ex:BahanKariRempah , ex:BahanSantan , ex:BahanDagingSapi ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 3 ;
+    ex:hargaMin 45000 ;
+    ex:hargaMax 65000 ;
+    ex:kisaranHarga "Rp 45.000 - Rp 65.000" ;
+    ex:rasaDominan "Kari Kental & Rempah Tajam" ;
+    ex:metodeMasak "Masak Kuah Kari" ;
+    ex:rekomendasiTempat ex:RMTabona .
+
+# 13. Nasi Gurih Medan
+ex:NasiGurihMedan a ex:Kuliner ;
+    rdfs:label "Nasi Gurih Medan"@id , "Medan Coconut Fragrant Rice"@en ;
+    schema:description "Nasi uduk khas Medan yang dimasak dengan santan dan serai, disajikan bersama rendang, telur balado, perkedel, dan sambal teri kacang."@id ;
+    schema:image "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatSarapan ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSarapan ;
+    ex:memilikiBahan ex:BahanSantan , ex:BahanTauco ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 2 ;
+    ex:hargaMin 18000 ;
+    ex:hargaMax 35000 ;
+    ex:kisaranHarga "Rp 18.000 - Rp 35.000" ;
+    ex:rasaDominan "Gurih Santan & Pedas Manis" ;
+    ex:metodeMasak "Kukus Santan" ;
+    ex:pasanganCocok ex:SateKerangMedan ;
+    ex:rekomendasiTempat ex:NasiGurihTendaBiru .
+
+# 14. Sop Sumsum Langsa
+ex:SopSumsumLangsa a ex:Kuliner ;
+    rdfs:label "Sop Sumsum Langsa"@id , "Langsa-Medan Bone Marrow Soup"@en ;
+    schema:description "Sop tulang kaki sapi jumbo dengan sumsum lembut yang diseruput memakai sedotan dalam kuah kaldu bening rempah kapulaga dan cengkeh."@id ;
+    schema:image "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatKulinerMalam ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuMakanMalam ;
+    ex:memilikiBahan ex:BahanDagingSapi ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 1 ;
+    ex:hargaMin 50000 ;
+    ex:hargaMax 75000 ;
+    ex:kisaranHarga "Rp 50.000 - Rp 75.000" ;
+    ex:rasaDominan "Gurih Kaldu Sapi & Creamy" ;
+    ex:metodeMasak "Rebus Lambat (Slow Simmer)" ;
+    ex:rekomendasiTempat ex:SopSumsumLangsaMedan .
+
+# 15. Martabak Piring Murni
+ex:MartabakPiring a ex:Kuliner ;
+    rdfs:label "Martabak Piring Murni"@id , "Medan Plate-Baked Sweet Martabak"@en ;
+    schema:description "Martabak manis unik khas Medan yang dipanggang di atas piring seng di atas bara arang dengan pilihan kulit tipis garing atau tebal lembut."@id ;
+    schema:image "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatKulinerMalam ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuMakanMalam ;
+    ex:memilikiBahan ex:BahanGulaAren ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 8000 ;
+    ex:hargaMax 20000 ;
+    ex:kisaranHarga "Rp 8.000 - Rp 20.000" ;
+    ex:rasaDominan "Manis Renyah & Harum Arang" ;
+    ex:metodeMasak "Panggang Arang di Piring" ;
+    ex:rekomendasiTempat ex:MartabakPiringMurni .
+
+# 16. Rujak Kolam Medan
+ex:RujakKolam a ex:Kuliner ;
+    rdfs:label "Rujak Kolam Medan"@id , "Medan Fruit Salad with Banana-Seed Peanut Sauce"@en ;
+    schema:description "Potongan buah tropis segar disiram bumbu kacang tanah ulek kental yang dicampur gula merah, terasi, cabai, dan pisang batu."@id ;
+    schema:image "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatCamilan ;
+    ex:pengaruhBudaya ex:BudayaJawaMedan ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanGulaAren ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 4 ;
+    ex:hargaMin 20000 ;
+    ex:hargaMax 30000 ;
+    ex:kisaranHarga "Rp 20.000 - Rp 30.000" ;
+    ex:rasaDominan "Asam, Manis, Pedas & Segar" ;
+    ex:metodeMasak "Ulek Segar" ;
+    ex:rekomendasiTempat ex:RujakKolamTakanaJuo .
+
+# 17. Es Campur Amo
+ex:EsCampurAmo a ex:Kuliner ;
+    rdfs:label "Es Campur Amo"@id , "Amo Medan Shaved Ice Dessert"@en ;
+    schema:description "Es serut legendaris berisi kacang merah lembut, cendol, tape singkong, jagung manis, mutiara, sirup merah, dan susu kental manis."@id ;
+    schema:image "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatMinuman ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanSantan , ex:BahanGulaAren ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 18000 ;
+    ex:hargaMax 28000 ;
+    ex:kisaranHarga "Rp 18.000 - Rp 28.000" ;
+    ex:rasaDominan "Manis Dingin & Menyegarkan" ;
+    ex:metodeMasak "Serut Es & Racik Dingin" ;
+    ex:rekomendasiTempat ex:KedaiEsCampurAmo .
+
+# 18. Kopi Apek & Kopi Sidikalang
+ex:KopiApek a ex:Kuliner ;
+    rdfs:label "Kopi Sidikalang (Kopi Apek)"@id , "Sidikalang Traditional Kopitiam Coffee"@en ;
+    schema:description "Kopi bubuk Sidikalang yang diseduh menggunakan saringan kain khas kopitiam Medan, disajikan hitam pekat atau dengan susu kental manis."@id ;
+    schema:image "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatMinuman ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuSarapan ;
+    ex:memilikiBahan ex:BahanKopiSidikalang ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 14000 ;
+    ex:hargaMax 22000 ;
+    ex:kisaranHarga "Rp 14.000 - Rp 22.000" ;
+    ex:rasaDominan "Pahit Aromatik & Bold" ;
+    ex:metodeMasak "Seduh Saring Kopitiam" ;
+    ex:rekomendasiTempat ex:KedaiKopiApek .
+
+# 19. Arsik Ikan Mas
+ex:ArsikIkanMas a ex:Kuliner ;
+    rdfs:label "Arsik Ikan Mas"@id , "Batak Spiced Yellow Carp"@en ;
+    schema:description "Ikan mas utuh dimasak kering dengan bumbu kuning kunyit, andaliman, asam cikala, lokio, dan kacang panjang khas tradisi Batak Toba."@id ;
+    schema:image "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:pengaruhBudaya ex:BudayaBatakToba ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanIkanMas , ex:BahanAndaliman ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 3 ;
+    ex:hargaMin 35000 ;
+    ex:hargaMax 65000 ;
+    ex:kisaranHarga "Rp 35.000 - Rp 65.000" ;
+    ex:rasaDominan "Asam Segar, Pedas Getir & Gurih" ;
+    ex:metodeMasak "Ungkep Kering" ;
+    ex:rekomendasiTempat ex:RMBatakTesalonika ;
+    owl:sameAs dbr:Arsik .
+
+# 20. Babi Panggang Karo (BPK)
+ex:BabiPanggangKaro a ex:Kuliner ;
+    rdfs:label "Babi Panggang Karo (BPK)"@id , "Karo Style Roasted Pork"@en ;
+    schema:description "Irisan daging babi panggang renyah khas Karo disajikan bersama kuah kaldu sup tulang, daun ubi tumbuk, dan sambal andaliman."@id ;
+    schema:image "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatMakananBerat ;
+    ex:pengaruhBudaya ex:BudayaBatakKaro ;
+    ex:waktuSajian ex:WaktuMakanSiang ;
+    ex:memilikiBahan ex:BahanDagingBabi , ex:BahanAndaliman ;
+    ex:isHalal false ;
+    ex:tingkatKepedasan 4 ;
+    ex:hargaMin 35000 ;
+    ex:hargaMax 55000 ;
+    ex:kisaranHarga "Rp 35.000 - Rp 55.000" ;
+    ex:rasaDominan "Gurih Panggang & Pedas Andaliman" ;
+    ex:metodeMasak "Panggang Bara Arang" ;
+    ex:rekomendasiTempat ex:BPKOlaKisat ;
+    owl:sameAs dbr:Babi_panggang .
+
+# 21. Kwetiau Goreng Ateng
+ex:KwetiauAteng a ex:Kuliner ;
+    rdfs:label "Kwetiau Goreng Medan"@id , "Medan Wok-Fried Flat Rice Noodles"@en ;
+    schema:description "Kwetiau beras goreng ala Tionghoa-Medan dengan aroma wok hei kuat, lapchiong, udang segar, telur bebek, dan tauge renyah."@id ;
+    schema:image "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatKulinerMalam ;
+    ex:pengaruhBudaya ex:BudayaTionghoaMedan ;
+    ex:waktuSajian ex:WaktuMakanMalam ;
+    ex:memilikiBahan ex:BahanKwetiau , ex:BahanDagingBabi ;
+    ex:isHalal false ;
+    ex:tingkatKepedasan 2 ;
+    ex:hargaMin 40000 ;
+    ex:hargaMax 65000 ;
+    ex:kisaranHarga "Rp 40.000 - Rp 65.000" ;
+    ex:rasaDominan "Gurih Smoky & Sedap" ;
+    ex:metodeMasak "Tumis Api Besar" ;
+    ex:rekomendasiTempat ex:KwetiauAtengResto ;
+    owl:sameAs dbr:Char_kway_teow .
+
+# 22. Sate Padang Al-Fresco
+ex:SatePadangMedan a ex:Kuliner ;
+    rdfs:label "Sate Padang Medan"@id , "Medan-Style Padang Spiced Satay"@en ;
+    schema:description "Sate daging dan lidah sapi panggang yang disiram kuah kental kekuningan berbumbu kunyit, jahe, dan cabai pedas khas kuliner malam Medan."@id ;
+    schema:image "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatKulinerMalam ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuMakanMalam ;
+    ex:memilikiBahan ex:BahanDagingSapi , ex:BahanKariRempah ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 4 ;
+    ex:hargaMin 25000 ;
+    ex:hargaMax 40000 ;
+    ex:kisaranHarga "Rp 25.000 - Rp 40.000" ;
+    ex:rasaDominan "Pedas Rempah & Gurih Kental" ;
+    ex:metodeMasak "Bakar Arang & Kuah Kental" ;
+    ex:pasanganCocok ex:TST ;
+    ex:rekomendasiTempat ex:SatePadangAlFresco ;
+    owl:sameAs dbr:Sate_Padang .
+
+# 23. Es Krim Tip-Top
+ex:EsKrimTipTop a ex:Kuliner ;
+    rdfs:label "Es Krim Tip-Top Kesawan"@id , "Tip-Top Heritage Homemade Ice Cream"@en ;
+    schema:description "Es krim buatan tangan bergaya kolonial sejak 1934 dengan resep klasik tanpa pengawet seperti Ystaart dan Carmen Ice Cream."@id ;
+    schema:image "https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatCamilan ;
+    ex:pengaruhBudaya ex:BudayaJawaMedan ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanSantan ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 25000 ;
+    ex:hargaMax 48000 ;
+    ex:kisaranHarga "Rp 25.000 - Rp 48.000" ;
+    ex:rasaDominan "Manis Klasik & Lembut" ;
+    ex:metodeMasak "Churning Tradisional" ;
+    ex:rekomendasiTempat ex:TipTopRestaurant .
+
+# 24. Lemang Medan
+ex:LemangMedan a ex:Kuliner ;
+    rdfs:label "Lemang Panas Medan"@id , "Medan Bamboo Glutinous Rice"@en ;
+    schema:description "Beras ketan dan santan yang dibakar di dalam ruas bambu berlapis daun pisang hingga harum, nikmat disantap dengan selai srikaya atau tapai."@id ;
+    schema:image "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=800&q=80" ;
+    ex:kategori ex:KatOlehOleh ;
+    ex:pengaruhBudaya ex:BudayaMelayu ;
+    ex:waktuSajian ex:WaktuSepanjangHari ;
+    ex:memilikiBahan ex:BahanBerasKetan , ex:BahanSantan ;
+    ex:isHalal true ;
+    ex:tingkatKepedasan 0 ;
+    ex:hargaMin 20000 ;
+    ex:hargaMax 40000 ;
+    ex:kisaranHarga "Rp 20.000 - Rp 40.000 / bambu" ;
+    ex:rasaDominan "Gurih Santan & Harum Bambu" ;
+    ex:metodeMasak "Bakar dalam Bambu" ;
+    ex:rekomendasiTempat ex:LemangPanasBromo ;
+    owl:sameAs dbr:Lemang .
+
+# ==============================================================================
+# 7. RECOMMENDED MEDAN RESTAURANTS & GEOSPATIAL DATA (24 VENUES)
+# ==============================================================================
 ex:RestoSotoSinarPagi a ex:Restoran ;
-    schema:name "Soto Sinar Pagi" ;
-    schema:address "Jl. Sei Deli No.2D, Medan" ;
-    schema:geo [ schema:latitude "3.5975" ; schema:longitude "98.6722" ] .
+    schema:name "Soto Medan Sinar Pagi" ;
+    schema:address "Jl. Sei Deli No. 2D, Medan Barat" ;
+    ex:berlokasiDi ex:KecMedanBarat ;
+    ex:jamBuka "07:00 - 15:30 WIB" ;
+    ex:rating 4.7 ;
+    ex:tahunBerdiri 1962 ;
+    geo:lat "3.5975"^^xsd:decimal ;
+    geo:long "98.6722"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5975"^^xsd:decimal ; schema:longitude "98.6722"^^xsd:decimal ] .
 
 ex:TokoZulaikha a ex:Restoran ;
     schema:name "Bika Ambon Zulaikha" ;
-    schema:address "Jl. Mojopahit No.62, Medan" ;
-    schema:geo [ schema:latitude "3.5831" ; schema:longitude "98.6654" ] .
+    schema:address "Jl. Mojopahit No. 62, Medan Petisah" ;
+    ex:berlokasiDi ex:KecMedanPetisah ;
+    ex:jamBuka "07:30 - 21:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 2003 ;
+    geo:lat "3.5831"^^xsd:decimal ;
+    geo:long "98.6654"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5831"^^xsd:decimal ; schema:longitude "98.6654"^^xsd:decimal ] .
 
 ex:LontongKakLin a ex:Restoran ;
     schema:name "Lontong Kak Lin" ;
-    schema:address "Jl. Cik Ditiro No.8, Medan" ;
-    schema:geo [ schema:latitude "3.5802" ; schema:longitude "98.6710" ] .
+    schema:address "Jl. Teuku Cik Ditiro No. 8M, Medan Polonia" ;
+    ex:berlokasiDi ex:KecMedanPolonia ;
+    ex:jamBuka "07:00 - 16:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1994 ;
+    geo:lat "3.5802"^^xsd:decimal ;
+    geo:long "98.6710"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5802"^^xsd:decimal ; schema:longitude "98.6710"^^xsd:decimal ] .
+
+ex:UcokDurianMedan a ex:Restoran ;
+    schema:name "Ucok Durian Medan" ;
+    schema:address "Jl. K.H. Wahid Hasyim No. 30-32, Medan Baru" ;
+    ex:berlokasiDi ex:KecMedanBaru ;
+    ex:jamBuka "08:00 - 23:59 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 1985 ;
+    geo:lat "3.5778"^^xsd:decimal ;
+    geo:long "98.6602"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5778"^^xsd:decimal ; schema:longitude "98.6602"^^xsd:decimal ] .
+
+ex:WarungMieGomakPetisah a ex:Restoran ;
+    schema:name "Mie Gomak Pasar Petisah" ;
+    schema:address "Jl. Razak Baru, Pasar Petisah, Medan Petisah" ;
+    ex:berlokasiDi ex:KecMedanPetisah ;
+    ex:jamBuka "06:30 - 14:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 1998 ;
+    geo:lat "3.5912"^^xsd:decimal ;
+    geo:long "98.6641"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5912"^^xsd:decimal ; schema:longitude "98.6641"^^xsd:decimal ] .
+
+ex:TSTPakHaji a ex:Restoran ;
+    schema:name "TST Pak Haji" ;
+    schema:address "Jl. Puri No. 58, Kota Matsum, Medan Area" ;
+    ex:berlokasiDi ex:KecMedanArea ;
+    ex:jamBuka "17:00 - 01:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1988 ;
+    geo:lat "3.5754"^^xsd:decimal ;
+    geo:long "98.6915"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5754"^^xsd:decimal ; schema:longitude "98.6915"^^xsd:decimal ] .
+
+ex:TokoBoluMeranti a ex:Restoran ;
+    schema:name "Toko Bolu Meranti Kruing" ;
+    schema:address "Jl. Kruing No. 2K, Sekip, Medan Petisah" ;
+    ex:berlokasiDi ex:KecMedanPetisah ;
+    ex:jamBuka "08:00 - 20:00 WIB" ;
+    ex:rating 4.8 ;
+    ex:tahunBerdiri 2005 ;
+    geo:lat "3.5964"^^xsd:decimal ;
+    geo:long "98.6669"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5964"^^xsd:decimal ; schema:longitude "98.6669"^^xsd:decimal ] .
+
+ex:BihunBebekAsie a ex:Restoran ;
+    schema:name "Bihun Bebek Asie Kumango" ;
+    schema:address "Jl. Kumango No. 15, Kesawan, Medan Barat" ;
+    ex:berlokasiDi ex:KecMedanBarat ;
+    ex:jamBuka "07:00 - 11:30 WIB" ;
+    ex:rating 4.7 ;
+    ex:tahunBerdiri 1930 ;
+    geo:lat "3.5861"^^xsd:decimal ;
+    geo:long "98.6789"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5861"^^xsd:decimal ; schema:longitude "98.6789"^^xsd:decimal ] .
+
+ex:PokatKocokSimpangGriya a ex:Restoran ;
+    schema:name "Pokat Kocok Ibu Iyah Simpang Griya" ;
+    schema:address "Jl. T. Amir Hamzah, Simpang Griya, Medan Helvetia" ;
+    ex:berlokasiDi ex:KecMedanHelvetia ;
+    ex:jamBuka "11:00 - 18:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1995 ;
+    geo:lat "3.6078"^^xsd:decimal ;
+    geo:long "98.6513"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.6078"^^xsd:decimal ; schema:longitude "98.6513"^^xsd:decimal ] .
+
+ex:SateKerangRahmat a ex:Restoran ;
+    schema:name "Sate Kerang Rahmat" ;
+    schema:address "Jl. Kruing No. 3D, Medan Petisah" ;
+    ex:berlokasiDi ex:KecMedanPetisah ;
+    ex:jamBuka "08:00 - 20:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1990 ;
+    geo:lat "3.5961"^^xsd:decimal ;
+    geo:long "98.6672"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5961"^^xsd:decimal ; schema:longitude "98.6672"^^xsd:decimal ] .
+
+ex:MieBalapMail a ex:Restoran ;
+    schema:name "Mie Balap Seafood Mail Krakatau" ;
+    schema:address "Jl. Gunung Krakatau No. 105, Medan Timur" ;
+    ex:berlokasiDi ex:KecMedanTimur ;
+    ex:jamBuka "06:30 - 12:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 2008 ;
+    geo:lat "3.6194"^^xsd:decimal ;
+    geo:long "98.6815"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.6194"^^xsd:decimal ; schema:longitude "98.6815"^^xsd:decimal ] .
+
+ex:RMTabona a ex:Restoran ;
+    schema:name "Rumah Makan Tabona" ;
+    schema:address "Jl. Mangkubumi No. 17, Aur, Medan Maimun" ;
+    ex:berlokasiDi ex:KecMedanMaimun ;
+    ex:jamBuka "06:30 - 16:30 WIB" ;
+    ex:rating 4.7 ;
+    ex:tahunBerdiri 1982 ;
+    geo:lat "3.5829"^^xsd:decimal ;
+    geo:long "98.6813"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5829"^^xsd:decimal ; schema:longitude "98.6813"^^xsd:decimal ] .
+
+ex:NasiGurihTendaBiru a ex:Restoran ;
+    schema:name "Nasi Gurih Tenda Biru" ;
+    schema:address "Jl. K.L. Yos Sudarso No. 9, Medan Barat" ;
+    ex:berlokasiDi ex:KecMedanBarat ;
+    ex:jamBuka "06:30 - 12:30 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1992 ;
+    geo:lat "3.6025"^^xsd:decimal ;
+    geo:long "98.6754"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.6025"^^xsd:decimal ; schema:longitude "98.6754"^^xsd:decimal ] .
+
+ex:SopSumsumLangsaMedan a ex:Restoran ;
+    schema:name "Sop Sumsum Langsa Medan" ;
+    schema:address "Jl. Setia Budi No. 235, Medan Sunggal" ;
+    ex:berlokasiDi ex:KecMedanSunggal ;
+    ex:jamBuka "11:00 - 22:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 2010 ;
+    geo:lat "3.5681"^^xsd:decimal ;
+    geo:long "98.6412"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5681"^^xsd:decimal ; schema:longitude "98.6412"^^xsd:decimal ] .
+
+ex:MartabakPiringMurni a ex:Restoran ;
+    schema:name "Martabak Piring Murni" ;
+    schema:address "Jl. Tjong Yong Hian (Selat Panjang), Medan Kota" ;
+    ex:berlokasiDi ex:KecMedanKota ;
+    ex:jamBuka "18:00 - 23:30 WIB" ;
+    ex:rating 4.7 ;
+    ex:tahunBerdiri 1978 ;
+    geo:lat "3.5847"^^xsd:decimal ;
+    geo:long "98.6865"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5847"^^xsd:decimal ; schema:longitude "98.6865"^^xsd:decimal ] .
+
+ex:RujakKolamTakanaJuo a ex:Restoran ;
+    schema:name "Rujak Kolam Takana Juo" ;
+    schema:address "Jl. Mahkamah No. 96, Mesjid, Medan Kota" ;
+    ex:berlokasiDi ex:KecMedanKota ;
+    ex:jamBuka "10:00 - 18:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 1975 ;
+    geo:lat "3.5752"^^xsd:decimal ;
+    geo:long "98.6869"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5752"^^xsd:decimal ; schema:longitude "98.6869"^^xsd:decimal ] .
+
+ex:KedaiEsCampurAmo a ex:Restoran ;
+    schema:name "Es Campur Amo Sei Kera" ;
+    schema:address "Jl. Sei Kera No. 114, Medan Timur" ;
+    ex:berlokasiDi ex:KecMedanTimur ;
+    ex:jamBuka "11:00 - 19:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1986 ;
+    geo:lat "3.5951"^^xsd:decimal ;
+    geo:long "98.6932"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5951"^^xsd:decimal ; schema:longitude "98.6932"^^xsd:decimal ] .
+
+ex:KedaiKopiApek a ex:Restoran ;
+    schema:name "Kedai Kopi Apek" ;
+    schema:address "Jl. Hindu No. 37, Kesawan, Medan Barat" ;
+    ex:berlokasiDi ex:KecMedanBarat ;
+    ex:jamBuka "06:30 - 14:30 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1922 ;
+    geo:lat "3.5858"^^xsd:decimal ;
+    geo:long "98.6781"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5858"^^xsd:decimal ; schema:longitude "98.6781"^^xsd:decimal ] .
+
+ex:RMBatakTesalonika a ex:Restoran ;
+    schema:name "RM Khas Batak Tesalonika" ;
+    schema:address "Jl. Jamin Ginting No. 312, Medan Baru" ;
+    ex:berlokasiDi ex:KecMedanBaru ;
+    ex:jamBuka "09:00 - 21:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 2001 ;
+    geo:lat "3.5625"^^xsd:decimal ;
+    geo:long "98.6542"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5625"^^xsd:decimal ; schema:longitude "98.6542"^^xsd:decimal ] .
+
+ex:BPKOlaKisat a ex:Restoran ;
+    schema:name "Babi Panggang Karo Ola Kisat" ;
+    schema:address "Jl. Jamin Ginting No. 45, Padang Bulan, Medan Baru" ;
+    ex:berlokasiDi ex:KecMedanBaru ;
+    ex:jamBuka "09:00 - 21:30 WIB" ;
+    ex:rating 4.7 ;
+    ex:tahunBerdiri 1996 ;
+    geo:lat "3.5673"^^xsd:decimal ;
+    geo:long "98.6568"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5673"^^xsd:decimal ; schema:longitude "98.6568"^^xsd:decimal ] .
+
+ex:KwetiauAtengResto a ex:Restoran ;
+    schema:name "Kwetiau Ateng Jl. S. Parman" ;
+    schema:address "Jl. S. Parman No. 52, Medan Baru" ;
+    ex:berlokasiDi ex:KecMedanBaru ;
+    ex:jamBuka "17:00 - 23:00 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1984 ;
+    geo:lat "3.5835"^^xsd:decimal ;
+    geo:long "98.6687"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5835"^^xsd:decimal ; schema:longitude "98.6687"^^xsd:decimal ] .
+
+ex:SatePadangAlFresco a ex:Restoran ;
+    schema:name "Sate Padang Al-Fresco" ;
+    schema:address "Jl. Setia Budi No. 210, Medan Sunggal" ;
+    ex:berlokasiDi ex:KecMedanSunggal ;
+    ex:jamBuka "16:30 - 23:30 WIB" ;
+    ex:rating 4.6 ;
+    ex:tahunBerdiri 1999 ;
+    geo:lat "3.5714"^^xsd:decimal ;
+    geo:long "98.6428"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5714"^^xsd:decimal ; schema:longitude "98.6428"^^xsd:decimal ] .
+
+ex:TipTopRestaurant a ex:Restoran ;
+    schema:name "Tip-Top Restaurant Kesawan" ;
+    schema:address "Jl. Jend. Ahmad Yani No. 92 A-B, Kesawan, Medan Barat" ;
+    ex:berlokasiDi ex:KecMedanBarat ;
+    ex:jamBuka "08:00 - 22:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 1934 ;
+    geo:lat "3.5872"^^xsd:decimal ;
+    geo:long "98.6776"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5872"^^xsd:decimal ; schema:longitude "98.6776"^^xsd:decimal ] .
+
+ex:LemangPanasBromo a ex:Restoran ;
+    schema:name "Lemang Panas Bromo" ;
+    schema:address "Jl. Bromo No. 72, Medan Area" ;
+    ex:berlokasiDi ex:KecMedanArea ;
+    ex:jamBuka "14:00 - 22:00 WIB" ;
+    ex:rating 4.5 ;
+    ex:tahunBerdiri 2002 ;
+    geo:lat "3.5719"^^xsd:decimal ;
+    geo:long "98.7042"^^xsd:decimal ;
+    schema:geo [ a schema:GeoCoordinates ; schema:latitude "3.5719"^^xsd:decimal ; schema:longitude "98.7042"^^xsd:decimal ] .
