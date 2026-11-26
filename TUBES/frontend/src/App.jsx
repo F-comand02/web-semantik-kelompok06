@@ -1155,6 +1155,7 @@ export default function App() {
     setSelectedKawasan('');
     setSelectedTeknik('');
     setHalalFilter('');
+    setVisibleCount(12);
   };
 
   const executeSearchSubmit = (e, overrideQuery) => {
@@ -1490,13 +1491,42 @@ export default function App() {
       .slice(0, 8);
   }, [allDishes, searchInput]);
 
-  const matchingSearchResults = searchInput.trim()
-    ? results.filter((dish) => String(dish.nama || '').toLocaleLowerCase().includes(searchInput.trim().toLocaleLowerCase()))
-    : results;
-  const displayedResults = hasActiveFilter
-    ? matchingSearchResults.slice(0, visibleCount)
-    : (allDishes.length ? allDishes : DEMO_DISHES).slice(0, 6);
-  const favoriteDishes = (allDishes.length ? allDishes : results).filter((d) => favorites.includes(d.slug));
+  const fullCatalog = useMemo(() => {
+    const base = allDishes.length ? allDishes : DEMO_DISHES;
+    // Utamakan 60 kuliner ikonik asli Medan terlebih dahulu sebelum 300 varian tambahan
+    return [...base].sort((a, b) => {
+      const aExtra = String(a.slug || '').startsWith('KulinerTambahan') ? 1 : 0;
+      const bExtra = String(b.slug || '').startsWith('KulinerTambahan') ? 1 : 0;
+      if (aExtra !== bExtra) return aExtra - bExtra;
+      return (b.restoran?.rating || 0) - (a.restoran?.rating || 0);
+    });
+  }, [allDishes]);
+
+  const matchingSearchResults = useMemo(() => {
+    const q = searchInput.trim().toLocaleLowerCase();
+    if (!q) return results;
+    return results.filter((dish) =>
+      [
+        dish.nama,
+        dish.namaEn,
+        dish.deskripsi,
+        dish.kategori,
+        dish.budaya,
+        dish.restoran?.nama,
+        dish.restoran?.kecamatan,
+        dish.restoran?.kawasan,
+        ...(dish.bahanUtama || []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLocaleLowerCase()
+        .includes(q)
+    );
+  }, [results, searchInput]);
+
+  const activePool = hasActiveFilter ? matchingSearchResults : fullCatalog;
+  const displayedResults = activePool.slice(0, visibleCount);
+  const favoriteDishes = fullCatalog.filter((d) => favorites.includes(d.slug));
 
   const sidebarItems = [
     { id: 'beranda', label: 'Beranda', icon: OrganicHomeIcon },
@@ -2360,7 +2390,7 @@ export default function App() {
                       ? `Hasil Pencarian (${matchingSearchResults.length})`
                       : hasActiveFilter
                         ? `Hasil Filter (${results.length})`
-                        : 'Rekomendasi Kuliner Pilihan di Medan'}
+                        : `Rekomendasi Kuliner Pilihan di Medan (${fullCatalog.length} Hidangan)`}
                   </h2>
                   <p className="text-xs text-slate-500">
                     Pilih hidangan untuk melihat detail racikan rempah, jam buka, lokasi peta, dan padanan menu terbaik.
@@ -2401,8 +2431,8 @@ export default function App() {
                     </p>
                   ) : null}
 
-                  {visibleCount < matchingSearchResults.length && (
-                    <div className="mt-8 text-center">
+                  {visibleCount < activePool.length && (
+                    <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                       <button
                         onClick={() => setVisibleCount((c) => c + 12)}
                         className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
@@ -2411,7 +2441,13 @@ export default function App() {
                             : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
                         }`}
                       >
-                        Muat Lebih Banyak ({matchingSearchResults.length - visibleCount} kuliner lainnya)
+                        Muat Lebih Banyak ({activePool.length - visibleCount} kuliner lainnya)
+                      </button>
+                      <button
+                        onClick={() => setVisibleCount(activePool.length)}
+                        className="px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
+                      >
+                        Tampilkan Semua ({activePool.length})
                       </button>
                     </div>
                   )}
@@ -2539,7 +2575,7 @@ export default function App() {
                   onClick={resetFilters}
                   className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors cursor-pointer"
                 >
-                  Reset ({results.length} hasil)
+                  Reset ({activePool.length} hasil)
                 </button>
               </div>
 
@@ -2562,13 +2598,23 @@ export default function App() {
               {displayedResults.map(renderDishCard)}
             </div>
 
-            {visibleCount < results.length && (
-              <div className="mt-8 text-center">
+            {visibleCount < activePool.length && (
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <button
-                  onClick={() => setVisibleCount((c) => c + 12)}
-                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] text-white text-xs font-semibold shadow-sm cursor-pointer"
+                  onClick={() => setVisibleCount((c) => c + 24)}
+                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer"
                 >
-                  Tampilkan Lebih Banyak ({results.length - visibleCount} tersisa)
+                  Tampilkan Lebih Banyak ({activePool.length - visibleCount} tersisa)
+                </button>
+                <button
+                  onClick={() => setVisibleCount(activePool.length)}
+                  className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                    darkMode
+                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:bg-slate-800'
+                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
+                  }`}
+                >
+                  Tampilkan Semua ({activePool.length})
                 </button>
               </div>
             )}
