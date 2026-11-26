@@ -933,6 +933,7 @@ export default function App() {
 
   // Search & Filter states
   const [searchInput, setSearchInput] = useState('');
+  const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [selectedKategori, setSelectedKategori] = useState('');
   const [selectedBudaya, setSelectedBudaya] = useState('');
@@ -1144,6 +1145,7 @@ export default function App() {
 
   const resetFilters = () => {
     setSearchInput('');
+    setShowSearchSuggestions(false);
     setKeyword('');
     setSelectedKategori('');
     setSelectedBudaya('');
@@ -1158,6 +1160,7 @@ export default function App() {
     if (e) e.preventDefault();
     const term = overrideQuery !== undefined ? overrideQuery : searchInput;
     setSearchInput(term);
+    setShowSearchSuggestions(false);
     setKeyword(term);
     if (term.trim()) {
       setSearchHistory((prev) => [
@@ -1477,8 +1480,20 @@ export default function App() {
     keyword || selectedKategori || selectedBudaya || selectedKecamatan || selectedKawasan || selectedTeknik || halalFilter
   );
 
+  const searchSuggestions = useMemo(() => {
+    const query = searchInput.trim().toLocaleLowerCase();
+    if (!query) return [];
+
+    return (allDishes.length ? allDishes : DEMO_DISHES)
+      .filter((dish) => String(dish.nama || '').toLocaleLowerCase().includes(query))
+      .slice(0, 8);
+  }, [allDishes, searchInput]);
+
+  const matchingSearchResults = searchInput.trim()
+    ? results.filter((dish) => String(dish.nama || '').toLocaleLowerCase().includes(searchInput.trim().toLocaleLowerCase()))
+    : results;
   const displayedResults = hasActiveFilter
-    ? results.slice(0, visibleCount)
+    ? matchingSearchResults.slice(0, visibleCount)
     : (allDishes.length ? allDishes : DEMO_DISHES).slice(0, 6);
   const favoriteDishes = (allDishes.length ? allDishes : results).filter((d) => favorites.includes(d.slug));
 
@@ -1858,7 +1873,7 @@ export default function App() {
             </div>
 
             {/* Pill Search Bar */}
-            <form onSubmit={executeSearchSubmit} className="max-w-3xl mx-auto mb-4">
+            <form onSubmit={executeSearchSubmit} className="relative max-w-3xl mx-auto mb-4">
               <div
                 className={`flex items-center rounded-full border p-1.5 pl-5 transition-all ${
                   darkMode
@@ -1873,8 +1888,14 @@ export default function App() {
                   onChange={(e) => {
                     setSearchInput(e.target.value);
                     setKeyword(e.target.value);
+                    setShowSearchSuggestions(true);
                   }}
-                  placeholder="Cari kuliner Medan, rempah, budaya, atau kawasan populer..."
+                  onFocus={() => setShowSearchSuggestions(true)}
+                  onBlur={() => setShowSearchSuggestions(false)}
+                  aria-autocomplete="list"
+                  aria-controls="kuliner-search-suggestions"
+                  aria-expanded={showSearchSuggestions && Boolean(searchInput.trim())}
+                  placeholder="Cari nama kuliner Medan..."
                   className={`flex-1 bg-transparent text-sm outline-none ${
                     darkMode ? 'text-white placeholder-slate-500' : 'text-slate-800 placeholder-slate-400'
                   }`}
@@ -1911,6 +1932,51 @@ export default function App() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
+              {showSearchSuggestions && searchInput.trim() && (
+                <div
+                  id="kuliner-search-suggestions"
+                  role="listbox"
+                  aria-label="Hasil pencarian kuliner"
+                  className={`absolute left-0 right-0 top-full z-30 mt-2 max-h-80 overflow-y-auto rounded-2xl border shadow-xl ${
+                    darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'
+                  }`}
+                >
+                  {searchSuggestions.length ? (
+                    searchSuggestions.map((dish) => {
+                      const name = String(dish.nama || '');
+                      const query = searchInput.trim();
+                      const matchStart = name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase());
+                      const matchEnd = matchStart + query.length;
+
+                      return (
+                        <button
+                          key={dish.slug}
+                          type="button"
+                          role="option"
+                          aria-selected="false"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => executeSearchSubmit(null, name)}
+                          className={`block w-full px-5 py-3 text-left text-sm transition-colors ${
+                            darkMode
+                              ? 'text-slate-200 hover:bg-slate-800'
+                              : 'text-slate-700 hover:bg-blue-50'
+                          }`}
+                        >
+                          {name.slice(0, matchStart)}
+                          <span className="rounded-sm bg-blue-100 font-semibold text-[#1d63ed] dark:bg-sky-500/20 dark:text-sky-300">
+                            {name.slice(matchStart, matchEnd)}
+                          </span>
+                          {name.slice(matchEnd)}
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <p role="status" className={`px-5 py-3 text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Tidak ada kuliner yang cocok.
+                    </p>
+                  )}
+                </div>
+              )}
             </form>
 
             {/* Pencarian Populer Row */}
@@ -2282,7 +2348,11 @@ export default function App() {
               <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
                 <div>
                   <h2 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                    {hasActiveFilter ? `Menampilkan ${results.length} Rekomendasi Kuliner` : 'Rekomendasi Kuliner Pilihan di Medan'}
+                    {searchInput.trim()
+                      ? `Hasil Pencarian (${matchingSearchResults.length})`
+                      : hasActiveFilter
+                        ? `Hasil Filter (${results.length})`
+                        : 'Rekomendasi Kuliner Pilihan di Medan'}
                   </h2>
                   <p className="text-xs text-slate-500">
                     Pilih hidangan untuk melihat detail racikan rempah, jam buka, lokasi peta, dan padanan menu terbaik.
@@ -2309,11 +2379,21 @@ export default function App() {
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {displayedResults.map(renderDishCard)}
-                  </div>
+                  {displayedResults.length ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {displayedResults.map(renderDishCard)}
+                    </div>
+                  ) : hasActiveFilter ? (
+                    <p role="status" className={`rounded-2xl border p-6 text-center text-sm ${
+                      darkMode ? 'border-slate-800 bg-slate-900 text-slate-400' : 'border-slate-200 bg-white text-slate-500'
+                    }`}>
+                      {searchInput.trim()
+                        ? 'Tidak ada kuliner yang cocok dengan pencarian.'
+                        : 'Tidak ada kuliner yang cocok dengan filter ini.'}
+                    </p>
+                  ) : null}
 
-                  {visibleCount < results.length && (
+                  {visibleCount < matchingSearchResults.length && (
                     <div className="mt-8 text-center">
                       <button
                         onClick={() => setVisibleCount((c) => c + 12)}
@@ -2323,7 +2403,7 @@ export default function App() {
                             : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
                         }`}
                       >
-                        Muat Lebih Banyak ({results.length - visibleCount} kuliner lainnya)
+                        Muat Lebih Banyak ({matchingSearchResults.length - visibleCount} kuliner lainnya)
                       </button>
                     </div>
                   )}
