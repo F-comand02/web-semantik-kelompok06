@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const SPARQL_ENDPOINT = process.env.SPARQL_ENDPOINT || 'http://localhost:3030/kuliner/query';
 const ONTOLOGY_NS = process.env.ONTOLOGY_NS || 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
 

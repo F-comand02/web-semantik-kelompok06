@@ -50,7 +50,7 @@ import {
   OrganicHalalLeafIcon,
 } from './components/OrganicIcons';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://localhost:5001/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
 const GEMINI_API_KEY = '';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
@@ -1003,7 +1003,7 @@ export default function App() {
         }
       })
       .catch(() => {
-        setHealth({ status: 'disconnected', error: 'Backend server on port 5000 is not reachable.' });
+        setHealth({ status: 'disconnected', error: 'Backend server on port 5001 is not reachable.' });
         setIsDemoMode(true);
         setFacets(buildDemoFacets(DEMO_DISHES));
         setAllDishes(DEMO_DISHES);
@@ -3054,9 +3054,6 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center gap-5 font-medium">
-              <button onClick={() => setActiveView('api')} className="hover:text-[#1d63ed] cursor-pointer">
-                Portal Mitra
-              </button>
               <button onClick={() => setActiveView('pengaturan')} className="hover:text-[#1d63ed] cursor-pointer">
                 Tentang Kami
               </button>
