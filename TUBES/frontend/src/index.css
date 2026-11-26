@@ -1,1 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-system, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --color-sambal: #b91c1c;
+  --color-sambal-dark: #7f1d1d;
+  --color-kunyit: #d97706;
+  --color-cream: #fff8ec;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.ulos-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #b91c1c 0 14px,
+    #111827 14px 22px,
+    #f59e0b 22px 30px,
+    #111827 30px 38px,
+    #fff8ec 38px 44px,
+    #111827 44px 52px
+  );
+}
+
+.dot-pattern {
+  background-image: radial-gradient(rgba(185, 28, 28, 0.14) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.dark .dot-pattern {
+  background-image: radial-gradient(rgba(245, 158, 11, 0.16) 1px, transparent 1px);
+}
+
+input[type="range"] {
+  accent-color: #b91c1c;
+}
