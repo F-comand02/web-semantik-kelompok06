@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Home,
@@ -30,100 +30,120 @@ import {
   Database,
   Play,
   Layers,
-  AlertTriangle,
   Award,
   ChefHat,
   HeartHandshake,
   GitBranch,
   Store,
-  BarChart2,
   Check,
   Copy,
   Users,
   Menu,
+  Bot,
+  Send,
+  RotateCcw,
+  KeyRound,
+  Filter,
 } from 'lucide-react';
 
 const API_BASE = 'http://localhost:5000/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
+const GEMINI_API_KEY = '';
+const GEMINI_MODEL = 'gemini-3-flash-preview';
+const LOCAL_KEY_STORAGE = 'ranah_kulmed_gemini_key';
 
-// ============================================================================
-// CUSTOM BRAND LOGO ("M" + MAGNIFYING GLASS) & ISTANA MAIMUN SILHOUETTE SVG
-// ============================================================================
-function MedanSearchLogo({ size = 'md', darkMode = false }) {
-  const iconDim = size === 'lg' ? 'w-12 h-12' : size === 'sm' ? 'w-6 h-6' : 'w-9 h-9';
-  const textClass =
-    size === 'lg'
-      ? 'text-4xl sm:text-5xl font-extrabold tracking-tight'
-      : size === 'sm'
-      ? 'text-base font-bold tracking-tight'
-      : 'text-lg font-extrabold leading-tight tracking-tight';
+// Structured JSON Schema for reliable, zero-hallucination AI culinary recommendations
+const GEMINI_RESPONSE_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    summary: { type: 'STRING' },
+    recommendations: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          slug: { type: 'STRING' },
+          nama: { type: 'STRING' },
+          alasan: { type: 'STRING' },
+          estimasiHarga: { type: 'STRING' },
+          lokasi: { type: 'STRING' },
+        },
+        required: ['slug', 'nama', 'alasan'],
+      },
+    },
+    suggestedFilters: {
+      type: 'OBJECT',
+      properties: {
+        keyword: { type: 'STRING' },
+        halal: { type: 'STRING' },
+        kategoriSlug: { type: 'STRING' },
+        kecamatanSlug: { type: 'STRING' },
+      },
+    },
+    followUpQuestions: {
+      type: 'ARRAY',
+      items: { type: 'STRING' },
+    },
+  },
+  required: ['summary', 'recommendations', 'followUpQuestions'],
+};
 
-  return (
-    <div className="inline-flex items-center gap-2.5 select-none">
-      <svg viewBox="0 0 64 64" className={`${iconDim} shrink-0`} fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="medanGrad" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#0ea5e9" />
-            <stop offset="55%" stopColor="#1d63ed" />
-            <stop offset="100%" stopColor="#1e40af" />
-          </linearGradient>
-        </defs>
-        {/* Stylized Letter M */}
-        <path
-          d="M10 50V18C10 14.5 14.2 12.8 16.6 15.3L32 31.5L47.4 15.3C49.8 12.8 54 14.5 54 18V31"
-          stroke="url(#medanGrad)"
-          strokeWidth="7.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Integrated Magnifying Glass on Bottom-Right */}
-        <circle cx="44" cy="43" r="10" stroke="url(#medanGrad)" strokeWidth="5.5" fill={darkMode ? '#0f172a' : '#ffffff'} />
-        <path d="M51.5 50.5L58 57" stroke="url(#medanGrad)" strokeWidth="6" strokeLinecap="round" />
-      </svg>
-      {size === 'md' ? (
-        <div className={textClass}>
-          <span className={darkMode ? 'text-white block' : 'text-slate-900 block'}>Medan</span>
-          <span className="text-[#1d63ed] dark:text-sky-400 block -mt-1">Search</span>
-        </div>
-      ) : (
-        <span className={textClass}>
-          <span className={darkMode ? 'text-white' : 'text-slate-900'}>Medan </span>
-          <span className="text-[#1d63ed] dark:text-sky-400">Search</span>
-        </span>
-      )}
-    </div>
-  );
-}
+const INITIAL_AI_MESSAGE = {
+  role: 'model',
+  text: 'Halo! Saya Asisten Ranah KulMed. Ceritakan selera rasa, budget, status halal, atau kawasan Medan yang kamu tuju—aku akan mencarikan rekomendasi terbaik langsung dari katalog kami.',
+  recommendations: [],
+  suggestedFilters: null,
+  followUpQuestions: [
+    'Sarapan halal di Medan di bawah Rp 30 ribu?',
+    'Oleh-oleh khas Medan terbaik untuk keluarga?',
+    'Kuliner pedas berempah andaliman yang wajib dicoba?',
+  ],
+  isFallback: false,
+};
 
-function MaimunSilhouette({ className = '' }) {
-  return (
-    <svg viewBox="0 0 520 220" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-      {/* Subtle architectural silhouette inspired by Istana Maimun & Masjid Raya Medan */}
-      <path d="M0 220V195H45V165H75V145C75 130 90 120 90 120C90 120 105 130 105 145V165H145V130H185V105C185 75 230 55 260 35C290 55 335 75 335 105V130H375V165H415V145C415 130 430 120 430 120C430 120 445 130 445 145V165H480V195H520V220H0Z" />
-      <rect x="257" y="14" width="6" height="24" rx="3" />
-      <circle cx="260" cy="12" r="5" />
-      <rect x="155" y="92" width="14" height="75" rx="4" />
-      <path d="M152 94C152 82 162 74 162 74C162 74 172 82 172 94H152Z" />
-      <rect x="351" y="92" width="14" height="75" rx="4" />
-      <path d="M348 94C348 82 358 74 358 74C358 74 368 82 368 94H348Z" />
-    </svg>
-  );
-}
+const POPULAR_SEARCHES = ['Soto Medan', 'Bika Ambon', 'Mie Gomak', 'Durian', 'Andaliman', 'Kesawan'];
 
-// ============================================================================
-// 6 PRESET MULTI-HOP & AGGREGATION SPARQL QUERIES (Kelompok06/KomA/25#)
-// ============================================================================
+const NODE_COLORS = {
+  Kuliner: '#1d63ed',
+  Kategori: '#8b5cf6',
+  PengaruhBudaya: '#f59e0b',
+  BahanUtama: '#10b981',
+  Restoran: '#f43f5e',
+  Kecamatan: '#0ea5e9',
+  Kelurahan: '#6366f1',
+  KawasanKuliner: '#ec4899',
+  TeknikMasak: '#f97316',
+  ProfilRasa: '#eab308',
+  PenghargaanKuliner: '#a855f7',
+};
+
+const NODE_LABELS = {
+  Kuliner: 'Hidangan',
+  Kategori: 'Kategori',
+  PengaruhBudaya: 'Budaya',
+  BahanUtama: 'Bahan & Rempah',
+  Restoran: 'Tempat Kuliner',
+  Kecamatan: 'Kecamatan',
+  Kelurahan: 'Kelurahan',
+  KawasanKuliner: 'Kawasan Populer',
+  TeknikMasak: 'Teknik Masak',
+  ProfilRasa: 'Profil Rasa',
+  PenghargaanKuliner: 'Penghargaan',
+};
+
 const PRESET_SPARQL = [
   {
-    title: '1. Kuliner Halal di Sekitar Kawasan Medan Baru',
-    badge: 'Rekomendasi Area',
+    title: 'Kuliner Halal di Sekitar Medan Baru & Kecamatan Tetangga',
+    badge: 'Radius Lokasi',
     query: `PREFIX ex: <${ONTOLOGY_URI}>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
-SELECT DISTINCT ?kuliner ?restoran ?kecamatanTetangga ?kelurahan ?harga WHERE {
-  ex:KecMedanBaru ex:berbatasanDengan ?kec .
-  ?kec rdfs:label ?kecamatanTetangga .
+SELECT DISTINCT ?kuliner ?restoran ?kecamatan ?kelurahan ?harga WHERE {
+  { BIND(ex:KecMedanBaru AS ?kec) }
+  UNION
+  { ex:KecMedanBaru ex:berbatasanDengan ?kec }
+  ?kec rdfs:label ?kecamatan .
   ?r a ex:Restoran ;
      schema:name ?restoran ;
      ex:berlokasiDi ?kec ;
@@ -136,77 +156,58 @@ SELECT DISTINCT ?kuliner ?restoran ?kecamatanTetangga ?kelurahan ?harga WHERE {
      ex:rekomendasiTempat ?r .
   FILTER(LANG(?kuliner) = "id")
 }
-ORDER BY ?kecamatanTetangga ?kuliner`,
+ORDER BY ?kecamatan ?kuliner
+LIMIT 25`,
   },
   {
-    title: '2. Jaringan Cabang Restoran Populer & Lokasi Kelurahan',
-    badge: 'Cabang Resmi',
+    title: 'Daftar Hidangan Berbumbu Andaliman Khas Sumatera Utara',
+    badge: 'Rempah Ikonik',
     query: `PREFIX ex: <${ONTOLOGY_URI}>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
-SELECT ?restoranInduk ?cabang ?kecamatan ?kelurahan ?lat ?long WHERE {
-  ?c a ex:Restoran ;
-     schema:name ?cabang ;
-     ex:cabangDari ?induk ;
-     ex:berlokasiDi ?kec ;
-     ex:berlokasiDiKelurahan ?kel ;
-     schema:geo ?geo .
-  ?induk schema:name ?restoranInduk .
-  ?kec rdfs:label ?kecamatan .
-  ?kel rdfs:label ?kelurahan .
-  ?geo schema:latitude ?lat ;
-       schema:longitude ?long .
-}
-ORDER BY ?restoranInduk`,
-  },
-  {
-    title: '3. Sajian Halal Berbahan Andaliman Khas Sumatera',
-    badge: 'Rempah Autentik',
-    query: `PREFIX ex: <${ONTOLOGY_URI}>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX schema: <http://schema.org/>
-
-SELECT ?kuliner ?budaya ?restoran ?harga WHERE {
+SELECT ?kuliner ?budaya ?restoran ?kecamatan ?harga WHERE {
   ?k a ex:Kuliner ;
      rdfs:label ?kuliner ;
-     ex:isHalal true ;
      ex:memilikiBahan ex:BahanAndaliman ;
      ex:pengaruhBudaya ?b ;
      ex:kisaranHarga ?harga ;
      ex:rekomendasiTempat ?r .
   FILTER(LANG(?kuliner) = "id")
   ?b rdfs:label ?budaya . FILTER(LANG(?budaya) = "id")
-  ?r schema:name ?restoran .
-}`,
+  ?r schema:name ?restoran ; ex:berlokasiDi ?kec .
+  ?kec rdfs:label ?kecamatan .
+}
+ORDER BY ?kuliner`,
   },
   {
-    title: '4. Destinasi Kuliner Legendaris Medan (Berdiri Sebelum 1985)',
-    badge: 'Kuliner Legendaris',
+    title: 'Cabang Resmi Restoran Populer di Berbagai Kawasan Medan',
+    badge: 'Jaringan Cabang',
     query: `PREFIX ex: <${ONTOLOGY_URI}>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 
-SELECT ?restoran ?tahunBerdiri ?kuliner ?kecamatan WHERE {
-  ?r a ex:Restoran ;
-     schema:name ?restoran ;
-     ex:tahunBerdiri ?tahunBerdiri ;
-     ex:berlokasiDi ?kec .
-  FILTER(?tahunBerdiri < 1985)
+SELECT ?restoranUtama ?cabang ?kecamatan ?kelurahan ?kawasan WHERE {
+  ?c a ex:Restoran ;
+     schema:name ?cabang ;
+     ex:cabangDari ?induk ;
+     ex:berlokasiDi ?kec ;
+     ex:berlokasiDiKelurahan ?kel ;
+     ex:beradaDiKawasan ?kaw .
+  ?induk schema:name ?restoranUtama .
   ?kec rdfs:label ?kecamatan .
-  ?k ex:rekomendasiTempat ?r ;
-     rdfs:label ?kuliner .
-  FILTER(LANG(?kuliner) = "id")
+  ?kel rdfs:label ?kelurahan .
+  ?kaw rdfs:label ?kawasan . FILTER(LANG(?kawasan) = "id")
 }
-ORDER BY ASC(?tahunBerdiri)`,
+ORDER BY ?restoranUtama`,
   },
   {
-    title: '5. Ragam Kuliner & Kisaran Harga Berdasarkan Akar Budaya',
-    badge: 'Wawasan Budaya',
+    title: 'Statistik Jumlah Hidangan & Rata-Rata Harga per Tradisi Budaya',
+    badge: 'Statistik Budaya',
     query: `PREFIX ex: <${ONTOLOGY_URI}>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?budaya (COUNT(DISTINCT ?k) AS ?totalKuliner) (ROUND(AVG(?hMin)) AS ?rataHargaMinIDR) WHERE {
+SELECT ?budaya (COUNT(DISTINCT ?k) AS ?totalHidangan) (ROUND(AVG(?hMin)) AS ?rataHargaMinIDR) WHERE {
   ?k a ex:Kuliner ;
      ex:pengaruhBudaya ?b ;
      ex:hargaMin ?hMin .
@@ -214,61 +215,48 @@ SELECT ?budaya (COUNT(DISTINCT ?k) AS ?totalKuliner) (ROUND(AVG(?hMin)) AS ?rata
   FILTER(LANG(?budaya) = "id")
 }
 GROUP BY ?budaya
-ORDER BY DESC(?totalKuliner)`,
+ORDER BY DESC(?totalHidangan)`,
   },
   {
-    title: '6. Sebaran Destinasi Kuliner di 21 Kecamatan Kota Medan',
-    badge: 'Peta Wilayah',
+    title: 'Tempat Kuliner Legendaris Medan (Berdiri Sebelum 1985)',
+    badge: 'Warisan Kuliner',
+    query: `PREFIX ex: <${ONTOLOGY_URI}>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?kuliner ?restoran ?tahunBerdiri ?kawasan ?rating WHERE {
+  ?r a ex:Restoran ;
+     schema:name ?restoran ;
+     ex:tahunBerdiri ?tahunBerdiri ;
+     ex:rating ?rating ;
+     ex:beradaDiKawasan ?kaw .
+  FILTER(?tahunBerdiri < 1985)
+  ?kaw rdfs:label ?kawasan . FILTER(LANG(?kawasan) = "id")
+  ?k a ex:Kuliner ;
+     rdfs:label ?kuliner ;
+     ex:rekomendasiTempat ?r .
+  FILTER(LANG(?kuliner) = "id")
+}
+ORDER BY ASC(?tahunBerdiri)`,
+  },
+  {
+    title: 'Sebaran Kelurahan & Tempat Kuliner di 21 Kecamatan Kota Medan',
+    badge: 'Peta 21 Kecamatan',
     query: `PREFIX ex: <${ONTOLOGY_URI}>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?kecamatan (COUNT(DISTINCT ?kel) AS ?totalKelurahan) (COUNT(DISTINCT ?r) AS ?totalRestoran) WHERE {
+SELECT ?kecamatan (COUNT(DISTINCT ?kel) AS ?totalKelurahan) (COUNT(DISTINCT ?r) AS ?totalTempat) WHERE {
   ?kec a ex:Kecamatan ;
        rdfs:label ?kecamatan .
   OPTIONAL { ?kel a ex:Kelurahan ; ex:bagianDariKecamatan ?kec . }
   OPTIONAL { ?r a ex:Restoran ; ex:berlokasiDi ?kec . }
 }
 GROUP BY ?kecamatan
-ORDER BY DESC(?totalRestoran) DESC(?totalKelurahan)`,
+ORDER BY DESC(?totalTempat) DESC(?totalKelurahan)`,
   },
 ];
 
-const NODE_COLORS = {
-  Kuliner: '#1d63ed',
-  Kategori: '#7c3aed',
-  PengaruhBudaya: '#d97706',
-  BahanUtama: '#059669',
-  Restoran: '#e11d48',
-  Kecamatan: '#0284c7',
-  Kelurahan: '#4f46e5',
-  KawasanKuliner: '#db2777',
-  TeknikMasak: '#ea580c',
-  ProfilRasa: '#ca8a04',
-  PenghargaanKuliner: '#9333ea',
-};
-
-const NODE_LABELS = {
-  Kuliner: 'Hidangan',
-  Kategori: 'Kategori',
-  PengaruhBudaya: 'Budaya',
-  BahanUtama: 'Bahan & Rempah',
-  Restoran: 'Tempat Makan',
-  Kecamatan: 'Kecamatan',
-  Kelurahan: 'Kelurahan',
-  KawasanKuliner: 'Kawasan Kuliner',
-  TeknikMasak: 'Teknik Masak',
-  ProfilRasa: 'Profil Rasa',
-  PenghargaanKuliner: 'Penghargaan',
-};
-
-const TEAM_MEMBERS = [
-  { name: 'Farel Yamotaro Hia', role: 'Founder & Product Lead' },
-  { name: 'Ray Nathan Geereno Saragih', role: 'Head of Culinary Data & Curation' },
-  { name: 'Naufal Muhammad Dzaki', role: 'Lead Search & Backend Engineer' },
-  { name: 'William Fransisco Sihotang', role: 'Lead UI/UX & Product Designer' },
-  { name: 'Yabesh Day Siahaan', role: 'Quality Assurance & Content Strategist' },
-];
-
+// Curated preview catalog (used automatically when local Fuseki backend is offline)
 const DEMO_DISHES = [
   {
     slug: 'SotoMedan',
@@ -292,7 +280,10 @@ const DEMO_DISHES = [
     penghargaan: 'Warisan Budaya Takbenda Indonesia (Kemendikbud)',
     bahanUtama: ['Santan Kelapa', 'Daging Sapi', 'Daun Jeruk Purut', 'Serai Wangi'],
     sameAs: ['http://dbpedia.org/resource/Soto_Medan'],
-    pairings: [{ slug: 'SateKerangMedan', nama: 'Sate Kerang Medan' }],
+    pairings: [
+      { slug: 'SateKerangMedan', nama: 'Sate Kerang Medan' },
+      { slug: 'SodaBadak', nama: 'Es Soda Badak Susu' },
+    ],
     branches: [
       {
         slug: 'CabangSotoSinarPagiRingRoad',
@@ -340,7 +331,7 @@ const DEMO_DISHES = [
     penghargaan: 'Top Oleh-Oleh Bandara Kualanamu',
     bahanUtama: ['Santan Kelapa', 'Daun Jeruk Purut', 'Tepung Tapioka & Sagu', 'Serai Wangi'],
     sameAs: ['http://dbpedia.org/resource/Bika_ambon'],
-    pairings: [],
+    pairings: [{ slug: 'KopiApek', nama: 'Kopi Sidikalang (Kopi Apek)' }],
     branches: [
       {
         slug: 'CabangZulaikhaAmplas',
@@ -388,7 +379,7 @@ const DEMO_DISHES = [
     penghargaan: 'Ikon Medan Culinary Festival',
     bahanUtama: ['Mie Lidi', 'Andaliman (Merica Batak)', 'Santan Kelapa', 'Kunyit Segar'],
     sameAs: ['http://dbpedia.org/resource/Mie_gomak'],
-    pairings: [],
+    pairings: [{ slug: 'TST', nama: 'Teh Susu Telur (TST)' }],
     branches: [],
     restoran: {
       nama: 'Mie Gomak Pasar Petisah',
@@ -427,7 +418,7 @@ const DEMO_DISHES = [
     penghargaan: 'Ikon Medan Culinary Festival',
     bahanUtama: ['Santan Kelapa', 'Tauco Medan', 'Ikan Teri Medan', 'Kacang Tanah Sangrai'],
     sameAs: ['http://dbpedia.org/resource/Lontong'],
-    pairings: [{ slug: 'SateKerangMedan', nama: 'Sate Kerang Medan' }],
+    pairings: [{ slug: 'KopiApek', nama: 'Kopi Sidikalang (Kopi Apek)' }],
     branches: [
       {
         slug: 'CabangLontongKakLinMansyur',
@@ -454,6 +445,54 @@ const DEMO_DISHES = [
     },
   },
   {
+    slug: 'DurianPancake',
+    uri: `${ONTOLOGY_URI}DurianPancake`,
+    nama: 'Pancake Durian Medan',
+    namaEn: 'Medan Durian Crepe Pancake',
+    deskripsi:
+      'Kulit crepe tipis lembut berisi daging buah durian Medan asli yang legit dipadu krim kocok dingin.',
+    gambar: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
+    isHalal: true,
+    tingkatKepedasan: 0,
+    kisaranHarga: 'Rp 75.000 - Rp 120.000',
+    rasaDominan: 'Manis Legit & Harum',
+    metodeMasak: 'Seduh, Tarik & Racik Dingin',
+    teknikSlug: 'TeknikSeduhRacik',
+    kategori: 'Oleh-Oleh Khas',
+    kategoriSlug: 'KatOlehOleh',
+    budaya: 'Akulturasi Jawa & Kolonial',
+    budayaSlug: 'BudayaJawaKolonial',
+    waktuSajian: 'Sepanjang Hari',
+    penghargaan: 'Top Oleh-Oleh Bandara Kualanamu',
+    bahanUtama: ['Durian Medan', 'Tepung Gandum / Roti', 'Susu Kental Manis', 'Daun Pandan Wangi'],
+    sameAs: ['http://dbpedia.org/resource/Durian'],
+    pairings: [],
+    branches: [
+      {
+        slug: 'CabangUcokDurianRingRoad',
+        nama: 'Ucok Durian Cab. Ring Road',
+        alamat: 'Jl. Ring Road No. 92, Tanjung Sari',
+        kecamatan: 'Medan Selayang',
+        kelurahan: 'Kelurahan Tanjung Sari',
+        rating: 4.5,
+      },
+    ],
+    restoran: {
+      nama: 'Ucok Durian Medan',
+      alamat: 'Jl. K.H. Wahid Hasyim No. 30-32, Babura, Medan Baru',
+      kecamatan: 'Medan Baru',
+      kecamatanSlug: 'KecMedanBaru',
+      kelurahan: 'Kelurahan Babura',
+      kawasan: 'Sentra Durian & Kuliner Jl. Wahid Hasyim',
+      kawasanSlug: 'KawasanWahidHasyim',
+      jamBuka: '08:00 - 23:59 WIB',
+      rating: 4.5,
+      tahunBerdiri: 1985,
+      lat: 3.5778,
+      long: 98.6602,
+    },
+  },
+  {
     slug: 'KariBihunTabona',
     uri: `${ONTOLOGY_URI}KariBihunTabona`,
     nama: 'Kari Bihun Tabona',
@@ -476,7 +515,16 @@ const DEMO_DISHES = [
     bahanUtama: ['Bihun Halus', 'Rempah Kari India-Melayu', 'Santan Kelapa', 'Daging Sapi'],
     sameAs: [],
     pairings: [],
-    branches: [],
+    branches: [
+      {
+        slug: 'CabangRMTabonaCemara',
+        nama: 'RM Tabona Cab. Cemara Asri',
+        alamat: 'Komplek Cemara Asri No. 88, Pulo Brayan Darat II',
+        kecamatan: 'Medan Timur',
+        kelurahan: 'Kelurahan Pulo Brayan Darat II',
+        rating: 4.7,
+      },
+    ],
     restoran: {
       nama: 'Rumah Makan Tabona',
       alamat: 'Jl. Mangkubumi No. 17, Aur, Medan Maimun',
@@ -531,6 +579,84 @@ const DEMO_DISHES = [
       long: 98.6789,
     },
   },
+  {
+    slug: 'KopiApek',
+    uri: `${ONTOLOGY_URI}KopiApek`,
+    nama: 'Kopi Sidikalang (Kopi Apek)',
+    namaEn: 'Sidikalang Traditional Kopitiam Coffee',
+    deskripsi:
+      'Kopi bubuk Sidikalang yang diseduh menggunakan saringan kain khas kopitiam Medan, disajikan hitam pekat atau dengan susu kental manis.',
+    gambar: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',
+    isHalal: true,
+    tingkatKepedasan: 0,
+    kisaranHarga: 'Rp 14.000 - Rp 22.000',
+    rasaDominan: 'Pahit Kopi Aromatik',
+    metodeMasak: 'Seduh, Tarik & Racik Dingin',
+    teknikSlug: 'TeknikSeduhRacik',
+    kategori: 'Kopitiam & Roti',
+    kategoriSlug: 'KatKopitiam',
+    budaya: 'Tionghoa-Medan',
+    budayaSlug: 'BudayaTionghoaMedan',
+    waktuSajian: 'Sarapan (Pagi)',
+    penghargaan: 'Kurasi Kuliner Kesawan City Walk',
+    bahanUtama: ['Kopi Sidikalang', 'Susu Kental Manis'],
+    sameAs: [],
+    pairings: [{ slug: 'BikaAmbon', nama: 'Bika Ambon' }],
+    branches: [],
+    restoran: {
+      nama: 'Kedai Kopi Apek Kesawan',
+      alamat: 'Jl. Hindu No. 37, Kesawan, Medan Barat',
+      kecamatan: 'Medan Barat',
+      kecamatanSlug: 'KecMedanBarat',
+      kelurahan: 'Kelurahan Kesawan',
+      kawasan: 'Kawasan Heritage Kesawan',
+      kawasanSlug: 'KawasanKesawan',
+      jamBuka: '06:30 - 14:30 WIB',
+      rating: 4.6,
+      tahunBerdiri: 1922,
+      lat: 3.5858,
+      long: 98.6781,
+    },
+  },
+  {
+    slug: 'TST',
+    uri: `${ONTOLOGY_URI}TST`,
+    nama: 'Teh Susu Telur (TST)',
+    namaEn: 'Medan Egg Milk Tea',
+    deskripsi:
+      'Minuman hangat penambah stamina khas Medan dari kocokan kuning telur ayam kampung, susu kental manis, dan seduhan teh hitam pekat.',
+    gambar: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
+    isHalal: true,
+    tingkatKepedasan: 0,
+    kisaranHarga: 'Rp 15.000 - Rp 25.000',
+    rasaDominan: 'Manis Legit & Harum',
+    metodeMasak: 'Seduh, Tarik & Racik Dingin',
+    teknikSlug: 'TeknikSeduhRacik',
+    kategori: 'Minuman Khas',
+    kategoriSlug: 'KatMinuman',
+    budaya: 'India-Tamil',
+    budayaSlug: 'BudayaIndiaTamil',
+    waktuSajian: 'Makan Malam',
+    penghargaan: 'Ikon Medan Culinary Festival',
+    bahanUtama: ['Teh Hitam Pekat', 'Susu Kental Manis'],
+    sameAs: [],
+    pairings: [{ slug: 'MieGomak', nama: 'Mie Gomak' }],
+    branches: [],
+    restoran: {
+      nama: 'TST Pak Haji Puri',
+      alamat: 'Jl. Puri No. 58, Kotamatsum II, Medan Area',
+      kecamatan: 'Medan Area',
+      kecamatanSlug: 'KecMedanArea',
+      kelurahan: 'Kelurahan Kotamatsum II',
+      kawasan: 'Kuliner Malam Asia Mega Mas',
+      kawasanSlug: 'KawasanAsiaMegaMas',
+      jamBuka: '17:00 - 01:00 WIB',
+      rating: 4.6,
+      tahunBerdiri: 1988,
+      lat: 3.5754,
+      long: 98.6915,
+    },
+  },
 ];
 
 function buildDemoFacets(dishes) {
@@ -553,6 +679,165 @@ function buildDemoFacets(dishes) {
     hubs: tally((d) => ({ slug: d.restoran.kawasanSlug, label: d.restoran.kawasan })),
     techniques: tally((d) => ({ slug: d.teknikSlug, label: d.metodeMasak })),
     ingredients: [],
+  };
+}
+
+/**
+ * Brand Logo: Stylized Blue "M" with Integrated Magnifying Glass
+ */
+function RanahKulMedLogo({ size = 'md', darkMode = false, showText = true }) {
+  const dims =
+    size === 'lg'
+      ? { icon: 'w-14 h-14 sm:w-16 sm:h-16', text: 'text-4xl sm:text-5xl', gap: 'gap-3.5' }
+      : size === 'sm'
+      ? { icon: 'w-6 h-6', text: 'text-sm', gap: 'gap-2' }
+      : { icon: 'w-9 h-9', text: 'text-lg', gap: 'gap-2.5' };
+
+  return (
+    <div className={`inline-flex items-center ${dims.gap} select-none`}>
+      <svg viewBox="0 0 64 64" className={`${dims.icon} shrink-0`} aria-hidden="true">
+        <defs>
+          <linearGradient id="medanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2563eb" />
+            <stop offset="100%" stopColor="#1d4ed8" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M10 50 V16 C10 12.5 14 10.5 16.8 12.8 L32 25.5 L47.2 12.8 C50 10.5 54 12.5 54 16 V34"
+          fill="none"
+          stroke="url(#medanBlueGrad)"
+          strokeWidth="8.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="44" cy="43" r="10.5" fill={darkMode ? '#0f172a' : '#ffffff'} stroke="#1d63ed" strokeWidth="5.5" />
+        <line x1="52" y1="51" x2="59" y2="58" stroke="#1e40af" strokeWidth="6" strokeLinecap="round" />
+      </svg>
+      {showText && (
+        <span className={`font-extrabold tracking-tight leading-none ${dims.text}`}>
+          <span className={darkMode ? 'text-white' : 'text-slate-900'}>Ranah </span>
+          <span className="text-[#1d63ed] dark:text-sky-400">KulMed</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Subtle Medan Heritage Architectural Watermark (Istana Maimun / Masjid Raya Silhouette)
+ */
+function MaimunSilhouette({ className = '' }) {
+  return (
+    <svg viewBox="0 0 640 240" className={className} fill="currentColor" aria-hidden="true">
+      <rect x="60" y="185" width="520" height="45" rx="4" />
+      <rect x="110" y="145" width="420" height="45" rx="3" />
+      <rect x="220" y="105" width="200" height="45" rx="3" />
+      <path d="M265 105 C265 55, 375 55, 375 105 Z" />
+      <rect x="317" y="34" width="6" height="24" rx="2" />
+      <circle cx="320" cy="31" r="5" />
+      <path d="M145 145 C145 112, 205 112, 205 145 Z" />
+      <path d="M435 145 C435 112, 495 112, 495 145 Z" />
+      <rect x="92" y="100" width="16" height="90" rx="2" />
+      <path d="M90 100 L100 78 L110 100 Z" />
+      <rect x="532" y="100" width="16" height="90" rx="2" />
+      <path d="M530 100 L540 78 L550 100 Z" />
+    </svg>
+  );
+}
+
+/**
+ * GraphRAG Retriever: ranks the full Medan culinary Knowledge Graph catalog
+ * against user intent (budget, halal status, spice, ingredients, district, culture)
+ * so only the most relevant entities are grounded into the Gemini prompt.
+ */
+function retrieveGraphContext(question, catalog) {
+  const q = String(question || '').toLowerCase();
+  const tokens = q
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t.length >= 2);
+
+  let maxBudget = null;
+  const rbMatch = q.match(/(\d+)\s*(rb|ribu|k)\b/);
+  const fullMatch = q.match(/\b(\d{2,3})[.,]?000\b/);
+  if (rbMatch) maxBudget = Number(rbMatch[1]) * 1000;
+  else if (fullMatch) maxBudget = Number(fullMatch[1]) * 1000;
+  else if (/\b(murah|hemat|mahasiswa|terjangkau)\b/.test(q)) maxBudget = 30000;
+
+  const wantsHalal = /\bhalal\b/.test(q) && !/\bnon[\s-]?halal\b/.test(q);
+  const wantsNonHalal = /\bnon[\s-]?halal\b/.test(q) || /\b(babi|pork|lapo)\b/.test(q);
+  const wantsSpicy = /\b(pedas|andaliman|sambal|cabai|lado)\b/.test(q);
+
+  const scored = catalog.map((d) => {
+    let score = 0;
+    const searchable = [
+      d.nama,
+      d.namaEn,
+      d.deskripsi,
+      d.kategori,
+      d.budaya,
+      d.waktuSajian,
+      d.rasaDominan,
+      d.metodeMasak,
+      d.penghargaan,
+      d.restoran?.nama,
+      d.restoran?.alamat,
+      d.restoran?.kecamatan,
+      d.restoran?.kelurahan,
+      d.restoran?.kawasan,
+      ...(d.bahanUtama || []),
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
+    tokens.forEach((tok) => {
+      if (searchable.includes(tok)) score += 3;
+      if ((d.nama || '').toLowerCase().includes(tok)) score += 5;
+      if ((d.kategori || '').toLowerCase().includes(tok)) score += 4;
+      if ((d.restoran?.kecamatan || '').toLowerCase().includes(tok)) score += 4;
+      if ((d.restoran?.kawasan || '').toLowerCase().includes(tok)) score += 4;
+    });
+
+    if (wantsHalal) score += d.isHalal ? 6 : -12;
+    if (wantsNonHalal) score += !d.isHalal ? 6 : -12;
+    if (wantsSpicy && (d.tingkatKepedasan || 0) >= 3) score += 4;
+
+    if (maxBudget !== null) {
+      const priceNums = (d.kisaranHarga || '').match(/\d[\d.]*/g);
+      const minPrice = priceNums ? Number(priceNums[0].replace(/\./g, '')) : null;
+      if (minPrice && minPrice <= maxBudget) score += 5;
+      else if (minPrice && minPrice > maxBudget * 1.4) score -= 4;
+    }
+
+    if (d.restoran?.rating) score += d.restoran.rating * 0.4;
+    return { dish: d, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, 15).map((s) => s.dish);
+}
+
+/**
+ * Graceful local recommendation builder if Gemini cannot be reached (e.g. offline localhost).
+ */
+function buildLocalFallbackReply(question, retrieved) {
+  const top = retrieved.slice(0, 3);
+  return {
+    text: `Berikut rekomendasi kuliner Medan yang paling sesuai dengan pencarian "${question}" dari katalog Ranah KulMed:`,
+    recommendations: top.map((d) => ({
+      slug: d.slug,
+      nama: d.nama,
+      alasan: `${d.kategori} khas ${d.budaya} (${d.isHalal ? 'Halal' : 'Non-Halal'}) dengan cita rasa ${d.rasaDominan || 'autentik'}.`,
+      estimasiHarga: d.kisaranHarga,
+      lokasi: `${d.restoran?.nama || ''} · ${d.restoran?.kecamatan || 'Medan'}`,
+    })),
+    suggestedFilters: null,
+    followUpQuestions: [
+      'Tampilkan pilihan kuliner halal populer lainnya',
+      'Rekomendasi kuliner malam di sekitar Kesawan',
+    ],
+    isFallback: true,
   };
 }
 
@@ -619,33 +904,53 @@ export default function App() {
   const [visibleCount, setVisibleCount] = useState(12);
 
   const [results, setResults] = useState([]);
+  const [allDishes, setAllDishes] = useState(DEMO_DISHES);
   const [lastSparql, setLastSparql] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Favorites & Search History
   const [favorites, setFavorites] = useState(['SotoMedan', 'BikaAmbon', 'MieGomak']);
   const [searchHistory, setSearchHistory] = useState([
-    { query: 'Soto Medan', time: 'Baru saja', filter: 'Semua Kategori' },
-    { query: 'Andaliman', time: '10 menit lalu', filter: 'Rempah Utama' },
-    { query: 'Kesawan', time: '25 menit lalu', filter: 'Kawasan Heritage' },
+    { query: 'Soto Medan', time: '09:15', filter: 'Pencarian Kuliner' },
+    { query: 'Andaliman', time: '11:40', filter: 'Rempah Khas' },
+    { query: 'Kesawan', time: '14:20', filter: 'Kawasan Kuliner' },
   ]);
 
-  // Detail modal
+  // Detail modal, Knowledge Graph, SPARQL Lab & Clipboard states
   const [selectedDish, setSelectedDish] = useState(null);
   const [dishExtra, setDishExtra] = useState(null);
-
-  // Knowledge Graph state
   const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
   const [graphFocus, setGraphFocus] = useState('SotoMedan');
   const [hoveredNode, setHoveredNode] = useState(null);
-
-  // SPARQL Playground state
   const [sparqlInput, setSparqlInput] = useState(PRESET_SPARQL[0].query);
   const [sparqlOutput, setSparqlOutput] = useState(null);
   const [sparqlError, setSparqlError] = useState('');
   const [copiedText, setCopiedText] = useState('');
 
-  // Fetch health & facets on mount
+  // Gemini AI Culinary Assistant state (GraphRAG + Structured JSON)
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+  const [aiMessages, setAiMessages] = useState([INITIAL_AI_MESSAGE]);
+  const [customGeminiKey, setCustomGeminiKey] = useState(() => {
+    try {
+      return window.localStorage.getItem(LOCAL_KEY_STORAGE) || '';
+    } catch {
+      return '';
+    }
+  });
+  const [keySavedNotice, setKeySavedNotice] = useState(false);
+  const aiChatEndRef = useRef(null);
+
+  // Auto-scroll AI conversation smoothly when new message arrives
+  useEffect(() => {
+    if (aiOpen) {
+      aiChatEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [aiMessages, aiLoading, aiOpen]);
+
+  // Fetch health, facets & full catalog snapshot for GraphRAG grounding
   useEffect(() => {
     fetch(`${API_BASE}/health`)
       .then((r) => r.json())
@@ -654,12 +959,14 @@ export default function App() {
         if (data.status !== 'connected') {
           setIsDemoMode(true);
           setFacets(buildDemoFacets(DEMO_DISHES));
+          setAllDishes(DEMO_DISHES);
         }
       })
       .catch(() => {
         setHealth({ status: 'disconnected', error: 'Backend server on port 5000 is not reachable.' });
         setIsDemoMode(true);
         setFacets(buildDemoFacets(DEMO_DISHES));
+        setAllDishes(DEMO_DISHES);
       });
 
     fetch(`${API_BASE}/facets`)
@@ -668,12 +975,35 @@ export default function App() {
         if (d.categories) setFacets(d);
       })
       .catch(() => {});
+
+    fetch(`${API_BASE}/search`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.results?.length) setAllDishes(d.results);
+      })
+      .catch(() => {});
   }, []);
 
   // Reactive SPARQL query execution
   useEffect(() => {
     const controller = new AbortController();
     const timer = setTimeout(async () => {
+      const hasActiveSearch = Boolean(
+        keyword ||
+        selectedKategori ||
+        selectedBudaya ||
+        selectedKecamatan ||
+        selectedKawasan ||
+        selectedTeknik ||
+        halalFilter
+      );
+
+      if (!hasActiveSearch) {
+        setResults([]);
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
       setVisibleCount(12);
       try {
@@ -772,6 +1102,18 @@ export default function App() {
       .catch(() => setGraphData(buildDemoGraph(graphFocus)));
   }, [activeView, graphFocus, isDemoMode]);
 
+  const resetFilters = () => {
+    setSearchInput('');
+    setKeyword('');
+    setSelectedKategori('');
+    setSelectedBudaya('');
+    setSelectedKecamatan('');
+    setIncludeNeighbors(false);
+    setSelectedKawasan('');
+    setSelectedTeknik('');
+    setHalalFilter('');
+  };
+
   const executeSearchSubmit = (e, overrideQuery) => {
     if (e) e.preventDefault();
     const term = overrideQuery !== undefined ? overrideQuery : searchInput;
@@ -853,6 +1195,182 @@ export default function App() {
     setTimeout(() => setCopiedText(''), 1800);
   };
 
+  const saveLocalGeminiKey = (value) => {
+    setCustomGeminiKey(value);
+    try {
+      if (value.trim()) window.localStorage.setItem(LOCAL_KEY_STORAGE, value.trim());
+      else window.localStorage.removeItem(LOCAL_KEY_STORAGE);
+    } catch {
+      // Ignore storage quota / privacy mode errors
+    }
+    setKeySavedNotice(true);
+    setTimeout(() => setKeySavedNotice(false), 2000);
+  };
+
+  const resetAiChat = () => {
+    setAiMessages([INITIAL_AI_MESSAGE]);
+    setAiError('');
+    setAiPrompt('');
+  };
+
+  const applyAiFilters = (suggested) => {
+    if (!suggested) return;
+    resetFilters();
+    if (suggested.keyword) {
+      setSearchInput(suggested.keyword);
+      setKeyword(suggested.keyword);
+    }
+    if (suggested.halal === 'true' || suggested.halal === 'false') {
+      setHalalFilter(suggested.halal);
+    }
+    if (suggested.kategoriSlug && facets.categories.some((c) => c.slug === suggested.kategoriSlug)) {
+      setSelectedKategori(suggested.kategoriSlug);
+    }
+    if (suggested.kecamatanSlug && facets.districts.some((d) => d.slug === suggested.kecamatanSlug)) {
+      setSelectedKecamatan(suggested.kecamatanSlug);
+    }
+    setShowFilterDrawer(true);
+    setActiveView('beranda');
+  };
+
+  // Professional GraphRAG + Structured Output Gemini Call with Exponential Backoff
+  const askGeminiCulinary = async (e, presetQuestion) => {
+    if (e) e.preventDefault();
+    const question = (presetQuestion !== undefined ? presetQuestion : aiPrompt).trim();
+    if (!question || aiLoading) return;
+
+    setAiOpen(true);
+    const userMsg = { role: 'user', text: question };
+    const nextMessages = [...aiMessages, userMsg];
+    setAiMessages(nextMessages);
+    if (presetQuestion === undefined) setAiPrompt('');
+    setAiLoading(true);
+    setAiError('');
+
+    const catalog = allDishes.length ? allDishes : results.length ? results : DEMO_DISHES;
+    const retrieved = retrieveGraphContext(question, catalog);
+
+    const groundedCatalog = retrieved
+      .map(
+        (d) =>
+          `- slug: ${d.slug} | nama: ${d.nama} | kategori: ${d.kategori} (${d.kategoriSlug || ''}) | budaya: ${d.budaya} | halal: ${d.isHalal ? 'Ya' : 'Tidak'} | pedas: ${d.tingkatKepedasan}/5 | harga: ${d.kisaranHarga} | waktu: ${d.waktuSajian || '-'} | rasa: ${d.rasaDominan || '-'} | tempat: ${d.restoran?.nama} (${d.restoran?.kecamatan}, ${d.restoran?.kawasan || ''}) | bahan: ${(d.bahanUtama || []).join(', ')}`
+      )
+      .join('\n');
+
+    const validCategories = facets.categories.map((c) => `${c.slug} (${c.label})`).join(', ');
+    const validDistricts = facets.districts.map((d) => `${d.slug} (${d.label})`).join(', ');
+
+    const systemInstruction = [
+      'Kamu adalah Asisten Kuliner profesional untuk platform Ranah KulMed (direktori kuliner Kota Medan).',
+      'Jawab selalu dalam Bahasa Indonesia yang ramah, ringkas, dan persuasif.',
+      'ATURAN KETAT (ZERO HALLUCINATION):',
+      '1. Rekomendasikan 1 hingga 4 hidangan TERBAIK yang HANYA berasal dari daftar KATALOG TERVERIFIKASI di bawah ini. Gunakan nilai `slug` persis seperti di katalog.',
+      '2. Jelaskan alasan singkat (1-2 kalimat) yang menonjolkan cita rasa, bahan/rempah, kecocokan budget/halal, dan lokasi.',
+      '3. Isi `suggestedFilters` hanya jika relevan dengan pertanyaan pengguna, menggunakan `halal` ("true", "false", atau ""), `keyword`, `kategoriSlug` dari daftar kategori valid, dan `kecamatanSlug` dari daftar kecamatan valid.',
+      '4. Berikan 2 sampai 3 `followUpQuestions` singkat yang natural untuk melanjutkan eksplorasi.',
+      '',
+      `KATEGORI VALID: ${validCategories || '-'}`,
+      `KECAMATAN VALID: ${validDistricts || '-'}`,
+      '',
+      'KATALOG TERVERIFIKASI MEDAN SEARCH:',
+      groundedCatalog,
+    ].join('\n');
+
+    const historyTurns = nextMessages.slice(-6).map((m) => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.text }],
+    }));
+
+    const effectiveApiKey = customGeminiKey.trim() || GEMINI_API_KEY;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(effectiveApiKey)}`;
+
+    const payload = {
+      contents: historyTurns,
+      systemInstruction: { parts: [{ text: systemInstruction }] },
+      generationConfig: {
+        temperature: 0.4,
+        responseMimeType: 'application/json',
+        responseSchema: GEMINI_RESPONSE_SCHEMA,
+      },
+    };
+
+    try {
+      let data = null;
+      const delays = [1000, 2000, 4000];
+
+      for (let attempt = 0; attempt <= delays.length; attempt++) {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.status === 429 || res.status >= 500) {
+          if (attempt < delays.length) {
+            await new Promise((r) => setTimeout(r, delays[attempt]));
+            continue;
+          }
+        }
+
+        const json = await res.json();
+        if (!res.ok) {
+          throw new Error(json.error?.message || `HTTP ${res.status}`);
+        }
+        data = json;
+        break;
+      }
+
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) {
+        throw new Error('Respons AI kosong.');
+      }
+
+      const parsed = JSON.parse(rawText);
+      const catalogMap = new Map(catalog.map((d) => [d.slug, d]));
+
+      const verifiedRecs = (parsed.recommendations || [])
+        .filter((rec) => rec && (catalogMap.has(rec.slug) || rec.nama))
+        .slice(0, 4)
+        .map((rec) => {
+          const match =
+            catalogMap.get(rec.slug) ||
+            catalog.find((d) => d.nama.toLowerCase() === String(rec.nama || '').toLowerCase());
+          return {
+            slug: match ? match.slug : rec.slug,
+            nama: match ? match.nama : rec.nama,
+            alasan: rec.alasan || '',
+            estimasiHarga: match ? match.kisaranHarga : rec.estimasiHarga || '',
+            lokasi: match
+              ? `${match.restoran?.nama || ''} · ${match.restoran?.kecamatan || 'Medan'}`
+              : rec.lokasi || '',
+          };
+        });
+
+      const sf = parsed.suggestedFilters || {};
+      const hasSuggestedFilter = Boolean(sf.keyword || sf.halal || sf.kategoriSlug || sf.kecamatanSlug);
+
+      setAiMessages([
+        ...nextMessages,
+        {
+          role: 'model',
+          text: parsed.summary || 'Berikut rekomendasi kuliner Medan pilihan untukmu:',
+          recommendations: verifiedRecs,
+          suggestedFilters: hasSuggestedFilter ? sf : null,
+          followUpQuestions: (parsed.followUpQuestions || []).slice(0, 3),
+          isFallback: false,
+        },
+      ]);
+    } catch {
+      const fallback = buildLocalFallbackReply(question, retrieved);
+      setAiMessages([...nextMessages, { role: 'model', ...fallback }]);
+      setAiError(
+        'Mode lokal aktif: untuk jawaban AI generatif penuh saat berjalan di localhost, masukkan API Key gratis Google AI Studio di menu Pengaturan.'
+      );
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   const positionedGraph = useMemo(() => {
     const { nodes, edges } = graphData;
     if (!nodes.length) return { nodes: [], edges: [] };
@@ -915,24 +1433,14 @@ export default function App() {
     };
   }, [graphData, graphFocus]);
 
-  const resetFilters = () => {
-    setSearchInput('');
-    setKeyword('');
-    setSelectedKategori('');
-    setSelectedBudaya('');
-    setSelectedKecamatan('');
-    setIncludeNeighbors(false);
-    setSelectedKawasan('');
-    setSelectedTeknik('');
-    setHalalFilter('');
-  };
-
   const hasActiveFilter = Boolean(
     keyword || selectedKategori || selectedBudaya || selectedKecamatan || selectedKawasan || selectedTeknik || halalFilter
   );
 
-  const displayedResults = results.slice(0, visibleCount);
-  const favoriteDishes = results.filter((d) => favorites.includes(d.slug));
+  const displayedResults = hasActiveFilter
+    ? results.slice(0, visibleCount)
+    : (allDishes.length ? allDishes : DEMO_DISHES).slice(0, 6);
+  const favoriteDishes = (allDishes.length ? allDishes : results).filter((d) => favorites.includes(d.slug));
 
   const sidebarItems = [
     { id: 'beranda', label: 'Beranda', icon: Home },
@@ -967,7 +1475,6 @@ export default function App() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
-          {/* Halal Badge */}
           <span
             className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold backdrop-blur-md flex items-center gap-1 shadow-sm ${
               item.isHalal ? 'bg-emerald-500/95 text-white' : 'bg-rose-500/95 text-white'
@@ -977,14 +1484,11 @@ export default function App() {
             {item.isHalal ? 'Halal' : 'Non-Halal'}
           </span>
 
-          {/* Bookmark Button */}
           <button
             onClick={(e) => toggleFavorite(e, item.slug)}
             title="Simpan ke Favorit"
             className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all ${
-              isFav
-                ? 'bg-[#1d63ed] text-white shadow-md'
-                : 'bg-white/85 text-slate-700 hover:bg-white'
+              isFav ? 'bg-[#1d63ed] text-white shadow-md' : 'bg-white/85 text-slate-700 hover:bg-white'
             }`}
           >
             <Bookmark className={`w-3.5 h-3.5 ${isFav ? 'fill-white' : ''}`} />
@@ -1007,9 +1511,7 @@ export default function App() {
             <div>
               <h3
                 className={`text-base font-bold transition-colors ${
-                  darkMode
-                    ? 'text-slate-100 group-hover:text-sky-400'
-                    : 'text-slate-900 group-hover:text-[#1d63ed]'
+                  darkMode ? 'text-slate-100 group-hover:text-sky-400' : 'text-slate-900 group-hover:text-[#1d63ed]'
                 }`}
               >
                 {item.nama}
@@ -1036,9 +1538,7 @@ export default function App() {
               <span
                 key={b}
                 className={`text-[11px] px-2 py-0.5 rounded-md font-medium ${
-                  darkMode
-                    ? 'bg-slate-800 text-sky-300'
-                    : 'bg-[#eef4ff] text-[#1d63ed]'
+                  darkMode ? 'bg-slate-800 text-sky-300' : 'bg-[#eef4ff] text-[#1d63ed]'
                 }`}
               >
                 {b}
@@ -1082,9 +1582,9 @@ export default function App() {
               resetFilters();
               setActiveView('beranda');
             }}
-            className="text-left focus:outline-none"
+            className="text-left focus:outline-none cursor-pointer"
           >
-            <MedanSearchLogo size="md" darkMode={darkMode} />
+            <RanahKulMedLogo size="md" darkMode={darkMode} />
           </button>
         </div>
 
@@ -1096,7 +1596,7 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={() => setActiveView(item.id)}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                   active
                     ? darkMode
                       ? 'bg-sky-500/15 text-sky-300 font-semibold'
@@ -1131,7 +1631,7 @@ export default function App() {
         {/* Bottom Sidebar Promo Card ("Pencarian Cerdas") */}
         <div className="p-4">
           <div
-            onClick={() => setActiveView('graph')}
+            onClick={() => setActiveView('beranda')}
             className={`cursor-pointer rounded-2xl p-4 border transition-all relative overflow-hidden group ${
               darkMode
                 ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 hover:border-sky-500/50'
@@ -1170,7 +1670,7 @@ export default function App() {
               className={`w-64 h-full p-5 flex flex-col ${darkMode ? 'bg-slate-900' : 'bg-white'}`}
             >
               <div className="flex items-center justify-between mb-6">
-                <MedanSearchLogo size="md" darkMode={darkMode} />
+                <RanahKulMedLogo size="md" darkMode={darkMode} />
                 <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 rounded-lg text-slate-400">
                   <X className="w-5 h-5" />
                 </button>
@@ -1221,7 +1721,7 @@ export default function App() {
           />
         </div>
 
-        {/* TOP BAR (Theme Toggle, Fitur Lanjutan Dropdown, Kelompok 06 Avatar) */}
+        {/* TOP BAR (Theme Toggle, Fitur Lanjutan Dropdown, Ranah KulMed Avatar) */}
         <header className="relative z-20 flex items-center justify-between lg:justify-end px-4 sm:px-8 py-4">
           <button
             onClick={() => setMobileMenuOpen(true)}
@@ -1237,7 +1737,7 @@ export default function App() {
             <button
               onClick={() => setDarkMode((d) => !d)}
               title={darkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
-              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
+              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
                 darkMode
                   ? 'bg-slate-900 border-slate-700 text-amber-300 hover:bg-slate-800'
                   : 'bg-white border-slate-200/90 text-slate-600 hover:text-[#1d63ed] shadow-xs'
@@ -1248,14 +1748,14 @@ export default function App() {
 
             <div className={`h-5 w-px ${darkMode ? 'bg-slate-800' : 'bg-slate-200'}`} />
 
-            {/* "Fitur Lanjutan v" Dropdown Menu (Matches Reference Image!) */}
+            {/* "Fitur Lanjutan" Dropdown Menu */}
             <div className="relative">
               <button
                 onClick={() => {
                   setAdvancedMenuOpen((o) => !o);
                   setTeamMenuOpen(false);
                 }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs sm:text-sm font-medium transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs sm:text-sm font-medium transition-all cursor-pointer ${
                   darkMode
                     ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-500'
                     : 'bg-white border-blue-200/90 text-[#1d63ed] hover:bg-blue-50/60 shadow-xs'
@@ -1277,8 +1777,6 @@ export default function App() {
                     }`}
                   >
                     {[
-                      { id: 'graph', label: 'Jejaring Kuliner', sub: 'Peta koneksi rasa & bahan', icon: Network },
-                      { id: 'sparql', label: 'Wawasan & Analisis', sub: 'Filter mendalam & statistik', icon: Terminal },
                       { id: 'api', label: 'Portal Mitra & API', sub: 'Integrasi data kuliner Medan', icon: Code2 },
                     ].map((opt) => {
                       const Icon = opt.icon;
@@ -1289,7 +1787,7 @@ export default function App() {
                             setActiveView(opt.id);
                             setAdvancedMenuOpen(false);
                           }}
-                          className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors ${
+                          className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                             darkMode ? 'hover:bg-slate-800' : 'hover:bg-[#eef4ff]'
                           }`}
                         >
@@ -1308,14 +1806,14 @@ export default function App() {
               </AnimatePresence>
             </div>
 
-            {/* Medan Search Team Avatar Pill */}
+            {/* Ranah KulMed Team Avatar Pill */}
             <div className="relative">
               <button
                 onClick={() => {
                   setTeamMenuOpen((o) => !o);
                   setAdvancedMenuOpen(false);
                 }}
-                className="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors"
+                className="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <span className="w-8 h-8 rounded-full bg-[#1d63ed] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   MS
@@ -1334,19 +1832,29 @@ export default function App() {
                     }`}
                   >
                     <p className="text-xs font-bold text-[#1d63ed] dark:text-sky-400 flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5" /> Tim Medan Search
+                      <Users className="w-3.5 h-3.5" /> Tim Kreator Ranah KulMed
                     </p>
-                    <p className="text-[11px] text-slate-400 mt-0.5 mb-3">Platform Direktori &amp; Eksplorasi Kuliner Medan</p>
-                    <div className="space-y-2">
-                      {TEAM_MEMBERS.map((m) => (
-                        <div key={m.name} className="text-xs border-t border-slate-100 dark:border-slate-800 pt-1.5">
-                          <p className={`font-semibold ${darkMode ? 'text-slate-200' : 'text-slate-800'}`}>
-                            {m.name}
-                          </p>
-                          <p className="text-[10px] text-slate-400">{m.role}</p>
-                        </div>
+                    <p className="text-[11px] text-slate-400 mt-0.5 mb-3">
+                      Platform Direktori &amp; Eksplorasi Kuliner Kota Medan
+                    </p>
+                    <ul className="space-y-1.5 text-xs">
+                      {[
+                        'Farel Yamotaro Hia',
+                        'Yabesh Day Siahaan',
+                        'Ray Nathan Geereno Saragih',
+                        'William Fransisco Sihotang',
+                        'Naufal Muhammad Dzaki',
+                      ].map((member) => (
+                        <li
+                          key={member}
+                          className={`px-2.5 py-1.5 rounded-lg ${
+                            darkMode ? 'bg-slate-800/70 text-slate-200' : 'bg-slate-50 text-slate-700'
+                          }`}
+                        >
+                          {member}
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -1354,26 +1862,27 @@ export default function App() {
           </div>
         </header>
 
-        {/* ==================== VIEW 1: BERANDA (MINIMALIST SEARCH HERO) ==================== */}
+        {/* ==================== VIEW 1: BERANDA (MINIMALIST HERO + AI + CATALOG) ==================== */}
         {activeView === 'beranda' && (
-          <main className="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-8 pt-4 pb-12">
-            {/* Hero Title & Subtitle */}
-            <div className="text-center max-w-2xl mx-auto mt-4 mb-8">
-              <div className="flex justify-center mb-3">
-                <MedanSearchLogo size="lg" darkMode={darkMode} />
+          <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-6 pb-14">
+            {/* Centered Hero Branding */}
+            <div className="text-center max-w-3xl mx-auto mb-8">
+              <div className="flex justify-center mb-4">
+                <RanahKulMedLogo size="lg" darkMode={darkMode} />
               </div>
-              <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                Temukan cita rasa autentik, kuliner legendaris, dan destinasi makan terbaik di seluruh penjuru Kota Medan.
+              <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                Temukan kuliner khas Medan, cita rasa legendaris, bahan rempah pilihan, hingga lokasi terbaik di seluruh
+                21 kecamatan Kota Medan dengan lebih cepat dan akurat.
               </p>
             </div>
 
             {/* Pill Search Bar */}
-            <form onSubmit={executeSearchSubmit} className="max-w-3xl mx-auto mb-5">
+            <form onSubmit={executeSearchSubmit} className="max-w-3xl mx-auto mb-4">
               <div
                 className={`flex items-center rounded-full border p-1.5 pl-5 transition-all ${
                   darkMode
                     ? 'bg-slate-900/95 border-slate-700 focus-within:border-sky-400 shadow-lg'
-                    : 'bg-white border-slate-200/90 focus-within:border-blue-400 shadow-[0_10px_35px_rgba(29,99,237,0.08)]'
+                    : 'bg-white border-slate-200/90 focus-within:border-[#1d63ed] shadow-[0_10px_30px_rgba(29,99,237,0.08)]'
                 }`}
               >
                 <Search className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
@@ -1384,8 +1893,8 @@ export default function App() {
                     setSearchInput(e.target.value);
                     setKeyword(e.target.value);
                   }}
-                  placeholder="Mau makan apa hari ini? Cari Soto Medan, Bika Ambon, Andaliman, Kesawan..."
-                  className={`flex-1 bg-transparent text-sm sm:text-base outline-none ${
+                  placeholder="Cari kuliner Medan, rempah, budaya, atau kawasan populer..."
+                  className={`flex-1 bg-transparent text-sm outline-none ${
                     darkMode ? 'text-white placeholder-slate-500' : 'text-slate-800 placeholder-slate-400'
                   }`}
                 />
@@ -1396,7 +1905,7 @@ export default function App() {
                       setSearchInput('');
                       setKeyword('');
                     }}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+                    className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1404,10 +1913,10 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setShowFilterDrawer((s) => !s)}
-                  title="Filter Pencarian"
-                  className={`p-2.5 rounded-full mx-1 transition-colors ${
-                    showFilterDrawer || hasActiveFilter
-                      ? 'bg-[#e8f0fe] text-[#1d63ed]'
+                  title="Filter Lanjutan"
+                  className={`p-2.5 rounded-full mr-1.5 transition-colors cursor-pointer ${
+                    showFilterDrawer
+                      ? 'bg-[#e8f0fe] text-[#1d63ed] dark:bg-sky-500/20 dark:text-sky-300'
                       : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
@@ -1415,7 +1924,7 @@ export default function App() {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 text-white text-sm font-semibold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 text-white text-sm font-semibold shadow-sm transition-all cursor-pointer"
                 >
                   <span>Cari</span>
                   <ArrowRight className="w-4 h-4" />
@@ -1425,27 +1934,257 @@ export default function App() {
 
             {/* Pencarian Populer Row */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8 text-xs">
-              <span className={`font-semibold flex items-center gap-1 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-500" /> Pencarian Populer:
+              <span className="inline-flex items-center gap-1 font-semibold text-slate-500 mr-1">
+                <Flame className="w-3.5 h-3.5 text-orange-500" /> Pencarian Populer:
               </span>
-              {['Soto Medan', 'Bika Ambon', 'Mie Gomak', 'Andaliman', 'Kesawan', 'Lontong Medan'].map((chip) => (
+              {POPULAR_SEARCHES.map((tag) => (
                 <button
-                  key={chip}
-                  onClick={() => executeSearchSubmit(null, chip)}
-                  className={`px-3.5 py-1.5 rounded-full font-medium transition-all ${
-                    keyword.toLowerCase() === chip.toLowerCase()
-                      ? 'bg-[#1d63ed] text-white shadow-xs'
-                      : darkMode
-                      ? 'bg-slate-800/90 text-slate-300 hover:bg-slate-700'
-                      : 'bg-[#e9effa] text-slate-700 hover:bg-[#dce6f9] hover:text-[#1d63ed]'
+                  key={tag}
+                  type="button"
+                  onClick={() => executeSearchSubmit(null, tag)}
+                  className={`px-3.5 py-1.5 rounded-full border transition-all cursor-pointer ${
+                    darkMode
+                      ? 'bg-slate-900 border-slate-800 text-slate-300 hover:border-sky-400 hover:text-sky-300'
+                      : 'bg-white/90 border-blue-100 text-[#1d63ed] hover:bg-[#e8f0fe] shadow-2xs'
                   }`}
                 >
-                  {chip}
+                  {tag}
                 </button>
               ))}
             </div>
 
-            {/* Expandable Multi-Facet Semantic Filter Bar */}
+            {/* AI Culinary Concierge Card (GraphRAG + Structured Output) */}
+            <div
+              className={`max-w-3xl mx-auto mb-8 rounded-2xl border p-4 sm:p-5 transition-all ${
+                darkMode
+                  ? 'bg-slate-900/90 border-slate-800 shadow-lg'
+                  : 'bg-white/95 border-blue-200/80 shadow-[0_8px_28px_rgba(29,99,237,0.07)]'
+              }`}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1d63ed] to-sky-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                        Asisten Kuliner AI Ranah KulMed
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+                        Gemini Gratis
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Rekomendasi personal sesuai budget, status halal, bahan rempah, dan lokasi di Medan.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {aiOpen && aiMessages.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={resetAiChat}
+                      title="Mulai obrolan baru"
+                      className={`p-2 rounded-full border transition-colors cursor-pointer ${
+                        darkMode
+                          ? 'border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800'
+                          : 'border-slate-200 text-slate-500 hover:text-[#1d63ed] hover:bg-blue-50'
+                      }`}
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setAiOpen((prev) => !prev)}
+                    className="px-4 py-2 rounded-full bg-[#e8f0fe] hover:bg-blue-100 dark:bg-sky-500/15 dark:hover:bg-sky-500/25 text-[#1d63ed] dark:text-sky-300 text-xs font-semibold transition-colors cursor-pointer"
+                  >
+                    {aiOpen ? 'Sembunyikan' : 'Tanya Asisten AI'}
+                  </button>
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {aiOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 pt-4 border-t border-slate-200/80 dark:border-slate-800 space-y-3.5">
+                      <div
+                        className={`max-h-[420px] overflow-y-auto rounded-2xl p-3.5 space-y-4 text-xs ${
+                          darkMode ? 'bg-slate-950/90 border border-slate-800' : 'bg-[#f6f9ff] border border-slate-200/80'
+                        }`}
+                      >
+                        {aiMessages.map((msg, i) => {
+                          const catalogLookup = allDishes.length ? allDishes : results.length ? results : DEMO_DISHES;
+                          return (
+                            <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
+                              <div
+                                className={`max-w-[92%] sm:max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed whitespace-pre-line ${
+                                  msg.role === 'user'
+                                    ? 'bg-gradient-to-r from-[#1d63ed] to-[#1e40af] text-white shadow-xs'
+                                    : darkMode
+                                    ? 'bg-slate-900 text-slate-200 border border-slate-800'
+                                    : 'bg-white text-slate-700 border border-slate-200/80 shadow-2xs'
+                                }`}
+                              >
+                                {msg.text}
+                              </div>
+
+                              {/* Interactive Grounded Culinary Recommendation Cards */}
+                              {msg.role === 'model' && msg.recommendations?.length > 0 && (
+                                <div className="w-full max-w-[96%] grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-2.5">
+                                  {msg.recommendations.map((rec, rIdx) => {
+                                    const fullDish = catalogLookup.find((d) => d.slug === rec.slug);
+                                    return (
+                                      <button
+                                        key={`${rec.slug}-${rIdx}`}
+                                        type="button"
+                                        onClick={() => {
+                                          if (fullDish) openDishDetail(fullDish);
+                                          else executeSearchSubmit(null, rec.nama);
+                                        }}
+                                        className={`group text-left p-2.5 rounded-xl border transition-all flex gap-3 items-start cursor-pointer ${
+                                          darkMode
+                                            ? 'bg-slate-900 border-slate-800 hover:border-sky-400'
+                                            : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-2xs hover:shadow-sm'
+                                        }`}
+                                      >
+                                        {fullDish?.gambar ? (
+                                          <img
+                                            src={fullDish.gambar}
+                                            alt={rec.nama}
+                                            className="w-14 h-14 rounded-lg object-cover shrink-0"
+                                          />
+                                        ) : (
+                                          <div className="w-14 h-14 rounded-lg bg-[#e8f0fe] text-[#1d63ed] flex items-center justify-center shrink-0">
+                                            <Utensils className="w-5 h-5" />
+                                          </div>
+                                        )}
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center justify-between gap-1">
+                                            <p
+                                              className={`font-bold text-xs truncate group-hover:text-[#1d63ed] dark:group-hover:text-sky-400 ${
+                                                darkMode ? 'text-white' : 'text-slate-900'
+                                              }`}
+                                            >
+                                              {rec.nama}
+                                            </p>
+                                            {fullDish && (
+                                              <span
+                                                className={`shrink-0 text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${
+                                                  fullDish.isHalal
+                                                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                                                    : 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
+                                                }`}
+                                              >
+                                                {fullDish.isHalal ? 'Halal' : 'Non-Halal'}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                                            {rec.alasan}
+                                          </p>
+                                          <div className="flex items-center justify-between gap-2 mt-1.5 text-[10px]">
+                                            <span className="font-semibold text-[#1d63ed] dark:text-sky-400 truncate">
+                                              {rec.estimasiHarga}
+                                            </span>
+                                            <span className="text-slate-400 truncate max-w-[52%]">{rec.lokasi}</span>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
+
+                              {/* 1-Click Apply Suggested Filters + Dynamic Follow-Up Chips */}
+                              {msg.role === 'model' && (msg.suggestedFilters || msg.followUpQuestions?.length > 0) && (
+                                <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                                  {msg.suggestedFilters && (
+                                    <button
+                                      type="button"
+                                      onClick={() => applyAiFilters(msg.suggestedFilters)}
+                                      className="inline-flex items-center gap-1 text-[11px] px-3 py-1 rounded-full bg-[#1d63ed] text-white font-semibold hover:bg-blue-700 transition-colors cursor-pointer"
+                                    >
+                                      <Filter className="w-3 h-3" /> Terapkan ke Filter Pencarian
+                                    </button>
+                                  )}
+                                  {i === aiMessages.length - 1 &&
+                                    (msg.followUpQuestions || []).map((sample) => (
+                                      <button
+                                        key={sample}
+                                        type="button"
+                                        disabled={aiLoading}
+                                        onClick={() => askGeminiCulinary(null, sample)}
+                                        className={`text-[11px] px-3 py-1 rounded-full border transition-colors cursor-pointer ${
+                                          darkMode
+                                            ? 'bg-slate-900 border-slate-700 text-slate-300 hover:border-sky-400'
+                                            : 'bg-white border-blue-200/80 text-slate-700 hover:border-[#1d63ed] hover:text-[#1d63ed]'
+                                        }`}
+                                      >
+                                        {sample}
+                                      </button>
+                                    ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+
+                        {aiLoading && (
+                          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/70 dark:border-slate-800 text-[11px] text-[#1d63ed] dark:text-sky-400 font-medium">
+                            <Sparkles className="w-3.5 h-3.5 animate-spin" /> Mencocokkan katalog kuliner Medan untukmu...
+                          </div>
+                        )}
+                        <div ref={aiChatEndRef} />
+                      </div>
+
+                      {aiError && (
+                        <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-700 dark:text-amber-300">
+                          <span>{aiError}</span>
+                          <button
+                            type="button"
+                            onClick={() => setActiveView('pengaturan')}
+                            className="font-bold underline shrink-0 cursor-pointer"
+                          >
+                            Buka Pengaturan
+                          </button>
+                        </div>
+                      )}
+
+                      <form onSubmit={askGeminiCulinary} className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={aiPrompt}
+                          onChange={(e) => setAiPrompt(e.target.value)}
+                          placeholder="Tanya bebas: misal 'Makan malam halal di Kesawan di bawah 50rb'..."
+                          className={`flex-1 rounded-full border px-4 py-2.5 text-xs outline-none ${
+                            darkMode
+                              ? 'bg-slate-950 border-slate-700 text-white placeholder-slate-500 focus:border-sky-400'
+                              : 'bg-white border-slate-200 text-slate-800 placeholder-slate-400 focus:border-[#1d63ed]'
+                          }`}
+                        />
+                        <button
+                          type="submit"
+                          disabled={aiLoading || !aiPrompt.trim()}
+                          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 disabled:opacity-50 text-white text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                        >
+                          <Send className="w-3.5 h-3.5" />
+                          <span>Kirim</span>
+                        </button>
+                      </form>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Expandable Multi-Facet Filter Bar */}
             <AnimatePresence>
               {showFilterDrawer && (
                 <motion.div
@@ -1568,7 +2307,7 @@ export default function App() {
                 {hasActiveFilter && (
                   <button
                     onClick={resetFilters}
-                    className="text-xs font-semibold text-[#1d63ed] dark:text-sky-400 hover:underline"
+                    className="text-xs font-semibold text-[#1d63ed] dark:text-sky-400 hover:underline cursor-pointer"
                   >
                     Reset Filter
                   </button>
@@ -1594,7 +2333,7 @@ export default function App() {
                     <div className="mt-8 text-center">
                       <button
                         onClick={() => setVisibleCount((c) => c + 12)}
-                        className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all ${
+                        className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
                           darkMode
                             ? 'bg-slate-900 border-slate-700 text-sky-300 hover:bg-slate-800'
                             : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
@@ -1610,7 +2349,7 @@ export default function App() {
           </main>
         )}
 
-        {/* ==================== VIEW 2: EKSPLORASI (FULL SEMANTIC CATALOG) ==================== */}
+        {/* ==================== VIEW 2: EKSPLORASI (FULL CATALOG) ==================== */}
         {activeView === 'eksplorasi' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
             <div className="mb-6">
@@ -1622,7 +2361,6 @@ export default function App() {
               </p>
             </div>
 
-            {/* Full Filter Card */}
             <div
               className={`rounded-2xl border p-4 mb-6 space-y-4 ${
                 darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200/90 shadow-xs'
@@ -1727,7 +2465,7 @@ export default function App() {
 
                 <button
                   onClick={resetFilters}
-                  className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors"
+                  className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors cursor-pointer"
                 >
                   Reset ({results.length} hasil)
                 </button>
@@ -1756,7 +2494,7 @@ export default function App() {
               <div className="mt-8 text-center">
                 <button
                   onClick={() => setVisibleCount((c) => c + 12)}
-                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] text-white text-xs font-semibold shadow-sm"
+                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] text-white text-xs font-semibold shadow-sm cursor-pointer"
                 >
                   Tampilkan Lebih Banyak ({results.length - visibleCount} tersisa)
                 </button>
@@ -1794,7 +2532,7 @@ export default function App() {
 
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">
-                10 Kategori Sajian Khas Medan
+                Kategori Sajian Khas Medan
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {facets.categories.map((cat) => (
@@ -1804,7 +2542,7 @@ export default function App() {
                       setSelectedKategori(cat.slug);
                       setActiveView('eksplorasi');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between ${
+                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                       darkMode
                         ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
                         : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-xs'
@@ -1822,7 +2560,7 @@ export default function App() {
 
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">
-                12 Warisan Budaya Kuliner Sumatera Utara
+                Warisan Budaya Kuliner Sumatera Utara
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {facets.cultures.map((cult) => (
@@ -1832,7 +2570,7 @@ export default function App() {
                       setSelectedBudaya(cult.slug);
                       setActiveView('eksplorasi');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between ${
+                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
                       darkMode
                         ? 'bg-slate-900 border-slate-800 hover:border-amber-500'
                         : 'bg-white border-slate-200/90 hover:border-amber-400 shadow-xs'
@@ -1841,7 +2579,7 @@ export default function App() {
                     <div>
                       <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{cult.label}</p>
                       <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 font-medium">
-                        {cult.count} entitas kuliner
+                        {cult.count} hidangan khas
                       </p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-slate-400" />
@@ -1865,7 +2603,7 @@ export default function App() {
               {searchHistory.length > 0 && (
                 <button
                   onClick={() => setSearchHistory([])}
-                  className="text-xs text-rose-500 font-semibold hover:underline"
+                  className="text-xs text-rose-500 font-semibold hover:underline cursor-pointer"
                 >
                   Hapus Semua Riwayat
                 </button>
@@ -1966,7 +2704,7 @@ export default function App() {
                   darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'
                 }`}
               >
-                {(results.length ? results : DEMO_DISHES).map((r) => (
+                {(allDishes.length ? allDishes : DEMO_DISHES).map((r) => (
                   <option key={r.slug} value={r.slug}>
                     Fokus Hidangan: {r.nama}
                   </option>
@@ -2097,7 +2835,7 @@ export default function App() {
                   <button
                     key={idx}
                     onClick={() => setSparqlInput(p.query)}
-                    className={`w-full text-left p-3.5 rounded-2xl border transition-all ${
+                    className={`w-full text-left p-3.5 rounded-2xl border transition-all cursor-pointer ${
                       darkMode
                         ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
                         : 'bg-white border-slate-200 hover:border-[#1d63ed] shadow-xs'
@@ -2123,7 +2861,7 @@ export default function App() {
                     <span className="text-xs font-bold text-slate-500 font-mono">Editor Kueri Lanjutan (SPARQL 1.1)</span>
                     <button
                       onClick={runCustomSparql}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-xs font-bold text-white shadow-xs"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-xs font-bold text-white shadow-xs cursor-pointer"
                     >
                       <Play className="w-3.5 h-3.5" /> Tampilkan Hasil
                     </button>
@@ -2179,7 +2917,7 @@ export default function App() {
                         </tbody>
                       </table>
                     ) : (
-                      <p className="text-xs text-slate-400">Tidak ada triple yang cocok.</p>
+                      <p className="text-xs text-slate-400">Tidak ada data yang cocok.</p>
                     )}
                   </div>
                 )}
@@ -2188,7 +2926,7 @@ export default function App() {
           </main>
         )}
 
-        {/* ==================== VIEW 8: API DEVELOPER & ONTOLOGY DOCS ==================== */}
+        {/* ==================== VIEW 8: PORTAL MITRA & API ==================== */}
         {activeView === 'api' && (
           <main className="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-6">
             <div>
@@ -2210,7 +2948,7 @@ export default function App() {
                 <span className="truncate">{ONTOLOGY_URI}</span>
                 <button
                   onClick={() => copyToClipboard(ONTOLOGY_URI)}
-                  className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center gap-1 shrink-0"
+                  className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center gap-1 shrink-0 cursor-pointer"
                 >
                   {copiedText === ONTOLOGY_URI ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   Salin
@@ -2220,12 +2958,12 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { method: 'GET', path: '/api/health', desc: 'Cek status koneksi Apache Jena Fuseki & statistik 500 entitas.' },
+                { method: 'GET', path: '/api/health', desc: 'Cek status koneksi layanan data & statistik katalog kuliner.' },
                 { method: 'GET', path: '/api/facets', desc: 'Ambil daftar dinamis kategori, budaya, 21 kecamatan & kawasan.' },
-                { method: 'GET', path: '/api/search?keyword=Soto&includeNeighbors=true', desc: 'Pencarian multi-facet & traversal spasial kecamatan tetangga.' },
-                { method: 'GET', path: '/api/culinary/:slug', desc: 'Detail entitas, pasangan cocok, cabang restoran, owl:sameAs & rekomendasi.' },
-                { method: 'GET', path: '/api/graph?focus=SotoMedan', desc: 'Ekstraksi node & edge RDF untuk visualisasi Knowledge Graph.' },
-                { method: 'POST', path: '/api/sparql', desc: 'Eksekusi kueri SPARQL 1.1 SELECT/ASK langsung ke triplestore.' },
+                { method: 'GET', path: '/api/search?keyword=Soto&includeNeighbors=true', desc: 'Pencarian multi-filter & perluasan radius kecamatan sekitar.' },
+                { method: 'GET', path: '/api/culinary/:slug', desc: 'Detail hidangan, pasangan cocok, cabang resmi & rekomendasi serupa.' },
+                { method: 'GET', path: '/api/graph?focus=SotoMedan', desc: 'Ekstraksi jejaring keterhubungan bahan, budaya, dan lokasi.' },
+                { method: 'POST', path: '/api/sparql', desc: 'Eksekusi kueri analitik SPARQL 1.1 read-only ke basis data.' },
               ].map((ep) => (
                 <div
                   key={ep.path}
@@ -2246,11 +2984,11 @@ export default function App() {
           </main>
         )}
 
-        {/* ==================== VIEW 9: PENGATURAN & INFO TIM ==================== */}
+        {/* ==================== VIEW 9: PENGATURAN & INFO ==================== */}
         {activeView === 'pengaturan' && (
           <main className="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-6">
             <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-              Pengaturan &amp; Tentang Medan Search
+              Pengaturan &amp; Tentang Ranah KulMed
             </h2>
 
             <div
@@ -2264,37 +3002,61 @@ export default function App() {
               </div>
               <button
                 onClick={() => setDarkMode((d) => !d)}
-                className="px-4 py-2 rounded-full bg-[#1d63ed] text-white text-xs font-semibold"
+                className="px-4 py-2 rounded-full bg-[#1d63ed] text-white text-xs font-semibold cursor-pointer"
               >
                 {darkMode ? 'Gunakan Light Mode' : 'Gunakan Dark Mode'}
               </button>
             </div>
 
             <div
-              className={`rounded-2xl border p-5 ${
+              className={`rounded-2xl border p-5 space-y-3 ${
                 darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
               }`}
             >
-              <h3 className={`text-sm font-bold mb-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                Tim Kreator Medan Search
-              </h3>
-              <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                {TEAM_MEMBERS.map((m, idx) => (
-                  <div key={m.name} className="py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <div>
-                      <span className="font-bold">{idx + 1}. {m.name}</span>
-                    </div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#eef4ff] text-[#1d63ed] font-medium">
-                      {m.role}
-                    </span>
-                  </div>
-                ))}
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className={`text-sm font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                    <KeyRound className="w-4 h-4 text-[#1d63ed]" /> Konfigurasi Asisten AI (Gemini API Gratis)
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Saat dijalankan di laptop lokal (<code className="font-mono">localhost</code>), masukkan API Key gratis
+                    dari Google AI Studio agar Asisten AI aktif penuh. Key disimpan lokal di browser dan tidak pernah
+                    dikirim ke GitHub.
+                  </p>
+                </div>
+                {keySavedNotice && (
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-semibold shrink-0">
+                    Tersimpan
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="password"
+                  value={customGeminiKey}
+                  onChange={(e) => saveLocalGeminiKey(e.target.value)}
+                  placeholder="Opsional untuk localhost: AIza..."
+                  className={`flex-1 rounded-xl border px-3.5 py-2 text-xs font-mono outline-none ${
+                    darkMode
+                      ? 'bg-slate-950 border-slate-700 text-white focus:border-sky-400'
+                      : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-[#1d63ed]'
+                  }`}
+                />
+                {customGeminiKey && (
+                  <button
+                    type="button"
+                    onClick={() => saveLocalGeminiKey('')}
+                    className="px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-semibold hover:bg-rose-50 dark:hover:bg-rose-500/10 cursor-pointer"
+                  >
+                    Hapus Key
+                  </button>
+                )}
               </div>
             </div>
           </main>
         )}
 
-        {/* ==================== FOOTER (MATCHES REFERENCE SCREENSHOT) ==================== */}
+        {/* ==================== FOOTER ==================== */}
         <footer
           className={`relative z-10 mt-auto border-t px-4 sm:px-8 py-4 text-xs ${
             darkMode ? 'bg-slate-900/90 border-slate-800 text-slate-400' : 'bg-white border-slate-200/80 text-slate-500'
@@ -2302,22 +3064,16 @@ export default function App() {
         >
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <MedanSearchLogo size="sm" darkMode={darkMode} />
+              <RanahKulMedLogo size="sm" darkMode={darkMode} />
               <span className="text-slate-300 dark:text-slate-700">|</span>
-              <span>© 2026 Medan Search. Semua hak dilindungi.</span>
+              <span>© 2026 Ranah KulMed. Semua hak dilindungi.</span>
             </div>
 
             <div className="flex flex-wrap items-center gap-5 font-medium">
-              <button onClick={() => setActiveView('api')} className="hover:text-[#1d63ed]">
+              <button onClick={() => setActiveView('api')} className="hover:text-[#1d63ed] cursor-pointer">
                 Portal Mitra
               </button>
-              <button onClick={() => setActiveView('sparql')} className="hover:text-[#1d63ed]">
-                Wawasan Kuliner
-              </button>
-              <button onClick={() => setActiveView('graph')} className="hover:text-[#1d63ed]">
-                Jejaring Rasa
-              </button>
-              <button onClick={() => setActiveView('pengaturan')} className="hover:text-[#1d63ed]">
+              <button onClick={() => setActiveView('pengaturan')} className="hover:text-[#1d63ed] cursor-pointer">
                 Tentang Kami
               </button>
             </div>
@@ -2329,9 +3085,7 @@ export default function App() {
                 }`}
               />
               {health?.status === 'connected' ? (
-                <span className="text-emerald-600 dark:text-emerald-400">
-                  Online · Katalog Aktif
-                </span>
+                <span className="text-emerald-600 dark:text-emerald-400">Online · Katalog Aktif</span>
               ) : (
                 <span className="text-amber-600 dark:text-amber-400">Mode Pratinjau</span>
               )}
@@ -2340,7 +3094,7 @@ export default function App() {
         </footer>
       </div>
 
-      {/* ==================== SEMANTIC DETAIL MODAL ==================== */}
+      {/* ==================== CULINARY DETAIL MODAL ==================== */}
       <AnimatePresence>
         {selectedDish && (
           <motion.div
@@ -2364,7 +3118,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
                 <button
                   onClick={() => setSelectedDish(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md"
+                  className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -2428,7 +3182,7 @@ export default function App() {
                           executeSearchSubmit(null, b);
                           setSelectedDish(null);
                         }}
-                        className="px-3 py-1 rounded-full bg-[#eef4ff] dark:bg-sky-500/15 text-[#1d63ed] dark:text-sky-300 text-xs font-medium hover:bg-blue-100"
+                        className="px-3 py-1 rounded-full bg-[#eef4ff] dark:bg-sky-500/15 text-[#1d63ed] dark:text-sky-300 text-xs font-medium hover:bg-blue-100 cursor-pointer"
                       >
                         {b}
                       </button>
@@ -2446,10 +3200,10 @@ export default function App() {
                         <button
                           key={p.slug}
                           onClick={() => {
-                            const match = results.find((r) => r.slug === p.slug);
+                            const match = (allDishes.length ? allDishes : results).find((r) => r.slug === p.slug);
                             if (match) openDishDetail(match);
                           }}
-                          className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-medium"
+                          className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-medium cursor-pointer"
                         >
                           {p.nama}
                         </button>
@@ -2464,9 +3218,7 @@ export default function App() {
                   }`}
                 >
                   <div className="space-y-1">
-                    <p className="text-xs text-[#1d63ed] dark:text-sky-400 font-bold">
-                      Rekomendasi Tempat Terbaik
-                    </p>
+                    <p className="text-xs text-[#1d63ed] dark:text-sky-400 font-bold">Rekomendasi Tempat Terbaik</p>
                     <p className={`text-base font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                       {selectedDish.restoran.nama}
                     </p>
@@ -2487,7 +3239,9 @@ export default function App() {
                     </p>
                   </div>
                   <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${selectedDish.restoran.lat},${selectedDish.restoran.long}`}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${selectedDish.restoran.nama}, ${selectedDish.restoran.alamat}, Medan`
+                    )}`}
                     target="_blank"
                     rel="noreferrer"
                     className="px-4 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
@@ -2517,6 +3271,17 @@ export default function App() {
                               {b.alamat} · {b.kelurahan || b.kecamatan}
                             </p>
                           </div>
+                          <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                              `${b.nama}, ${b.alamat}, Medan`
+                            )}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="shrink-0 p-2 rounded-full text-[#1d63ed] hover:bg-blue-50 dark:hover:bg-sky-500/15"
+                            title="Buka cabang di Google Maps"
+                          >
+                            <Compass className="w-4 h-4" />
+                          </a>
                           <span className="text-amber-500 font-bold shrink-0">★ {b.rating}</span>
                         </div>
                       ))}
@@ -2552,7 +3317,7 @@ export default function App() {
                         <div
                           key={rec.slug}
                           onClick={() => {
-                            const match = results.find((r) => r.slug === rec.slug);
+                            const match = (allDishes.length ? allDishes : results).find((r) => r.slug === rec.slug);
                             if (match) openDishDetail(match);
                           }}
                           className={`flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer transition-colors ${
@@ -2576,6 +3341,22 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating Quick Summon Button for AI Assistant outside Beranda */}
+      {activeView !== 'beranda' && (
+        <button
+          type="button"
+          onClick={() => {
+            setActiveView('beranda');
+            setAiOpen(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 text-white text-xs font-bold shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
+        >
+          <Bot className="w-4 h-4" />
+          <span>Tanya Asisten AI</span>
+        </button>
+      )}
     </div>
   );
 }

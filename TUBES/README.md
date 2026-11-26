@@ -1,7 +1,7 @@
 Ini file `README.md` versi **Full & Comprehensive** yang mencakup penjelasan lengkap arsitektur semantik, dokumentasi API, panduan pengujian SPARQL, kontribusi, skema validasi, hingga contoh visualisasi Knowledge Graph.
 
 ```markdown
-# 🍜 Sistem Informasi Kuliner Medan (Semantic Web Engine)
+# 🍜 Ranah KulMed - Sistem Informasi Kuliner Medan
 
 [![Web Semantik](https://img.shields.io/badge/W3C-Semantic%20Web-blue.svg)](https://www.w3.org/W3C/)
 [![React](https://img.shields.io/badge/Frontend-React%20v18-cyan.svg)](https://react.dev/)
