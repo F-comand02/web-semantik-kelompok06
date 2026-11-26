@@ -49,6 +49,7 @@ import {
   OrganicSpiceFlameIcon,
   OrganicHalalLeafIcon,
 } from './components/OrganicIcons';
+import { resolveDishImage } from './culinaryImages';
 
 const API_BASE = 'http://localhost:5001/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
@@ -269,7 +270,7 @@ const DEMO_DISHES = [
     namaEn: 'Medan Coconut Beef Soup',
     deskripsi:
       'Soto berkuah santan kental kuning kehijauan dengan rempah jintan, kapulaga, dan pilihan daging sapi, ayam, atau udang.',
-    gambar: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/soto_medan.jpg',
     isHalal: true,
     tingkatKepedasan: 2,
     kisaranHarga: 'Rp 35.000 - Rp 55.000',
@@ -320,7 +321,7 @@ const DEMO_DISHES = [
     namaEn: 'Bika Ambon Honeycomb Cake',
     deskripsi:
       'Kue khas Medan berwarna kuning keemasan bertekstur bersarang kenyal dengan aroma harum daun jeruk purut serta serai.',
-    gambar: 'https://images.unsplash.com/photo-1605807646983-377bc5a76493?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/bika_ambon.jpg',
     isHalal: true,
     tingkatKepedasan: 0,
     kisaranHarga: 'Rp 55.000 - Rp 95.000',
@@ -368,7 +369,7 @@ const DEMO_DISHES = [
     namaEn: 'Batak Andaliman Stick Noodles',
     deskripsi:
       'Mie lidi khas Batak yang dijuluki Spageti Batak dengan kuah santan kental berbumbu andaliman yang getir pedas.',
-    gambar: 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/mie_gomak.jpg',
     isHalal: true,
     tingkatKepedasan: 4,
     kisaranHarga: 'Rp 12.000 - Rp 22.000',
@@ -407,7 +408,7 @@ const DEMO_DISHES = [
     namaEn: 'Medan Savory Rice Cake',
     deskripsi:
       'Lontong disajikan dengan sayur labu santan, tauco udang, sambal teri kacang, mie gomak goreng, telur balado, dan kerupuk merah.',
-    gambar: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/lontong_medan.png',
     isHalal: true,
     tingkatKepedasan: 3,
     kisaranHarga: 'Rp 18.000 - Rp 32.000',
@@ -455,7 +456,7 @@ const DEMO_DISHES = [
     namaEn: 'Medan Durian Crepe Pancake',
     deskripsi:
       'Kulit crepe tipis lembut berisi daging buah durian Medan asli yang legit dipadu krim kocok dingin.',
-    gambar: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/durian_pancake.jpg',
     isHalal: true,
     tingkatKepedasan: 0,
     kisaranHarga: 'Rp 75.000 - Rp 120.000',
@@ -503,7 +504,7 @@ const DEMO_DISHES = [
     namaEn: 'Tabona Indian-Medan Curry Vermicelli',
     deskripsi:
       'Bihun lembut disiram kuah kari kental kaya rempah India-Melayu dengan pilihan daging ayam kampung atau daging sapi empuk.',
-    gambar: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/kari_bihun.jpg',
     isHalal: true,
     tingkatKepedasan: 3,
     kisaranHarga: 'Rp 45.000 - Rp 65.000',
@@ -551,7 +552,7 @@ const DEMO_DISHES = [
     namaEn: 'Medan Herbal Duck Vermicelli',
     deskripsi:
       'Bihun halus disajikan dengan suwiran daging bebek empuk, bawang putih goreng, selada, dan kuah kaldu herbal obat Tionghoa yang pekat.',
-    gambar: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/bihun_bebek.jpg',
     isHalal: false,
     tingkatKepedasan: 1,
     kisaranHarga: 'Rp 55.000 - Rp 85.000',
@@ -590,7 +591,7 @@ const DEMO_DISHES = [
     namaEn: 'Sidikalang Traditional Kopitiam Coffee',
     deskripsi:
       'Kopi bubuk Sidikalang yang diseduh menggunakan saringan kain khas kopitiam Medan, disajikan hitam pekat atau dengan susu kental manis.',
-    gambar: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/kopi_sidikalang.jpg',
     isHalal: true,
     tingkatKepedasan: 0,
     kisaranHarga: 'Rp 14.000 - Rp 22.000',
@@ -629,7 +630,7 @@ const DEMO_DISHES = [
     namaEn: 'Medan Egg Milk Tea',
     deskripsi:
       'Minuman hangat penambah stamina khas Medan dari kocokan kuning telur ayam kampung, susu kental manis, dan seduhan teh hitam pekat.',
-    gambar: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
+    gambar: '/images/kuliner/tst.jpg',
     isHalal: true,
     tingkatKepedasan: 0,
     kisaranHarga: 'Rp 15.000 - Rp 25.000',
@@ -1524,8 +1525,14 @@ export default function App() {
       >
         <div className="h-44 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
           <img
-            src={item.gambar}
+            src={resolveDishImage(item)}
             alt={item.nama}
+            loading="lazy"
+            onError={(e) => {
+              if (item.gambar && e.currentTarget.src !== item.gambar) {
+                e.currentTarget.src = item.gambar;
+              }
+            }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
@@ -2104,10 +2111,11 @@ export default function App() {
                                             : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-2xs hover:shadow-sm'
                                         }`}
                                       >
-                                        {fullDish?.gambar ? (
+                                        {resolveDishImage(fullDish) ? (
                                           <img
-                                            src={fullDish.gambar}
+                                            src={resolveDishImage(fullDish)}
                                             alt={rec.nama}
+                                            loading="lazy"
                                             className="w-14 h-14 rounded-lg object-cover shrink-0"
                                           />
                                         ) : (
@@ -3175,7 +3183,16 @@ export default function App() {
               }`}
             >
               <div className="relative h-56">
-                <img src={selectedDish.gambar} alt={selectedDish.nama} className="w-full h-full object-cover" />
+                <img
+                  src={resolveDishImage(selectedDish)}
+                  alt={selectedDish.nama}
+                  onError={(e) => {
+                    if (selectedDish.gambar && e.currentTarget.src !== selectedDish.gambar) {
+                      e.currentTarget.src = selectedDish.gambar;
+                    }
+                  }}
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
                 <button
                   onClick={() => setSelectedDish(null)}
@@ -3387,7 +3404,17 @@ export default function App() {
                               : 'bg-slate-50 border-slate-200 hover:border-[#1d63ed]'
                           }`}
                         >
-                          <img src={rec.gambar} alt={rec.nama} className="w-12 h-12 rounded-lg object-cover" />
+                          <img
+                            src={resolveDishImage(rec)}
+                            alt={rec.nama}
+                            loading="lazy"
+                            onError={(e) => {
+                              if (rec.gambar && e.currentTarget.src !== rec.gambar) {
+                                e.currentTarget.src = rec.gambar;
+                              }
+                            }}
+                            className="w-12 h-12 rounded-lg object-cover"
+                          />
                           <div className="min-w-0">
                             <p className="text-xs font-bold truncate">{rec.nama}</p>
                             <p className="text-[11px] text-[#1d63ed] dark:text-sky-400 truncate">{rec.reason}</p>
