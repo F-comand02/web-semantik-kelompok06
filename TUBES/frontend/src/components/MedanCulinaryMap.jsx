@@ -7,12 +7,12 @@ const MEDAN_CENTER = [3.5896, 98.6738];
 const DEFAULT_ZOOM = 12;
 
 function createPinIcon(isHalal, dishCount = 1, isHighlighted = false) {
-  const bg = isHalal ? '#10b981' : '#f43f5e';
-  const ring = isHighlighted ? '0 0 0 5px rgba(29,99,237,0.32)' : '0 3px 10px rgba(15,23,42,0.32)';
+  const bg = isHalal ? '#059669' : '#b91c1c';
+  const ring = isHighlighted ? '0 0 0 5px rgba(185,28,28,0.32)' : '0 3px 10px rgba(28,25,23,0.32)';
   const size = isHighlighted ? 32 : 26;
   const badge =
     dishCount > 1
-      ? `<span style="position:absolute;top:-6px;right:-7px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#1d63ed;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff;">${dishCount}</span>`
+      ? `<span style="position:absolute;top:-6px;right:-7px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#b91c1c;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff;">${dishCount}</span>`
       : '';
 
   return L.divIcon({
@@ -152,7 +152,7 @@ export default function MedanCulinaryMap({
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.style.cssText =
-            'text-align:left;padding:5px 8px;border-radius:8px;background:#f1f5f9;border:1px solid #e2e8f0;font-size:11px;font-weight:600;color:#1d63ed;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:6px;';
+            'text-align:left;padding:5px 8px;border-radius:10px;background:#fff8ec;border:1px solid #fde68a;font-size:11px;font-weight:700;color:#b91c1c;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:6px;';
           btn.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${dish.nama}</span><span style="color:#475569;font-size:10px;flex-shrink:0;">Detail →</span>`;
           btn.onclick = () => onSelectDish(dish);
           listWrap.appendChild(btn);
@@ -199,21 +199,21 @@ export default function MedanCulinaryMap({
 
   return (
     <div
-      className={`rounded-2xl border overflow-hidden ${
-        darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200/90 shadow-xs'
+      className={`rounded-3xl border overflow-hidden ${
+        darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
       }`}
     >
       {!singleDish && (
         <div
           className={`px-4 py-3 border-b flex flex-wrap items-center justify-between gap-3 text-xs ${
-            darkMode ? 'border-slate-800 text-slate-300' : 'border-slate-100 text-slate-600'
+            darkMode ? 'border-stone-800 text-stone-300' : 'border-stone-200/70 text-stone-600'
           }`}
         >
           <div className="flex flex-wrap items-center gap-3">
-            <span className="font-bold text-[#1d63ed] dark:text-sky-400 flex items-center gap-1.5">
+            <span className="font-display font-bold text-red-700 dark:text-amber-400 flex items-center gap-1.5">
               <MapPin className="w-4 h-4" /> Peta Geospasial WGS84 Kuliner Medan
             </span>
-            <span className="text-slate-400">·</span>
+            <span className="text-stone-400">·</span>
             <span>
               <strong>{venueGroups.length}</strong> titik restoran dari <strong>{dishes.length}</strong> hidangan
             </span>
@@ -221,18 +221,18 @@ export default function MedanCulinaryMap({
 
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" /> Halal
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block" /> Halal
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" /> Non-Halal
+              <span className="w-2.5 h-2.5 rounded-full bg-red-700 inline-block" /> Non-Halal
             </span>
             <button
               type="button"
               onClick={resetMapView}
-              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border font-semibold cursor-pointer ${
+              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full border font-bold cursor-pointer transition ${
                 darkMode
-                  ? 'border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700'
-                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+                  ? 'border-stone-700 bg-stone-800 text-stone-200 hover:bg-stone-700'
+                  : 'border-stone-200 bg-[#fff8ec] text-stone-700 hover:border-red-600 hover:text-red-700'
               }`}
             >
               <RotateCcw className="w-3 h-3" /> Reset Peta

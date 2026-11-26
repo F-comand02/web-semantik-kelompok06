@@ -167,17 +167,17 @@ function getSimilarDishNames(query, catalog, limit) {
 }
 
 const NODE_COLORS = {
-  Kuliner: '#1d63ed',
-  Kategori: '#8b5cf6',
+  Kuliner: '#b91c1c',
+  Kategori: '#d97706',
   PengaruhBudaya: '#f59e0b',
-  BahanUtama: '#10b981',
-  Restoran: '#f43f5e',
-  Kecamatan: '#0ea5e9',
-  Kelurahan: '#6366f1',
-  KawasanKuliner: '#ec4899',
+  BahanUtama: '#059669',
+  Restoran: '#dc2626',
+  Kecamatan: '#ea580c',
+  Kelurahan: '#78716c',
+  KawasanKuliner: '#be123c',
   TeknikMasak: '#f97316',
-  ProfilRasa: '#eab308',
-  PenghargaanKuliner: '#a855f7',
+  ProfilRasa: '#ca8a04',
+  PenghargaanKuliner: '#9333ea',
 };
 
 const NODE_LABELS = {
@@ -754,74 +754,40 @@ function buildDemoFacets(dishes) {
  * Brand Logo: Hand-crafted Organic Medan Culinary Bowl & Spice Leaf Emblem
  */
 function RanahKulMedLogo({ size = 'md', darkMode = false, showText = true }) {
-  const dims =
-    size === 'lg'
-      ? { icon: 'w-14 h-14 sm:w-16 sm:h-16', text: 'text-4xl sm:text-5xl', gap: 'gap-3.5' }
-      : size === 'sm'
-      ? { icon: 'w-6 h-6', text: 'text-sm', gap: 'gap-2' }
-      : { icon: 'w-9 h-9', text: 'text-lg', gap: 'gap-2.5' };
+  const isLg = size === 'lg';
+  const isSm = size === 'sm';
 
   return (
-    <div className={`inline-flex items-center ${dims.gap} select-none`}>
-      <svg viewBox="0 0 64 64" className={`${dims.icon} shrink-0`} fill="none" aria-hidden="true">
-        {/* Soft organic ceramic backdrop */}
-        <path
-          d="M32 6 C48 6 58 15.5 57.5 31.5 C57 48 47.5 58 31.5 58 C15.5 58 6 48.5 6.5 32.5 C7 16 16.5 6 32 6 Z"
-          fill={darkMode ? '#1e293b' : '#eaf2ff'}
-          stroke={darkMode ? '#334155' : '#bfdbfe'}
-          strokeWidth="2"
-        />
-        {/* Rising warm aroma wisps */}
-        <path
-          d="M23.5 23.5 C22.3 19.8 25.5 17.8 24.4 14.2"
-          stroke={darkMode ? '#7dd3fc' : '#2563eb'}
-          strokeWidth="2.8"
-          strokeLinecap="round"
-        />
-        <path
-          d="M32.5 22 C31.4 18 34.8 15.8 33.6 12"
-          stroke={darkMode ? '#7dd3fc' : '#1d63ed'}
-          strokeWidth="2.8"
-          strokeLinecap="round"
-        />
-        {/* Medan aromatic spice leaf (daun jeruk / serai) */}
-        <path
-          d="M40.5 27.5 C41.8 20.5 47.5 18 51.8 19.4 C50.5 24.8 46.5 28.8 40.5 27.5 Z"
-          fill="#10b981"
-          fillOpacity={darkMode ? '0.35' : '0.25'}
-          stroke={darkMode ? '#34d399' : '#059669'}
-          strokeWidth="2.4"
-          strokeLinejoin="round"
-        />
-        {/* Hand-shaped Medan culinary bowl */}
-        <path
-          d="M14 31.5 C24.5 29.8 39.5 29.8 50 31.5 C49.2 42.2 42.2 49.6 32 49.8 C21.8 49.6 14.8 42.2 14 31.5 Z"
-          fill={darkMode ? '#38bdf8' : '#1d63ed'}
-          fillOpacity="0.16"
-          stroke={darkMode ? '#38bdf8' : '#1d63ed'}
-          strokeWidth="3.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Subtle artisanal rim accent & foot */}
-        <path
-          d="M22.5 39.2 C26.8 41.4 33.4 41.6 38.2 39.5"
-          stroke={darkMode ? '#7dd3fc' : '#1d63ed'}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeOpacity="0.65"
-        />
-        <path
-          d="M24.2 53.2 C29 54 35 54 39.8 53.2"
-          stroke={darkMode ? '#38bdf8' : '#1e40af'}
-          strokeWidth="3.2"
-          strokeLinecap="round"
-        />
-      </svg>
+    <div className={`inline-flex items-center ${isLg ? 'gap-3.5' : isSm ? 'gap-2' : 'gap-2.5'} select-none`}>
+      <span
+        className={`relative grid shrink-0 place-items-center bg-red-700 text-amber-300 shadow-lg shadow-red-700/30 ${
+          isLg ? 'h-14 w-14 rounded-3xl' : isSm ? 'h-7 w-7 rounded-xl' : 'h-10 w-10 rounded-2xl'
+        }`}
+      >
+        <OrganicCulinaryBowlIcon className={isLg ? 'w-8 h-8' : isSm ? 'w-4 h-4' : 'w-5 h-5'} />
+        {!isSm && (
+          <Search
+            className={`absolute -bottom-1 -right-1 rounded-full bg-stone-900 p-0.5 text-white ${
+              isLg ? 'w-5 h-5' : 'w-3.5 h-3.5'
+            }`}
+          />
+        )}
+      </span>
       {showText && (
-        <span className={`font-extrabold tracking-tight leading-none ${dims.text}`}>
-          <span className={darkMode ? 'text-white' : 'text-slate-900'}>Ranah </span>
-          <span className="text-[#1d63ed] dark:text-sky-400">KulMed</span>
+        <span className="leading-none text-left">
+          <span
+            className={`font-display font-black tracking-tight block ${
+              isLg ? 'text-4xl sm:text-5xl' : isSm ? 'text-base' : 'text-[22px]'
+            }`}
+          >
+            <span className={darkMode ? 'text-white' : 'text-stone-900'}>Ranah </span>
+            <span className="text-red-700 dark:text-red-500">KulMed</span>
+          </span>
+          {!isSm && !isLg && (
+            <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.16em] text-stone-500 dark:text-stone-400">
+              Mesin Pencari Kuliner
+            </span>
+          )}
         </span>
       )}
     </div>
@@ -1548,13 +1514,13 @@ export default function App() {
         animate={{ opacity: 1, y: 0 }}
         key={item.slug}
         onClick={() => openDishDetail(item)}
-        className={`group cursor-pointer rounded-2xl border overflow-hidden transition-all flex flex-col ${
+        className={`group relative cursor-pointer rounded-3xl border overflow-hidden transition-all duration-300 flex flex-col hover:-translate-y-1 hover:shadow-xl ${
           darkMode
-            ? 'bg-slate-900/90 border-slate-800 hover:border-sky-500/60 shadow-lg'
-            : 'bg-white border-slate-200/80 hover:border-blue-400/80 shadow-[0_4px_20px_rgba(15,23,42,0.04)] hover:shadow-[0_12px_30px_rgba(29,99,237,0.10)]'
+            ? 'bg-stone-900 border-stone-800 hover:border-amber-500/50 shadow-lg'
+            : 'bg-white border-stone-200/80 shadow-sm'
         }`}
       >
-        <div className="h-44 overflow-hidden relative bg-slate-200 dark:bg-slate-800">
+        <div className="h-44 overflow-hidden relative bg-stone-200 dark:bg-stone-800">
           <img
             src={resolveDishImage(item)}
             alt={item.nama}
@@ -1566,63 +1532,76 @@ export default function App() {
             }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-          <span
-            className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold backdrop-blur-md flex items-center gap-1 shadow-sm ${
-              item.isHalal ? 'bg-emerald-500/95 text-white' : 'bg-rose-500/95 text-white'
-            }`}
-          >
-            {item.isHalal ? <OrganicHalalLeafIcon className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
-            {item.isHalal ? 'Halal' : 'Non-Halal'}
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-black/65 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur">
+            {item.kategori}
           </span>
 
           <button
             onClick={(e) => toggleFavorite(e, item.slug)}
             title="Simpan ke Favorit"
-            className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all ${
-              isFav ? 'bg-[#1d63ed] text-white shadow-md' : 'bg-white/85 text-slate-700 hover:bg-white'
+            className={`absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center shadow transition hover:scale-110 cursor-pointer ${
+              isFav ? 'bg-red-700 text-white' : 'bg-white/90 text-stone-600 hover:text-red-700'
             }`}
           >
-            <OrganicBookmarkIcon className="w-3.5 h-3.5" filled={isFav} />
+            <OrganicBookmarkIcon className="w-4 h-4" filled={isFav} />
           </button>
 
-          <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-white/95 dark:bg-slate-900/90 text-[#1d63ed] dark:text-sky-300 text-[11px] font-semibold shadow-sm">
-            {item.kategori}
-          </span>
-
-          {item.restoran.rating > 0 && (
-            <span className="absolute bottom-3 right-3 flex items-center gap-1 text-[11px] font-bold text-slate-900 bg-white/95 px-2 py-1 rounded-lg shadow-sm">
-              <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-              {item.restoran.rating}
+          {item.restoran?.tahunBerdiri && item.restoran.tahunBerdiri < 1990 && (
+            <span className="absolute bottom-3 left-3 rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-extrabold text-stone-900 shadow-sm">
+              LEGENDARIS · {item.restoran.tahunBerdiri}
             </span>
           )}
         </div>
 
         <div className="p-4 flex-1 flex flex-col">
           <div className="flex items-start justify-between gap-2">
-            <div>
+            <div className="min-w-0">
               <h3
-                className={`text-base font-bold transition-colors ${
-                  darkMode ? 'text-slate-100 group-hover:text-sky-400' : 'text-slate-900 group-hover:text-[#1d63ed]'
+                className={`font-display text-lg font-bold leading-snug transition-colors ${
+                  darkMode ? 'text-stone-50 group-hover:text-amber-400' : 'text-stone-900 group-hover:text-red-800'
                 }`}
               >
                 {item.nama}
               </h3>
-              {item.namaEn && <p className="text-[11px] text-slate-400">{item.namaEn}</p>}
+              {item.namaEn && <p className="text-[11px] text-stone-400 truncate">{item.namaEn}</p>}
             </div>
             <span
-              className={`text-[11px] font-medium px-2 py-0.5 rounded-md shrink-0 ${
+              className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${
                 darkMode
                   ? 'bg-amber-500/15 text-amber-300'
-                  : 'bg-amber-50 text-amber-700 border border-amber-200/70'
+                  : 'bg-amber-50 text-amber-800 ring-1 ring-amber-200/80'
               }`}
             >
               {item.budaya}
             </span>
           </div>
 
-          <p className={`text-xs mt-2 line-clamp-2 flex-1 leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+          {item.restoran.rating > 0 && (
+            <div className="mt-1.5 flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400">
+              <span className="font-extrabold text-stone-800 dark:text-stone-100">{item.restoran.rating}</span>
+              <span className="inline-flex items-center gap-0.5 text-amber-500">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star
+                    key={s}
+                    className={`w-3 h-3 ${
+                      s <= Math.round(item.restoran.rating)
+                        ? 'fill-amber-500 text-amber-500'
+                        : 'text-stone-300 dark:text-stone-600'
+                    }`}
+                  />
+                ))}
+              </span>
+            </div>
+          )}
+
+          <p className="mt-2 flex items-center gap-1 text-xs font-semibold text-stone-600 dark:text-stone-300 truncate">
+            <MapPin className="w-3.5 h-3.5 text-red-700 shrink-0" />
+            <span className="truncate">{item.restoran.kecamatan}</span>
+          </p>
+
+          <p className={`text-[13px] mt-2 line-clamp-2 flex-1 leading-relaxed ${darkMode ? 'text-stone-400' : 'text-stone-500'}`}>
             {item.deskripsi}
           </p>
 
@@ -1630,8 +1609,8 @@ export default function App() {
             {item.bahanUtama.slice(0, 3).map((b) => (
               <span
                 key={b}
-                className={`text-[11px] px-2 py-0.5 rounded-md font-medium ${
-                  darkMode ? 'bg-slate-800 text-sky-300' : 'bg-[#eef4ff] text-[#1d63ed]'
+                className={`text-[11px] px-2.5 py-0.5 rounded-full font-semibold ${
+                  darkMode ? 'bg-stone-800 text-amber-300' : 'bg-[#fff8ec] text-amber-900 ring-1 ring-amber-200/70'
                 }`}
               >
                 {b}
@@ -1639,16 +1618,18 @@ export default function App() {
             ))}
           </div>
 
-          <div
-            className={`mt-3.5 pt-3 border-t flex items-center justify-between text-xs ${
-              darkMode ? 'border-slate-800 text-slate-400' : 'border-slate-100 text-slate-500'
-            }`}
-          >
-            <span className="flex items-center gap-1 truncate max-w-[58%]">
-              <MapPin className="w-3.5 h-3.5 text-[#1d63ed] shrink-0" />
-              <span className="truncate">{item.restoran.kecamatan}</span>
+          <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-3.5">
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                item.isHalal
+                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
+                  : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
+              }`}
+            >
+              {item.isHalal ? <OrganicHalalLeafIcon className="w-3 h-3" /> : <ShieldAlert className="w-3 h-3" />}
+              {item.isHalal ? 'Halal' : 'Non-Halal'}
             </span>
-            <span className={`font-bold ${darkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+            <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[11px] font-bold text-stone-700 dark:bg-stone-800 dark:text-stone-300">
               {item.kisaranHarga.split(' /')[0]}
             </span>
           </div>
@@ -1659,17 +1640,17 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen flex transition-colors duration-300 font-sans ${
-        darkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-[#f6f9ff] text-slate-800'
+      className={`min-h-screen flex transition-colors duration-300 font-sans antialiased ${
+        darkMode ? 'dark bg-stone-950 text-stone-200' : 'bg-[#fff8ec] text-stone-800'
       }`}
     >
       {/* ==================== LEFT SIDEBAR (DESKTOP) ==================== */}
       <aside
-        className={`hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 z-30 border-r transition-colors ${
-          darkMode ? 'bg-slate-900/95 border-slate-800' : 'bg-white border-slate-200/80'
+        className={`hidden lg:flex lg:w-[272px] lg:flex-col lg:fixed lg:inset-y-0 z-30 border-r px-5 py-6 transition-colors ${
+          darkMode ? 'bg-stone-900/60 border-stone-800 backdrop-blur' : 'bg-white/75 border-stone-200/70 backdrop-blur'
         }`}
       >
-        <div className="p-6">
+        <div>
           <button
             onClick={() => {
               resetFilters();
@@ -1679,9 +1660,10 @@ export default function App() {
           >
             <RanahKulMedLogo size="md" darkMode={darkMode} />
           </button>
+          <div className="ulos-stripes mt-5 h-1.5 rounded-full" />
         </div>
 
-        <nav className="flex-1 px-4 space-y-1.5">
+        <nav className="flex-1 mt-6 space-y-1.5">
           {sidebarItems.map((item) => {
             const Icon = item.icon;
             const active = activeView === item.id;
@@ -1689,28 +1671,24 @@ export default function App() {
               <button
                 key={item.id}
                 onClick={() => setActiveView(item.id)}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-extrabold transition cursor-pointer ${
                   active
-                    ? darkMode
-                      ? 'bg-sky-500/15 text-sky-300 font-semibold'
-                      : 'bg-[#e8f0fe] text-[#1d63ed] font-semibold'
+                    ? 'bg-red-700 text-white shadow-lg shadow-red-700/25'
                     : darkMode
-                    ? 'text-slate-400 hover:bg-slate-800/70 hover:text-slate-200'
-                    : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                    ? 'text-stone-300 hover:bg-stone-800 hover:text-amber-400'
+                    : 'text-stone-600 hover:bg-amber-100/70 hover:text-red-800'
                 }`}
               >
-                <span className="flex items-center gap-3.5">
-                  <Icon className={`w-4 h-4 ${active ? 'text-[#1d63ed] dark:text-sky-400' : ''}`} />
+                <span className="flex items-center gap-3">
+                  <Icon className="w-[18px] h-[18px]" />
                   {item.label}
                 </span>
                 {item.count > 0 && (
                   <span
-                    className={`text-[11px] px-2 py-0.5 rounded-full font-semibold ${
+                    className={`text-[11px] px-2 py-0.5 rounded-full font-extrabold ${
                       active
-                        ? 'bg-[#1d63ed] text-white'
-                        : darkMode
-                        ? 'bg-slate-800 text-slate-300'
-                        : 'bg-slate-100 text-slate-600'
+                        ? 'bg-white/20 text-white'
+                        : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
                     }`}
                   >
                     {item.count}
@@ -1722,26 +1700,25 @@ export default function App() {
         </nav>
 
         {/* Bottom Sidebar Promo Card ("Pencarian Cerdas") */}
-        <div className="p-4">
+        <div className="mt-6">
           <div
             onClick={() => setActiveView('beranda')}
-            className={`cursor-pointer rounded-2xl p-4 border transition-all relative overflow-hidden group ${
-              darkMode
-                ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 hover:border-sky-500/50'
-                : 'bg-gradient-to-br from-[#eef4ff] to-[#e0ecff] border-blue-200/60 hover:shadow-md'
-            }`}
+            className="cursor-pointer rounded-3xl p-4 bg-stone-900 text-white ring-1 ring-stone-800 transition hover:ring-amber-500/50 relative overflow-hidden group"
           >
-            <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm mb-3">
-              <OrganicSpiceCompassIcon className="w-5 h-5 text-[#1d63ed] dark:text-sky-400" />
+            <div className="w-10 h-10 rounded-2xl bg-red-700/20 text-amber-300 flex items-center justify-center mb-3 ring-1 ring-amber-400/20">
+              <OrganicSpiceCompassIcon className="w-5 h-5" />
             </div>
-            <h4 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Pencarian Cerdas</h4>
-            <p className={`text-xs mt-1 leading-relaxed pr-6 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+            <h4 className="font-display text-sm font-bold text-white">Pencarian Cerdas</h4>
+            <p className="text-xs mt-1 leading-relaxed pr-6 text-stone-400">
               Lebih akurat, sesuai seleramu.
             </p>
-            <span className="absolute bottom-3.5 right-3.5 w-7 h-7 rounded-full bg-white dark:bg-slate-800 text-[#1d63ed] dark:text-sky-400 flex items-center justify-center shadow-sm group-hover:translate-x-0.5 transition-transform">
+            <span className="absolute bottom-3.5 right-3.5 w-7 h-7 rounded-full bg-amber-500 text-stone-900 flex items-center justify-center shadow-sm group-hover:translate-x-0.5 transition-transform">
               <ArrowRight className="w-3.5 h-3.5" />
             </span>
           </div>
+          <p className="mt-4 text-center text-[10px] font-semibold text-stone-400">
+            Ranah KulMed © 2026 · Medan, Sumatera Utara
+          </p>
         </div>
       </aside>
 
@@ -1753,21 +1730,22 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileMenuOpen(false)}
-            className="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-xs lg:hidden"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs lg:hidden"
           >
             <motion.div
-              initial={{ x: -260 }}
+              initial={{ x: -272 }}
               animate={{ x: 0 }}
-              exit={{ x: -260 }}
+              exit={{ x: -272 }}
               onClick={(e) => e.stopPropagation()}
-              className={`w-64 h-full p-5 flex flex-col ${darkMode ? 'bg-slate-900' : 'bg-white'}`}
+              className={`w-[272px] h-full p-5 flex flex-col ${darkMode ? 'bg-stone-900' : 'bg-[#fff8ec]'}`}
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4">
                 <RanahKulMedLogo size="md" darkMode={darkMode} />
-                <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 rounded-lg text-slate-400">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 rounded-full text-stone-400 hover:text-red-700">
                   <X className="w-5 h-5" />
                 </button>
               </div>
+              <div className="ulos-stripes mb-5 h-1.5 rounded-full" />
               <nav className="space-y-1.5 flex-1">
                 {sidebarItems.map((item) => {
                   const Icon = item.icon;
@@ -1779,12 +1757,12 @@ export default function App() {
                         setActiveView(item.id);
                         setMobileMenuOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-extrabold transition ${
                         active
-                          ? 'bg-[#e8f0fe] text-[#1d63ed] font-semibold'
+                          ? 'bg-red-700 text-white shadow-lg shadow-red-700/25'
                           : darkMode
-                          ? 'text-slate-300'
-                          : 'text-slate-600'
+                          ? 'text-stone-300 hover:bg-stone-800'
+                          : 'text-stone-600 hover:bg-amber-100/70 hover:text-red-800'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -1799,17 +1777,17 @@ export default function App() {
       </AnimatePresence>
 
       {/* ==================== MAIN CONTENT AREA ==================== */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen relative overflow-x-hidden">
+      <div className="flex-1 lg:pl-[272px] flex flex-col min-h-screen relative overflow-x-hidden">
         {/* Subtle Ambient Background & Istana Maimun Architectural Watermark */}
-        <div className="pointer-events-none fixed inset-0 lg:left-64 overflow-hidden">
+        <div className="pointer-events-none fixed inset-0 lg:left-[272px] overflow-hidden">
           <div
             className={`absolute -top-24 left-1/4 w-[540px] h-[360px] rounded-full blur-3xl ${
-              darkMode ? 'bg-sky-500/10' : 'bg-blue-200/35'
+              darkMode ? 'bg-amber-500/5' : 'bg-amber-200/30'
             }`}
           />
           <MaimunSilhouette
             className={`absolute right-0 top-24 w-[520px] h-auto ${
-              darkMode ? 'text-slate-800/40' : 'text-blue-900/[0.055]'
+              darkMode ? 'text-stone-800/35' : 'text-red-900/[0.04]'
             }`}
           />
         </div>
@@ -1818,8 +1796,8 @@ export default function App() {
         <header className="relative z-20 flex items-center justify-between lg:justify-end px-4 sm:px-8 py-4">
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className={`lg:hidden p-2 rounded-xl border ${
-              darkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-700'
+            className={`lg:hidden p-2.5 rounded-full border ${
+              darkMode ? 'bg-stone-900 border-stone-800 text-stone-200' : 'bg-white border-stone-200 text-stone-700 shadow-xs'
             }`}
           >
             <Menu className="w-5 h-5" />
@@ -1832,14 +1810,14 @@ export default function App() {
               title={darkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
               className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
                 darkMode
-                  ? 'bg-slate-900 border-slate-700 text-amber-300 hover:bg-slate-800'
-                  : 'bg-white border-slate-200/90 text-slate-600 hover:text-[#1d63ed] shadow-xs'
+                  ? 'bg-stone-900 border-stone-700 text-amber-400 hover:bg-stone-800'
+                  : 'bg-white border-stone-200/90 text-stone-600 hover:text-red-700 hover:border-red-300 shadow-xs'
               }`}
             >
               {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
-            <div className={`h-5 w-px ${darkMode ? 'bg-slate-800' : 'bg-slate-200'}`} />
+            <div className={`h-5 w-px ${darkMode ? 'bg-stone-800' : 'bg-stone-200'}`} />
 
             {/* Ranah KulMed Team Avatar Pill */}
             <div className="relative">
@@ -1847,12 +1825,12 @@ export default function App() {
                 onClick={() => {
                   setTeamMenuOpen((o) => !o);
                 }}
-                className="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 pl-1 pr-2.5 py-1 rounded-full hover:bg-amber-100/70 dark:hover:bg-stone-800 transition-colors cursor-pointer"
               >
-                <span className="w-8 h-8 rounded-full bg-[#1d63ed] text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                <span className="w-8 h-8 rounded-full bg-red-700 text-white font-display text-xs font-black flex items-center justify-center shadow-xs">
                   MS
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                <ChevronDown className="w-3.5 h-3.5 text-stone-500" />
               </button>
 
               <AnimatePresence>
@@ -1861,14 +1839,14 @@ export default function App() {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
-                    className={`absolute right-0 mt-2 w-72 rounded-2xl border p-4 shadow-xl z-40 ${
-                      darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'
+                    className={`absolute right-0 mt-2 w-72 rounded-3xl border p-4 shadow-xl z-40 ${
+                      darkMode ? 'bg-stone-900 border-stone-700' : 'bg-white border-stone-200'
                     }`}
                   >
-                    <p className="text-xs font-bold text-[#1d63ed] dark:text-sky-400 flex items-center gap-1.5">
+                    <p className="text-xs font-extrabold text-red-700 dark:text-amber-400 flex items-center gap-1.5">
                       <Users className="w-3.5 h-3.5" /> Tim Kreator Ranah KulMed
                     </p>
-                    <p className="text-[11px] text-slate-400 mt-0.5 mb-3">
+                    <p className="text-[11px] text-stone-400 mt-0.5 mb-3">
                       Platform Direktori &amp; Eksplorasi Kuliner Kota Medan
                     </p>
                     <ul className="space-y-1.5 text-xs">
@@ -1881,8 +1859,8 @@ export default function App() {
                       ].map((member) => (
                         <li
                           key={member}
-                          className={`px-2.5 py-1.5 rounded-lg ${
-                            darkMode ? 'bg-slate-800/70 text-slate-200' : 'bg-slate-50 text-slate-700'
+                          className={`px-3 py-1.5 rounded-xl font-medium ${
+                            darkMode ? 'bg-stone-800/80 text-stone-200' : 'bg-[#fff8ec] text-stone-700'
                           }`}
                         >
                           {member}
@@ -1898,17 +1876,25 @@ export default function App() {
 
         {/* ==================== VIEW 1: BERANDA (MINIMALIST HERO + AI + CATALOG) ==================== */}
         {activeView === 'beranda' && (
-          <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-6 pb-14">
-            {/* Centered Hero Branding */}
-            <div className="text-center max-w-3xl mx-auto mb-8">
-              <div className="flex justify-center mb-4">
-                <RanahKulMedLogo size="lg" darkMode={darkMode} />
-              </div>
-              <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Temukan kuliner khas Medan, cita rasa legendaris, bahan rempah pilihan, hingga lokasi terbaik di seluruh
-                21 kecamatan Kota Medan dengan lebih cepat dan akurat.
+          <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-14">
+            {/* Hero Container with Ulos Stripes & Warm Dot Pattern */}
+            <section className="dot-pattern relative overflow-hidden rounded-[2rem] border border-amber-200/70 bg-gradient-to-b from-amber-50 to-[#fff8ec] px-5 pb-10 pt-10 text-center dark:border-stone-800 dark:from-stone-900 dark:to-stone-950 sm:px-10 sm:pt-14 mb-8">
+              <div className="ulos-stripes absolute inset-x-0 top-0 h-2" />
+
+              <p className="mx-auto inline-flex items-center gap-2 rounded-full bg-stone-900 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-widest text-amber-300">
+                <MapPin className="w-3.5 h-3.5" /> Medan, Sumatera Utara · 21 Kecamatan
               </p>
-            </div>
+
+              {/* Centered Hero Branding */}
+              <div className="text-center max-w-3xl mx-auto mt-5 mb-7">
+                <div className="flex justify-center mb-4">
+                  <RanahKulMedLogo size="lg" darkMode={darkMode} />
+                </div>
+                <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto ${darkMode ? 'text-stone-300' : 'text-stone-600'}`}>
+                  Temukan kuliner khas Medan, cita rasa legendaris, bahan rempah pilihan, hingga lokasi terbaik di seluruh
+                  21 kecamatan Kota Medan dengan lebih cepat dan akurat.
+                </p>
+              </div>
 
             {/* Pill Search Bar */}
             <form onSubmit={executeSearchSubmit} className="relative max-w-3xl mx-auto mb-4">
@@ -1980,50 +1966,34 @@ export default function App() {
                   }`}
                 >
                   {searchSuggestions.length ? (
-                    <>
-                      {searchSuggestionData.isFallback && (
-                        <p
-                          role="status"
-                          className={`px-5 py-2 text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}
-                        >
-                          Tidak ada nama yang cocok persis. Mungkin ini yang kamu maksud:
-                        </p>
-                      )}
-                      {searchSuggestions.map((dish) => {
-                        const name = String(dish.nama || '');
-                        const query = searchInput.trim();
-                        const matchStart = name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase());
-                        const matchEnd = matchStart + query.length;
+                    searchSuggestions.map((dish) => {
+                      const name = String(dish.nama || '');
+                      const query = searchInput.trim();
+                      const matchStart = name.toLocaleLowerCase().indexOf(query.toLocaleLowerCase());
+                      const matchEnd = matchStart + query.length;
 
-                        return (
-                          <button
-                            key={dish.slug}
-                            type="button"
-                            role="option"
-                            aria-selected="false"
-                            onMouseDown={(e) => e.preventDefault()}
-                            onClick={() => executeSearchSubmit(null, name)}
-                            className={`block w-full px-5 py-3 text-left text-sm transition-colors ${
-                              darkMode
-                                ? 'text-slate-200 hover:bg-slate-800'
-                                : 'text-slate-700 hover:bg-blue-50'
-                            }`}
-                          >
-                            {matchStart >= 0 ? (
-                              <>
-                                {name.slice(0, matchStart)}
-                                <span className="rounded-sm bg-blue-100 font-semibold text-[#1d63ed] dark:bg-sky-500/20 dark:text-sky-300">
-                                  {name.slice(matchStart, matchEnd)}
-                                </span>
-                                {name.slice(matchEnd)}
-                              </>
-                            ) : (
-                              name
-                            )}
-                          </button>
-                        );
-                      })}
-                    </>
+                      return (
+                        <button
+                          key={dish.slug}
+                          type="button"
+                          role="option"
+                          aria-selected="false"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => executeSearchSubmit(null, name)}
+                          className={`block w-full px-5 py-3 text-left text-sm transition-colors ${
+                            darkMode
+                              ? 'text-slate-200 hover:bg-slate-800'
+                              : 'text-slate-700 hover:bg-blue-50'
+                          }`}
+                        >
+                          {name.slice(0, matchStart)}
+                          <span className="rounded-sm bg-blue-100 font-semibold text-[#1d63ed] dark:bg-sky-500/20 dark:text-sky-300">
+                            {name.slice(matchStart, matchEnd)}
+                          </span>
+                          {name.slice(matchEnd)}
+                        </button>
+                      );
+                    })
                   ) : (
                     <p role="status" className={`px-5 py-3 text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                       Tidak ada kuliner yang cocok.
@@ -2033,42 +2003,43 @@ export default function App() {
               )}
             </form>
 
-            {/* Pencarian Populer Row */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mb-8 text-xs">
-              <span className="inline-flex items-center gap-1 font-semibold text-slate-500 mr-1">
-                <OrganicSpiceFlameIcon className="w-4 h-4 text-orange-500" /> Pencarian Populer:
-              </span>
-              {POPULAR_SEARCHES.map((tag) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => executeSearchSubmit(null, tag)}
-                  className={`px-3.5 py-1.5 rounded-full border transition-all cursor-pointer ${
-                    darkMode
-                      ? 'bg-slate-900 border-slate-800 text-slate-300 hover:border-sky-400 hover:text-sky-300'
-                      : 'bg-white/90 border-blue-100 text-[#1d63ed] hover:bg-[#e8f0fe] shadow-2xs'
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
+              {/* Pencarian Populer Row */}
+              <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+                <span className="inline-flex items-center gap-1 font-bold text-stone-500 dark:text-stone-400 mr-1">
+                  <OrganicSpiceFlameIcon className="w-4 h-4 text-red-600" /> Pencarian Populer:
+                </span>
+                {POPULAR_SEARCHES.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => executeSearchSubmit(null, tag)}
+                    className={`px-3.5 py-1.5 rounded-full border font-bold transition-all cursor-pointer ${
+                      darkMode
+                        ? 'bg-stone-900 border-stone-700 text-stone-300 hover:border-amber-500 hover:text-amber-300'
+                        : 'bg-white/85 border-stone-200 text-stone-600 hover:border-red-600 hover:text-red-700 shadow-2xs'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </section>
 
             {/* Offline catalog assistant */}
             <div
-              className={`max-w-3xl mx-auto mb-8 rounded-2xl border p-4 sm:p-5 transition-all ${
+              className={`max-w-3xl mx-auto mb-8 rounded-3xl border p-4 sm:p-5 transition-all ${
                 darkMode
-                  ? 'bg-slate-900/90 border-slate-800 shadow-lg'
-                  : 'bg-white/95 border-blue-200/80 shadow-[0_8px_28px_rgba(29,99,237,0.07)]'
+                  ? 'bg-stone-900 border-stone-800 shadow-lg'
+                  : 'bg-white border-stone-200/80 shadow-sm'
               }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${
+                    className={`w-10 h-10 rounded-2xl border flex items-center justify-center shrink-0 ${
                       darkMode
-                        ? 'bg-amber-950/40 border-amber-800/60 text-amber-300'
-                        : 'bg-amber-50/90 border-amber-200/80 text-amber-700'
+                        ? 'bg-red-950/50 border-red-900/60 text-amber-400'
+                        : 'bg-amber-50 border-amber-200/80 text-red-700'
                     }`}
                   >
                     <OrganicCulinaryBowlIcon className="w-6 h-6" />
@@ -2076,11 +2047,11 @@ export default function App() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                        Asisten Kuliner Ranah KulMed
+                        Asisten Kuliner AI Ranah KulMed
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Cocokkan pertanyaan dengan nama menu, bahan, harga, halal, dan lokasi pada katalog lokal.
+                      Rekomendasi personal sesuai budget, status halal, bahan rempah, dan lokasi di Medan.
                     </p>
                   </div>
                 </div>
@@ -2092,8 +2063,8 @@ export default function App() {
                       title="Mulai obrolan baru"
                       className={`p-2 rounded-full border transition-colors cursor-pointer ${
                         darkMode
-                          ? 'border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800'
-                          : 'border-slate-200 text-slate-500 hover:text-[#1d63ed] hover:bg-blue-50'
+                          ? 'border-stone-700 text-stone-400 hover:text-white hover:bg-stone-800'
+                          : 'border-stone-200 text-stone-500 hover:text-red-700 hover:bg-amber-50'
                       }`}
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
@@ -2102,7 +2073,11 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setAiOpen((prev) => !prev)}
-                    className="px-4 py-2 rounded-full bg-[#e8f0fe] hover:bg-blue-100 dark:bg-sky-500/15 dark:hover:bg-sky-500/25 text-[#1d63ed] dark:text-sky-300 text-xs font-semibold transition-colors cursor-pointer"
+                    className={`px-4 py-2 rounded-full text-xs font-extrabold transition-colors cursor-pointer ${
+                      aiOpen
+                        ? 'bg-stone-100 text-stone-700 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-200'
+                        : 'bg-red-700 hover:bg-red-800 text-white shadow-sm'
+                    }`}
                   >
                     {aiOpen ? 'Sembunyikan' : 'Tanya Asisten'}
                   </button>
@@ -2117,10 +2092,10 @@ export default function App() {
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="mt-4 pt-4 border-t border-slate-200/80 dark:border-slate-800 space-y-3.5">
+                    <div className="mt-4 pt-4 border-t border-stone-200/80 dark:border-stone-800 space-y-3.5">
                       <div
                         className={`max-h-[420px] overflow-y-auto rounded-2xl p-3.5 space-y-4 text-xs ${
-                          darkMode ? 'bg-slate-950/90 border border-slate-800' : 'bg-[#f6f9ff] border border-slate-200/80'
+                          darkMode ? 'bg-stone-950 border border-stone-800' : 'bg-[#fff8ec] border border-amber-200/70'
                         }`}
                       >
                         {aiMessages.map((msg, i) => {
@@ -2130,10 +2105,10 @@ export default function App() {
                               <div
                                 className={`max-w-[92%] sm:max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed whitespace-pre-line ${
                                   msg.role === 'user'
-                                    ? 'bg-gradient-to-r from-[#1d63ed] to-[#1e40af] text-white shadow-xs'
+                                    ? 'bg-red-700 text-white shadow-xs'
                                     : darkMode
-                                    ? 'bg-slate-900 text-slate-200 border border-slate-800'
-                                    : 'bg-white text-slate-700 border border-slate-200/80 shadow-2xs'
+                                    ? 'bg-stone-900 text-stone-200 border border-stone-800'
+                                    : 'bg-white text-stone-700 border border-stone-200/80 shadow-2xs'
                                 }`}
                               >
                                 {msg.text}
@@ -2152,10 +2127,10 @@ export default function App() {
                                           if (fullDish) openDishDetail(fullDish);
                                           else executeSearchSubmit(null, rec.nama);
                                         }}
-                                        className={`group text-left p-2.5 rounded-xl border transition-all flex gap-3 items-start cursor-pointer ${
+                                        className={`group text-left p-2.5 rounded-2xl border transition-all flex gap-3 items-start cursor-pointer ${
                                           darkMode
-                                            ? 'bg-slate-900 border-slate-800 hover:border-sky-400'
-                                            : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-2xs hover:shadow-sm'
+                                            ? 'bg-stone-900 border-stone-800 hover:border-amber-500'
+                                            : 'bg-white border-stone-200/90 hover:border-red-600 shadow-2xs hover:shadow-sm'
                                         }`}
                                       >
                                         {resolveDishImage(fullDish) ? (
@@ -2163,42 +2138,42 @@ export default function App() {
                                             src={resolveDishImage(fullDish)}
                                             alt={rec.nama}
                                             loading="lazy"
-                                            className="w-14 h-14 rounded-lg object-cover shrink-0"
+                                            className="w-14 h-14 rounded-xl object-cover shrink-0"
                                           />
                                         ) : (
-                                          <div className="w-14 h-14 rounded-lg bg-[#e8f0fe] text-[#1d63ed] flex items-center justify-center shrink-0">
+                                          <div className="w-14 h-14 rounded-xl bg-amber-100 text-red-700 flex items-center justify-center shrink-0">
                                             <Utensils className="w-5 h-5" />
                                           </div>
                                         )}
                                         <div className="min-w-0 flex-1">
                                           <div className="flex items-center justify-between gap-1">
                                             <p
-                                              className={`font-bold text-xs truncate group-hover:text-[#1d63ed] dark:group-hover:text-sky-400 ${
-                                                darkMode ? 'text-white' : 'text-slate-900'
+                                              className={`font-display font-bold text-xs truncate group-hover:text-red-700 dark:group-hover:text-amber-400 ${
+                                                darkMode ? 'text-white' : 'text-stone-900'
                                               }`}
                                             >
                                               {rec.nama}
                                             </p>
                                             {fullDish && (
                                               <span
-                                                className={`shrink-0 text-[9px] px-1.5 py-0.5 rounded-full font-semibold ${
+                                                className={`shrink-0 text-[9px] px-1.5 py-0.5 rounded-full font-bold ${
                                                   fullDish.isHalal
-                                                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                                                    : 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
+                                                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
+                                                    : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
                                                 }`}
                                               >
                                                 {fullDish.isHalal ? 'Halal' : 'Non-Halal'}
                                               </span>
                                             )}
                                           </div>
-                                          <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                                          <p className="text-[11px] text-stone-500 dark:text-stone-400 line-clamp-2 mt-0.5 leading-snug">
                                             {rec.alasan}
                                           </p>
                                           <div className="flex items-center justify-between gap-2 mt-1.5 text-[10px]">
-                                            <span className="font-semibold text-[#1d63ed] dark:text-sky-400 truncate">
+                                            <span className="font-bold text-red-700 dark:text-amber-400 truncate">
                                               {rec.estimasiHarga}
                                             </span>
-                                            <span className="text-slate-400 truncate max-w-[52%]">{rec.lokasi}</span>
+                                            <span className="text-stone-400 truncate max-w-[52%]">{rec.lokasi}</span>
                                           </div>
                                         </div>
                                       </button>
@@ -2214,7 +2189,7 @@ export default function App() {
                                     <button
                                       type="button"
                                       onClick={() => applyAiFilters(msg.suggestedFilters)}
-                                      className="inline-flex items-center gap-1 text-[11px] px-3 py-1 rounded-full bg-[#1d63ed] text-white font-semibold hover:bg-blue-700 transition-colors cursor-pointer"
+                                      className="inline-flex items-center gap-1 text-[11px] px-3 py-1 rounded-full bg-red-700 text-white font-bold hover:bg-red-800 transition-colors cursor-pointer"
                                     >
                                       <Filter className="w-3 h-3" /> Terapkan ke Filter Pencarian
                                     </button>
@@ -2224,11 +2199,12 @@ export default function App() {
                                       <button
                                         key={sample}
                                         type="button"
-                                        onClick={() => askOfflineCulinary(null, sample)}
+                                        disabled={aiLoading}
+                                        onClick={() => askGeminiCulinary(null, sample)}
                                         className={`text-[11px] px-3 py-1 rounded-full border transition-colors cursor-pointer ${
                                           darkMode
-                                            ? 'bg-slate-900 border-slate-700 text-slate-300 hover:border-sky-400'
-                                            : 'bg-white border-blue-200/80 text-slate-700 hover:border-[#1d63ed] hover:text-[#1d63ed]'
+                                            ? 'bg-stone-900 border-stone-700 text-stone-300 hover:border-amber-500'
+                                            : 'bg-white border-amber-200 text-stone-700 hover:border-red-600 hover:text-red-700'
                                         }`}
                                       >
                                         {sample}
@@ -2240,24 +2216,42 @@ export default function App() {
                           );
                         })}
 
+                        {aiLoading && (
+                          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/70 dark:border-slate-800 text-[11px] text-[#1d63ed] dark:text-sky-400 font-medium">
+                            <OrganicCulinaryBowlIcon className="w-4 h-4 animate-pulse" /> Mencocokkan katalog kuliner Medan untukmu...
+                          </div>
+                        )}
                         <div ref={aiChatEndRef} />
                       </div>
 
-                      <form onSubmit={askOfflineCulinary} className="flex items-center gap-2">
+                      {aiError && (
+                        <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-700 dark:text-amber-300">
+                          <span>{aiError}</span>
+                          <button
+                            type="button"
+                            onClick={() => setActiveView('pengaturan')}
+                            className="font-bold underline shrink-0 cursor-pointer"
+                          >
+                            Buka Pengaturan
+                          </button>
+                        </div>
+                      )}
+
+                      <form onSubmit={askGeminiCulinary} className="flex items-center gap-2">
                         <input
                           type="text"
                           value={aiPrompt}
                           onChange={(e) => setAiPrompt(e.target.value)}
                           placeholder="Tanya bebas: misal 'Makan malam halal di Kesawan di bawah 50rb'..."
-                          className={`flex-1 rounded-full border px-4 py-2.5 text-xs outline-none ${
+                          className={`flex-1 rounded-full border px-4 py-2.5 text-xs font-medium outline-none ${
                             darkMode
-                              ? 'bg-slate-950 border-slate-700 text-white placeholder-slate-500 focus:border-sky-400'
-                              : 'bg-white border-slate-200 text-slate-800 placeholder-slate-400 focus:border-[#1d63ed]'
+                              ? 'bg-stone-950 border-stone-700 text-white placeholder-stone-500 focus:border-amber-500'
+                              : 'bg-[#fff8ec] border-stone-200 text-stone-800 placeholder-stone-400 focus:border-red-700'
                           }`}
                         />
                         <button
                           type="submit"
-                          disabled={!aiPrompt.trim()}
+                          disabled={aiLoading || !aiPrompt.trim()}
                           className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 disabled:opacity-50 text-white text-xs font-semibold transition-all cursor-pointer shadow-xs"
                         >
                           <Send className="w-3.5 h-3.5" />
@@ -2280,16 +2274,16 @@ export default function App() {
                   className="overflow-hidden mb-8"
                 >
                   <div
-                    className={`rounded-2xl border p-4 space-y-3 ${
-                      darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'
+                    className={`rounded-3xl border p-4 sm:p-5 space-y-3 ${
+                      darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
                     }`}
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
                       <select
                         value={selectedKategori}
                         onChange={(e) => setSelectedKategori(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua Kategori</option>
@@ -2303,8 +2297,8 @@ export default function App() {
                       <select
                         value={selectedBudaya}
                         onChange={(e) => setSelectedBudaya(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua Budaya</option>
@@ -2321,8 +2315,8 @@ export default function App() {
                           setSelectedKecamatan(e.target.value);
                           if (!e.target.value) setIncludeNeighbors(false);
                         }}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua 21 Kecamatan</option>
@@ -2336,8 +2330,8 @@ export default function App() {
                       <select
                         value={selectedKawasan}
                         onChange={(e) => setSelectedKawasan(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua Kawasan Kuliner</option>
@@ -2351,8 +2345,8 @@ export default function App() {
                       <select
                         value={halalFilter}
                         onChange={(e) => setHalalFilter(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Halal &amp; Non-Halal</option>
@@ -2363,8 +2357,8 @@ export default function App() {
                       <select
                         value={selectedWaktu}
                         onChange={(e) => setSelectedWaktu(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua Waktu Sajian</option>
@@ -2378,8 +2372,8 @@ export default function App() {
                       <select
                         value={maxHargaFilter}
                         onChange={(e) => setMaxHargaFilter(e.target.value)}
-                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        className={`rounded-full border px-3.5 py-2 text-xs font-bold outline-none ${
+                          darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-700'
                         }`}
                       >
                         <option value="">Semua Budget Harga</option>
@@ -2391,12 +2385,12 @@ export default function App() {
                     </div>
 
                     {selectedKecamatan && (
-                      <label className="flex items-center gap-2 text-xs text-[#1d63ed] dark:text-sky-400 cursor-pointer pt-1">
+                      <label className="flex items-center gap-2 text-xs text-red-700 dark:text-amber-400 cursor-pointer pt-1 font-semibold">
                         <input
                           type="checkbox"
                           checked={includeNeighbors}
                           onChange={(e) => setIncludeNeighbors(e.target.checked)}
-                          className="accent-[#1d63ed]"
+                          className="accent-red-700"
                         />
                         <span>
                           <strong>Perluas Radius Lokasi</strong> — tampilkan juga rekomendasi kuliner di kecamatan sekitar
@@ -2410,9 +2404,9 @@ export default function App() {
 
             {/* Live Culinary Results Section */}
             <div className="mt-4">
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+              <div className="flex flex-wrap items-end justify-between gap-2 mb-5">
                 <div>
-                  <h2 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                  <h2 className={`font-display text-2xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
                     {searchInput.trim()
                       ? isSearchRecommendation
                         ? `Rekomendasi Nama Mirip (${matchingSearchResults.length})`
@@ -2422,21 +2416,19 @@ export default function App() {
                         : `Rekomendasi Kuliner Pilihan di Medan (${homeDisplayedResults.length} Hidangan)`}
                   </h2>
                   <p className="text-xs text-slate-500">
-                    {isSearchRecommendation
-                      ? 'Nama yang dicari tidak ditemukan persis. Berikut pilihan dengan nama yang paling mendekati.'
-                      : 'Pilih hidangan untuk melihat detail racikan rempah, jam buka, lokasi peta, dan padanan menu terbaik.'}
+                    Pilih hidangan untuk melihat detail racikan rempah, jam buka, lokasi peta, dan padanan menu terbaik.
                   </p>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <button
                     type="button"
                     onClick={() => setShowMapView((m) => !m)}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-extrabold transition-all cursor-pointer ${
                       showMapView
-                        ? 'bg-[#1d63ed] border-[#1d63ed] text-white shadow-xs'
+                        ? 'bg-red-700 border-red-700 text-white shadow-sm'
                         : darkMode
-                          ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-400'
-                          : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-2xs'
+                          ? 'bg-stone-900 border-stone-700 text-amber-400 hover:border-amber-500'
+                          : 'bg-white border-stone-200 text-red-700 hover:border-red-600 shadow-xs'
                     }`}
                   >
                     <MapPin className="w-3.5 h-3.5" />
@@ -2445,7 +2437,7 @@ export default function App() {
                   {hasActiveFilter && (
                     <button
                       onClick={resetFilters}
-                      className="text-xs font-semibold text-[#1d63ed] dark:text-sky-400 hover:underline cursor-pointer"
+                      className="text-xs font-extrabold text-red-700 dark:text-amber-400 hover:underline cursor-pointer"
                     >
                       Reset Filter
                     </button>
@@ -2464,7 +2456,7 @@ export default function App() {
                   {[1, 2, 3, 4, 5, 6].map((n) => (
                     <div
                       key={n}
-                      className={`h-72 rounded-2xl animate-pulse ${darkMode ? 'bg-slate-900' : 'bg-white border border-slate-200/70'}`}
+                      className={`h-72 rounded-3xl animate-pulse ${darkMode ? 'bg-stone-900' : 'bg-white border border-stone-200/80'}`}
                     />
                   ))}
                 </div>
@@ -2475,8 +2467,8 @@ export default function App() {
                       {homeDisplayedResults.map(renderDishCard)}
                     </div>
                   ) : hasActiveFilter ? (
-                    <p role="status" className={`rounded-2xl border p-6 text-center text-sm ${
-                      darkMode ? 'border-slate-800 bg-slate-900 text-slate-400' : 'border-slate-200 bg-white text-slate-500'
+                    <p role="status" className={`rounded-3xl border border-dashed p-10 text-center text-sm font-medium ${
+                      darkMode ? 'border-stone-700 bg-stone-900 text-stone-400' : 'border-stone-300 bg-white text-stone-500'
                     }`}>
                       {searchInput.trim()
                         ? 'Tidak ada kuliner yang cocok dengan pencarian.'
@@ -2488,17 +2480,17 @@ export default function App() {
                     <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                       <button
                         onClick={() => setVisibleCount((c) => c + 12)}
-                        className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                        className={`px-6 py-2.5 rounded-full border text-xs font-extrabold transition-all cursor-pointer ${
                           darkMode
-                            ? 'bg-slate-900 border-slate-700 text-sky-300 hover:bg-slate-800'
-                            : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
+                            ? 'bg-stone-900 border-stone-700 text-amber-400 hover:bg-stone-800'
+                            : 'bg-white border-stone-200 text-red-700 hover:border-red-600 shadow-xs'
                         }`}
                       >
                         Muat Lebih Banyak ({activePool.length - visibleCount} kuliner lainnya)
                       </button>
                       <button
                         onClick={() => setVisibleCount(activePool.length)}
-                        className="px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
+                        className="px-6 py-2.5 rounded-full bg-red-700 hover:bg-red-800 text-white text-xs font-extrabold shadow-sm transition-all cursor-pointer"
                       >
                         Tampilkan Semua ({activePool.length})
                       </button>
@@ -2513,127 +2505,241 @@ export default function App() {
         {/* ==================== VIEW 2: EKSPLORASI KOLEKSI ==================== */}
         {activeView === 'eksplorasi' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
-            <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                  {hasActiveFilter
-                    ? 'Hasil Jelajah Kuliner'
-                    : selectedExploreCollection
-                      ? selectedExploreCollection.title
-                      : 'Jelajahi Kuliner Medan'}
+                  Jelajah Lengkap Kuliner Medan
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  {hasActiveFilter
-                    ? 'Pilihan kuliner sesuai kategori yang kamu pilih.'
-                    : selectedExploreCollection
-                      ? selectedExploreCollection.description
-                      : 'Pilih koleksi sesuai suasana dan cita rasa yang ingin kamu temukan.'}
+                  Saring pilihan kuliner berdasarkan kategori hidangan, warisan budaya, waktu sajian, budget harga, 21 kecamatan, hingga peta lokasi.
                 </p>
               </div>
-              {(hasActiveFilter || selectedExploreCollection) && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (hasActiveFilter) resetFilters();
-                    setSelectedExploreCollectionId('');
-                    setVisibleCount(12);
+              <button
+                type="button"
+                onClick={() => setShowMapView((m) => !m)}
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                  showMapView
+                    ? 'bg-[#1d63ed] border-[#1d63ed] text-white shadow-xs'
+                    : darkMode
+                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-400'
+                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                {showMapView ? 'Sembunyikan Peta Lokasi' : 'Buka Peta 21 Kecamatan'}
+              </button>
+            </div>
+
+            <div
+              className={`rounded-2xl border p-4 mb-6 space-y-4 ${
+                darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200/90 shadow-xs'
+              }`}
+            >
+              <div className="relative">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={keyword}
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                    setSearchInput(e.target.value);
                   }}
-                  className={`px-4 py-2 rounded-full border text-xs font-semibold transition-colors cursor-pointer ${
+                  placeholder="Cari nama hidangan, bahan rempah, nama restoran, atau kelurahan..."
+                  className={`w-full rounded-xl border py-2.5 pl-10 pr-4 text-xs sm:text-sm outline-none ${
                     darkMode
-                      ? 'border-slate-700 bg-slate-900 text-sky-300 hover:bg-slate-800'
-                      : 'border-blue-200 bg-white text-[#1d63ed] hover:bg-blue-50'
+                      ? 'bg-slate-950 border-slate-700 text-white focus:border-sky-400'
+                      : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-[#1d63ed]'
+                  }`}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+                <select
+                  value={selectedKategori}
+                  onChange={(e) => setSelectedKategori(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
                   }`}
                 >
-                  Kembali ke Koleksi
+                  <option value="">Semua Kategori</option>
+                  {facets.categories.map((c) => (
+                    <option key={c.slug} value={c.slug}>
+                      {c.label} ({c.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedBudaya}
+                  onChange={(e) => setSelectedBudaya(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Budaya</option>
+                  {facets.cultures.map((c) => (
+                    <option key={c.slug} value={c.slug}>
+                      {c.label} ({c.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedKecamatan}
+                  onChange={(e) => {
+                    setSelectedKecamatan(e.target.value);
+                    if (!e.target.value) setIncludeNeighbors(false);
+                  }}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua 21 Kecamatan</option>
+                  {facets.districts.map((d) => (
+                    <option key={d.slug} value={d.slug}>
+                      {d.label} ({d.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedKawasan}
+                  onChange={(e) => setSelectedKawasan(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Kawasan</option>
+                  {(facets.hubs || []).map((h) => (
+                    <option key={h.slug} value={h.slug}>
+                      {h.label} ({h.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedTeknik}
+                  onChange={(e) => setSelectedTeknik(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Teknik Masak</option>
+                  {(facets.techniques || []).map((t) => (
+                    <option key={t.slug} value={t.slug}>
+                      {t.label} ({t.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedWaktu}
+                  onChange={(e) => setSelectedWaktu(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Waktu Sajian</option>
+                  {(facets.servingTimes || []).map((w) => (
+                    <option key={w.slug} value={w.slug}>
+                      {w.label} ({w.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={maxHargaFilter}
+                  onChange={(e) => setMaxHargaFilter(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Budget Harga</option>
+                  <option value="20000">≤ Rp 20.000</option>
+                  <option value="35000">≤ Rp 35.000</option>
+                  <option value="50000">≤ Rp 50.000</option>
+                  <option value="100000">≤ Rp 100.000</option>
+                </select>
+
+                <select
+                  value={halalFilter}
+                  onChange={(e) => setHalalFilter(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Halal &amp; Non-Halal</option>
+                  <option value="true">Halal Saja</option>
+                  <option value="false">Non-Halal Saja</option>
+                </select>
+
+                <button
+                  onClick={resetFilters}
+                  className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors cursor-pointer"
+                >
+                  Reset ({activePool.length} hasil)
                 </button>
+              </div>
+
+              {selectedKecamatan && (
+                <label className="flex items-center gap-2 text-xs text-[#1d63ed] dark:text-sky-400 cursor-pointer pt-1">
+                  <input
+                    type="checkbox"
+                    checked={includeNeighbors}
+                    onChange={(e) => setIncludeNeighbors(e.target.checked)}
+                    className="accent-[#1d63ed]"
+                  />
+                  <span>
+                    <strong>Perluas Radius Lokasi</strong> — tampilkan juga pilihan kuliner di kecamatan sekitar
+                  </span>
+                </label>
               )}
             </div>
 
-            {hasActiveFilter ? (
-              loading ? (
-                <p className="py-12 text-center text-sm text-slate-500">Memuat pilihan kuliner...</p>
-              ) : displayedResults.length ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {displayedResults.map(renderDishCard)}
-                  </div>
-                  {visibleCount < activePool.length && (
-                    <button
-                      type="button"
-                      onClick={() => setVisibleCount((count) => count + 24)}
-                      className="mt-8 mx-auto block px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer"
-                    >
-                      Tampilkan Lebih Banyak ({activePool.length - visibleCount} tersisa)
-                    </button>
-                  )}
-                </>
-              ) : (
-                <p role="status" className="py-12 text-center text-sm text-slate-500">
-                  Belum ada kuliner yang cocok dengan pilihan ini.
-                </p>
-              )
-            ) : selectedExploreCollection ? (
-              <>
-                <p className="text-xs text-slate-500 mb-4">{selectedExploreCollection.dishes.length} pilihan kuliner</p>
-                {displayedExploreDishes.length ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {displayedExploreDishes.map(renderDishCard)}
-                  </div>
-                ) : (
-                  <p role="status" className="py-12 text-center text-sm text-slate-500">
-                    Koleksi ini belum memiliki data kuliner.
-                  </p>
-                )}
-                {visibleCount < selectedExploreCollection.dishes.length && (
-                  <button
-                    type="button"
-                    onClick={() => setVisibleCount((count) => count + 24)}
-                    className="mt-8 mx-auto block px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer"
-                  >
-                    Tampilkan Lebih Banyak (
-                    {selectedExploreCollection.dishes.length - visibleCount} tersisa)
-                  </button>
-                )}
-              </>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {exploreCollections.map((collection) => {
-                  const CollectionIcon = collection.icon;
-                  return (
-                    <button
-                      key={collection.id}
-                      type="button"
-                      onClick={() => {
-                        setSelectedExploreCollectionId(collection.id);
-                        setVisibleCount(12);
-                      }}
-                      className={`group rounded-2xl border p-5 text-left transition-all cursor-pointer ${
-                        darkMode
-                          ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
-                          : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-xs'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div
-                          className={`w-11 h-11 rounded-xl flex items-center justify-center ${
-                            darkMode ? 'bg-sky-500/10 text-sky-300' : 'bg-blue-50 text-[#1d63ed]'
-                          }`}
-                        >
-                          <CollectionIcon className="w-5 h-5" />
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-slate-400 transition-transform group-hover:translate-x-1" />
-                      </div>
-                      <h3 className={`mt-4 text-base font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                        {collection.title}
-                      </h3>
-                      <p className="mt-1 text-xs leading-relaxed text-slate-500">{collection.description}</p>
-                      <p className="mt-4 text-xs font-semibold text-[#1d63ed] dark:text-sky-400">
-                        {collection.dishes.length} hidangan
-                      </p>
-                    </button>
-                  );
-                })}
+            {showMapView && (
+              <div className="mb-6">
+                <MedanCulinaryMap dishes={activePool} onSelectDish={openDishDetail} darkMode={darkMode} />
               </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {displayedResults.map(renderDishCard)}
+            </div>
+
+            {visibleCount < activePool.length && (
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <button
+                  onClick={() => setVisibleCount((c) => c + 24)}
+                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer"
+                >
+                  Tampilkan Lebih Banyak ({activePool.length - visibleCount} tersisa)
+                </button>
+                <button
+                  onClick={() => setVisibleCount(activePool.length)}
+                  className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                    darkMode
+                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:bg-slate-800'
+                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
+                  }`}
+                >
+                  Tampilkan Semua ({activePool.length})
+                </button>
+              </div>
+            )}
+
+            {lastSparql && (
+              <details
+                className={`mt-8 rounded-2xl border p-4 ${
+                  darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+                }`}
+              >
+                <summary className="cursor-pointer text-xs font-semibold text-[#1d63ed] dark:text-sky-400 flex items-center gap-2">
+                  <Database className="w-4 h-4" /> Detail Kueri Mesin Pencari (Mode Developer)
+                </summary>
+                <pre className="mt-3 p-4 rounded-xl bg-slate-950 text-xs text-emerald-300 overflow-x-auto font-mono">
+                  {lastSparql}
+                </pre>
+              </details>
             )}
           </main>
         )}
@@ -2642,16 +2748,16 @@ export default function App() {
         {activeView === 'kategori' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-8">
             <div>
-              <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
                 Kategori &amp; Warisan Budaya Kuliner
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
                 Telusuri kekayaan gastronomi Kota Medan berdasarkan jenis sajian maupun akar tradisi budaya.
               </p>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">
+              <h3 className="text-xs font-extrabold uppercase tracking-widest text-stone-400 mb-3">
                 Kategori Sajian Khas Medan
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2662,24 +2768,24 @@ export default function App() {
                       setSelectedKategori(cat.slug);
                       setActiveView('eksplorasi');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                    className={`group p-5 rounded-3xl border text-left transition-all flex items-center justify-between cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
                       darkMode
-                        ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
-                        : 'bg-white border-slate-200/90 hover:border-[#1d63ed] shadow-xs'
+                        ? 'bg-stone-900 border-stone-800 hover:border-amber-500/60'
+                        : 'bg-white border-stone-200/80 hover:border-red-600 shadow-sm'
                     }`}
                   >
                     <div>
-                      <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{cat.label}</p>
-                      <p className="text-xs text-[#1d63ed] dark:text-sky-400 mt-1 font-medium">{cat.count} hidangan</p>
+                      <p className={`font-display text-base font-bold ${darkMode ? 'text-white' : 'text-stone-900'}`}>{cat.label}</p>
+                      <p className="text-xs text-red-700 dark:text-amber-400 mt-1 font-bold">{cat.count} hidangan</p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                    <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-red-700 dark:group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                   </button>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">
+              <h3 className="text-xs font-extrabold uppercase tracking-widest text-stone-400 mb-3">
                 Warisan Budaya Kuliner Sumatera Utara
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2690,19 +2796,19 @@ export default function App() {
                       setSelectedBudaya(cult.slug);
                       setActiveView('eksplorasi');
                     }}
-                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                    className={`group p-5 rounded-3xl border text-left transition-all flex items-center justify-between cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
                       darkMode
-                        ? 'bg-slate-900 border-slate-800 hover:border-amber-500'
-                        : 'bg-white border-slate-200/90 hover:border-amber-400 shadow-xs'
+                        ? 'bg-stone-900 border-stone-800 hover:border-amber-500/60'
+                        : 'bg-white border-stone-200/80 hover:border-amber-500 shadow-sm'
                     }`}
                   >
                     <div>
-                      <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{cult.label}</p>
-                      <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 font-medium">
+                      <p className={`font-display text-base font-bold ${darkMode ? 'text-white' : 'text-stone-900'}`}>{cult.label}</p>
+                      <p className="text-xs text-amber-600 dark:text-amber-400 mt-1 font-bold">
                         {cult.count} hidangan khas
                       </p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                    <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all" />
                   </button>
                 ))}
               </div>
@@ -2712,35 +2818,46 @@ export default function App() {
 
         {/* ==================== VIEW 4: RIWAYAT PENCARIAN ==================== */}
         {activeView === 'riwayat' && (
-          <main className="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
-            <div className="flex items-center justify-between mb-6">
+          <main className="relative z-10 flex-1 max-w-3xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
+            <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
               <div>
-                <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
                   Riwayat Pencarian
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">Klik kata kunci di bawah untuk mencari kembali dengan cepat.</p>
+                <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">Klik kata kunci di bawah untuk mencari kembali dengan cepat.</p>
               </div>
               {searchHistory.length > 0 && (
                 <button
                   onClick={() => setSearchHistory([])}
-                  className="text-xs text-rose-500 font-semibold hover:underline cursor-pointer"
+                  className="rounded-full bg-red-700 px-4 py-2.5 text-xs font-extrabold text-white transition hover:bg-red-800 cursor-pointer"
                 >
                   Hapus Semua Riwayat
                 </button>
               )}
             </div>
 
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className={`rounded-3xl border p-4 text-center ${darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'}`}>
+                <p className="font-display text-3xl font-black text-red-700 dark:text-red-400">{searchHistory.length}</p>
+                <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-stone-400">Total pencarian</p>
+              </div>
+              <div className={`rounded-3xl border p-4 text-center ${darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'}`}>
+                <p className="font-display text-3xl font-black text-red-700 dark:text-red-400">{favorites.length}</p>
+                <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-stone-400">Disimpan favorit</p>
+              </div>
+            </div>
+
             {searchHistory.length === 0 ? (
               <div
-                className={`p-10 rounded-2xl border text-center ${
-                  darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+                className={`p-12 rounded-3xl border border-dashed text-center ${
+                  darkMode ? 'bg-stone-900 border-stone-700' : 'bg-white border-stone-300'
                 }`}
               >
-                <History className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <p className="text-sm font-semibold">Belum ada riwayat pencarian</p>
+                <History className="w-8 h-8 text-stone-400 mx-auto mb-2" />
+                <p className="font-display text-xl font-bold">Belum ada riwayat pencarian</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {searchHistory.map((h, idx) => (
                   <div
                     key={idx}
@@ -2748,22 +2865,26 @@ export default function App() {
                       executeSearchSubmit(null, h.query);
                       setActiveView('beranda');
                     }}
-                    className={`cursor-pointer p-4 rounded-2xl border flex items-center justify-between transition-all ${
+                    className={`cursor-pointer p-4 rounded-3xl border flex items-center justify-between transition-all ${
                       darkMode
-                        ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
-                        : 'bg-white border-slate-200 hover:border-[#1d63ed] shadow-xs'
+                        ? 'bg-stone-900 border-stone-800 hover:border-amber-500/60'
+                        : 'bg-white border-stone-200/80 hover:border-red-600 shadow-xs'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <Clock className="w-4 h-4 text-[#1d63ed]" />
+                    <div className="flex items-center gap-3.5">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-amber-100 text-red-800 dark:bg-stone-800 dark:text-amber-400">
+                        <Clock className="w-4 h-4" />
+                      </span>
                       <div>
-                        <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>{h.query}</p>
-                        <p className="text-[11px] text-slate-400">
+                        <p className={`text-sm font-extrabold ${darkMode ? 'text-white' : 'text-stone-900'}`}>{h.query}</p>
+                        <p className="text-xs text-stone-400">
                           {h.filter} · {h.time}
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                    <span className="rounded-full px-3.5 py-1.5 text-xs font-bold text-red-700 ring-1 ring-red-200 dark:text-amber-400 dark:ring-stone-700">
+                      Cari lagi
+                    </span>
                   </div>
                 ))}
               </div>
@@ -2775,23 +2896,23 @@ export default function App() {
         {activeView === 'favorit' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
             <div className="mb-6">
-              <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                Daftar Kuliner Favoritmu ({favoriteDishes.length})
+              <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                Daftar Kuliner Favoritmu <span className="text-red-700 dark:text-red-500">({favoriteDishes.length})</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
                 Simpan dan kelola daftar hidangan khas Medan yang ingin kamu kunjungi.
               </p>
             </div>
 
             {favoriteDishes.length === 0 ? (
               <div
-                className={`p-10 rounded-2xl border text-center ${
-                  darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+                className={`p-14 rounded-3xl border border-dashed text-center ${
+                  darkMode ? 'bg-stone-900 border-stone-700' : 'bg-white border-stone-300'
                 }`}
               >
-                <Bookmark className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <p className="text-sm font-semibold">Belum ada kuliner favorit</p>
-                <p className="text-xs text-slate-400 mt-1">Klik ikon bookmark pada kartu kuliner untuk menyimpannya.</p>
+                <Bookmark className="w-9 h-9 text-stone-400 mx-auto mb-3" />
+                <p className="font-display text-2xl font-black">Belum ada kuliner favorit</p>
+                <p className="text-sm text-stone-500 mt-1.5">Klik ikon bookmark pada kartu kuliner untuk menyimpannya.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -2805,23 +2926,23 @@ export default function App() {
         {activeView === 'graph' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-5">
             <div
-              className={`flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-4 ${
-                darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+              className={`flex flex-wrap items-center justify-between gap-4 rounded-3xl border p-5 ${
+                darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
               }`}
             >
               <div>
-                <h2 className="text-lg font-extrabold text-[#1d63ed] dark:text-sky-400 flex items-center gap-2">
+                <h2 className="font-display text-2xl font-black text-red-700 dark:text-amber-400 flex items-center gap-2">
                   <Network className="w-5 h-5" /> Peta Koneksi &amp; Jejaring Kuliner Medan
                 </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
                   Lihat bagaimana setiap hidangan terhubung dengan bahan rempah, warisan budaya, dan lokasi terbaiknya.
                 </p>
               </div>
               <select
                 value={graphFocus}
                 onChange={(e) => setGraphFocus(e.target.value)}
-                className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                  darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'
+                className={`rounded-full border px-4 py-2 text-xs font-bold outline-none ${
+                  darkMode ? 'bg-stone-950 border-stone-700 text-stone-200' : 'bg-[#fff8ec] border-stone-200 text-stone-800'
                 }`}
               >
                 {(allDishes.length ? allDishes : DEMO_DISHES).map((r) => (
@@ -2836,8 +2957,8 @@ export default function App() {
               {Object.entries(NODE_COLORS).map(([cls, color]) => (
                 <span
                   key={cls}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${
-                    darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full border font-semibold ${
+                    darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80'
                   }`}
                 >
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
@@ -2847,8 +2968,8 @@ export default function App() {
             </div>
 
             <div
-              className={`rounded-2xl border p-4 overflow-x-auto ${
-                darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+              className={`rounded-3xl border p-4 overflow-x-auto ${
+                darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
               }`}
             >
               <svg viewBox="0 0 880 540" className="w-full h-[540px] min-w-[720px]">
@@ -2862,7 +2983,7 @@ export default function App() {
                     markerHeight="6"
                     orient="auto-start-reverse"
                   >
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill={darkMode ? '#64748b' : '#94a3b8'} />
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill={darkMode ? '#78716c' : '#a8a29e'} />
                   </marker>
                 </defs>
 
@@ -2877,7 +2998,7 @@ export default function App() {
                         y1={e.from.y}
                         x2={e.to.x}
                         y2={e.to.y}
-                        stroke={highlighted ? '#1d63ed' : darkMode ? '#334155' : '#cbd5e1'}
+                        stroke={highlighted ? '#b91c1c' : darkMode ? '#44403c' : '#d6d3d1'}
                         strokeWidth={highlighted ? 2.2 : 1.3}
                         markerEnd="url(#arrow)"
                       />
@@ -2887,13 +3008,13 @@ export default function App() {
                         width="96"
                         height="15"
                         rx="4"
-                        fill={darkMode ? '#0f172a' : '#f8fafc'}
+                        fill={darkMode ? '#1c1917' : '#fff8ec'}
                       />
                       <text
                         x={mx}
                         y={my + 2.5}
                         textAnchor="middle"
-                        fill={darkMode ? '#94a3b8' : '#475569'}
+                        fill={darkMode ? '#a8a29e' : '#57534e'}
                         fontSize="8.5"
                         fontFamily="sans-serif"
                       >
@@ -2904,7 +3025,7 @@ export default function App() {
                 })}
 
                 {positionedGraph.nodes.map((n) => {
-                  const fill = NODE_COLORS[n.type] || '#64748b';
+                  const fill = NODE_COLORS[n.type] || '#78716c';
                   const shortLabel = n.label.length > 22 ? `${n.label.slice(0, 21)}…` : n.label;
                   return (
                     <g
@@ -2926,7 +3047,7 @@ export default function App() {
                       <text
                         y={n.isCenter ? 38 : 26}
                         textAnchor="middle"
-                        fill={darkMode ? '#f1f5f9' : '#0f172a'}
+                        fill={darkMode ? '#f5f5f4' : '#1c1917'}
                         fontSize={n.isCenter ? '12' : '9.5'}
                         fontWeight={n.isCenter ? '700' : '600'}
                       >
@@ -2945,26 +3066,26 @@ export default function App() {
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-1 space-y-3">
-                <h2 className="text-lg font-extrabold text-[#1d63ed] dark:text-sky-400 flex items-center gap-2">
+                <h2 className="font-display text-2xl font-black text-red-700 dark:text-amber-400 flex items-center gap-2">
                   <Layers className="w-5 h-5" /> Wawasan &amp; Analisis Kuliner
                 </h2>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-stone-500 dark:text-stone-400">
                   Pilih topik analisis kuliner di bawah ini untuk menampilkan daftar rekomendasi dan statistik secara langsung.
                 </p>
                 {PRESET_SPARQL.map((p, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSparqlInput(p.query)}
-                    className={`w-full text-left p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                    className={`w-full text-left p-4 rounded-3xl border transition-all cursor-pointer ${
                       darkMode
-                        ? 'bg-slate-900 border-slate-800 hover:border-sky-500'
-                        : 'bg-white border-slate-200 hover:border-[#1d63ed] shadow-xs'
+                        ? 'bg-stone-900 border-stone-800 hover:border-amber-500/60'
+                        : 'bg-white border-stone-200/80 hover:border-red-600 shadow-xs'
                     }`}
                   >
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#e8f0fe] text-[#1d63ed]">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-100 text-red-800 dark:bg-amber-900/40 dark:text-amber-300">
                       {p.badge}
                     </span>
-                    <p className={`text-xs font-bold mt-1.5 leading-snug ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>
+                    <p className={`text-xs font-bold mt-2 leading-snug ${darkMode ? 'text-stone-100' : 'text-stone-800'}`}>
                       {p.title}
                     </p>
                   </button>
@@ -2973,15 +3094,15 @@ export default function App() {
 
               <div className="lg:col-span-2 space-y-4">
                 <div
-                  className={`rounded-2xl border p-4 ${
-                    darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+                  className={`rounded-3xl border p-5 ${
+                    darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-slate-500 font-mono">Editor Kueri Lanjutan (SPARQL 1.1)</span>
+                    <span className="text-xs font-bold text-stone-500 font-mono">Editor Kueri Lanjutan (SPARQL 1.1)</span>
                     <button
                       onClick={runCustomSparql}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-xs font-bold text-white shadow-xs cursor-pointer"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-red-700 hover:bg-red-800 text-xs font-extrabold text-white shadow-xs cursor-pointer transition"
                     >
                       <Play className="w-3.5 h-3.5" /> Tampilkan Hasil
                     </button>
@@ -2990,30 +3111,30 @@ export default function App() {
                     value={sparqlInput}
                     onChange={(e) => setSparqlInput(e.target.value)}
                     rows={14}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-300 outline-none focus:border-sky-400"
+                    className="w-full bg-stone-950 border border-stone-800 rounded-2xl p-4 font-mono text-xs text-amber-300 outline-none focus:border-amber-500"
                   />
                 </div>
 
                 {sparqlError && (
-                  <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs text-rose-500">
+                  <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-xs text-red-700 dark:text-red-300">
                     {sparqlError}
                   </div>
                 )}
 
                 {sparqlOutput && (
                   <div
-                    className={`rounded-2xl border p-4 overflow-x-auto ${
-                      darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+                    className={`rounded-3xl border p-5 overflow-x-auto ${
+                      darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
                     }`}
                   >
-                    <p className="text-xs text-slate-500 mb-3">
-                      Mengembalikan <strong className="text-[#1d63ed]">{sparqlOutput.count}</strong> baris dalam{' '}
+                    <p className="text-xs text-stone-500 mb-3">
+                      Mengembalikan <strong className="text-red-700 dark:text-amber-400">{sparqlOutput.count}</strong> baris dalam{' '}
                       <strong className="text-emerald-600">{sparqlOutput.elapsedMs} ms</strong>
                     </p>
                     {sparqlOutput.bindings.length > 0 ? (
                       <table className="w-full text-left text-xs border-collapse">
                         <thead>
-                          <tr className="border-b border-slate-200 dark:border-slate-700 text-[#1d63ed] dark:text-sky-400">
+                          <tr className="border-b border-stone-200 dark:border-stone-700 text-red-700 dark:text-amber-400">
                             {Object.keys(sparqlOutput.bindings[0]).map((col) => (
                               <th key={col} className="py-2 px-3 font-mono">
                                 ?{col}
@@ -3025,7 +3146,7 @@ export default function App() {
                           {sparqlOutput.bindings.map((row, idx) => (
                             <tr
                               key={idx}
-                              className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/40"
+                              className="border-b border-stone-100 dark:border-stone-800 hover:bg-amber-50/50 dark:hover:bg-stone-800/40"
                             >
                               {Object.keys(sparqlOutput.bindings[0]).map((col) => (
                                 <td key={col} className="py-2 px-3">
@@ -3037,7 +3158,7 @@ export default function App() {
                         </tbody>
                       </table>
                     ) : (
-                      <p className="text-xs text-slate-400">Tidak ada data yang cocok.</p>
+                      <p className="text-xs text-stone-400">Tidak ada data yang cocok.</p>
                     )}
                   </div>
                 )}
@@ -3050,25 +3171,25 @@ export default function App() {
         {activeView === 'api' && (
           <main className="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-6">
             <div>
-              <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
                 Portal Mitra &amp; Integrasi Data
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
                 Akses katalog direktori kuliner Kota Medan secara terstruktur untuk mitra pariwisata, aplikasi, dan pengembang.
               </p>
             </div>
 
             <div
-              className={`rounded-2xl border p-5 space-y-3 ${
-                darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+              className={`rounded-3xl border p-5 space-y-3 ${
+                darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-sm'
               }`}
             >
-              <p className="text-xs font-bold uppercase tracking-wider text-[#1d63ed]">Base Data Namespace</p>
-              <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-slate-950 text-emerald-300 font-mono text-xs">
+              <p className="text-xs font-extrabold uppercase tracking-wider text-red-700 dark:text-amber-400">Base Data Namespace</p>
+              <div className="flex items-center justify-between gap-2 p-3.5 rounded-2xl bg-stone-950 text-amber-300 font-mono text-xs">
                 <span className="truncate">{ONTOLOGY_URI}</span>
                 <button
                   onClick={() => copyToClipboard(ONTOLOGY_URI)}
-                  className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 flex items-center gap-1 shrink-0 cursor-pointer"
+                  className="px-3 py-1.5 rounded-full bg-stone-800 text-stone-200 hover:bg-red-700 flex items-center gap-1 shrink-0 cursor-pointer transition"
                 >
                   {copiedText === ONTOLOGY_URI ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   Salin
@@ -3087,17 +3208,17 @@ export default function App() {
               ].map((ep) => (
                 <div
                   key={ep.path}
-                  className={`p-4 rounded-2xl border ${
-                    darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+                  className={`p-5 rounded-3xl border ${
+                    darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="px-2 py-0.5 rounded-md bg-[#e8f0fe] text-[#1d63ed] font-mono text-[11px] font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-red-800 dark:bg-amber-900/40 dark:text-amber-300 font-mono text-[11px] font-extrabold">
                       {ep.method}
                     </span>
-                    <code className="text-xs font-mono font-semibold">{ep.path}</code>
+                    <code className="text-xs font-mono font-bold">{ep.path}</code>
                   </div>
-                  <p className="text-xs text-slate-500">{ep.desc}</p>
+                  <p className="text-xs text-stone-500 dark:text-stone-400">{ep.desc}</p>
                 </div>
               ))}
             </div>
@@ -3106,43 +3227,76 @@ export default function App() {
 
         {/* ==================== VIEW 9: PENGATURAN & INFO ==================== */}
         {activeView === 'pengaturan' && (
-          <main className="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-6">
-            <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-              Pengaturan &amp; Tentang Ranah KulMed
-            </h2>
+          <main className="relative z-10 flex-1 max-w-3xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12 space-y-5">
+            <div>
+              <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                Pengaturan &amp; Tentang Ranah KulMed
+              </h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
+                Atur tampilan dan konfigurasi Asisten AI Ranah KulMed sesuai preferensimu.
+              </p>
+            </div>
 
             <div
-              className={`rounded-2xl border p-5 flex items-center justify-between ${
-                darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+              className={`rounded-3xl border p-5 sm:p-6 flex items-center justify-between gap-4 ${
+                darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'
               }`}
             >
               <div>
-                <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Tema Tampilan Antarmuka</p>
-                <p className="text-xs text-slate-500">Pilih mode terang minimalis atau mode gelap.</p>
+                <p className={`font-display text-base font-bold ${darkMode ? 'text-white' : 'text-stone-900'}`}>Tema Tampilan Antarmuka</p>
+                <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Pilih mode terang hangat atau mode gelap.</p>
               </div>
               <button
                 onClick={() => setDarkMode((d) => !d)}
-                className="px-4 py-2 rounded-full bg-[#1d63ed] text-white text-xs font-semibold cursor-pointer"
+                className="px-5 py-2.5 rounded-full bg-red-700 hover:bg-red-800 text-white text-xs font-extrabold cursor-pointer transition shrink-0"
               >
                 {darkMode ? 'Gunakan Light Mode' : 'Gunakan Dark Mode'}
               </button>
             </div>
 
             <div
-              className={`rounded-2xl border p-5 space-y-3 ${
-                darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200 shadow-xs'
+              className={`rounded-3xl border p-5 sm:p-6 space-y-3 ${
+                darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'
               }`}
             >
-              <div>
-                <p className={`text-sm font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                  <Network className="w-4 h-4 text-[#1d63ed]" /> Asisten
-                </p>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className={`text-sm font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                    <KeyRound className="w-4 h-4 text-[#1d63ed]" /> Konfigurasi Asisten AI (Gemini API Gratis)
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Saat dijalankan di laptop lokal (<code className="font-mono">localhost</code>), masukkan API Key gratis
+                    dari Google AI Studio agar Asisten AI aktif penuh. Key disimpan lokal di browser dan tidak pernah
+                    dikirim ke GitHub.
+                  </p>
+                </div>
+                {keySavedNotice && (
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-semibold shrink-0">
+                    Tersimpan
+                  </span>
+                )}
               </div>
-              <div
-                role="status"
-                className="rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-3 text-xs text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300"
-              >
-                Asisten yang dapat digunakan
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="password"
+                  value={customGeminiKey}
+                  onChange={(e) => saveLocalGeminiKey(e.target.value)}
+                  placeholder="Opsional untuk localhost: AIza..."
+                  className={`flex-1 rounded-xl border px-3.5 py-2 text-xs font-mono outline-none ${
+                    darkMode
+                      ? 'bg-slate-950 border-slate-700 text-white focus:border-sky-400'
+                      : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-[#1d63ed]'
+                  }`}
+                />
+                {customGeminiKey && (
+                  <button
+                    type="button"
+                    onClick={() => saveLocalGeminiKey('')}
+                    className="px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-semibold hover:bg-rose-50 dark:hover:bg-rose-500/10 cursor-pointer"
+                  >
+                    Hapus Key
+                  </button>
+                )}
               </div>
               <p className="text-[11px] text-slate-500">
               </p>
@@ -3152,15 +3306,21 @@ export default function App() {
 
         {/* ==================== FOOTER ==================== */}
         <footer
-          className={`relative z-10 mt-auto border-t px-4 sm:px-8 py-4 text-xs ${
-            darkMode ? 'bg-slate-900/90 border-slate-800 text-slate-400' : 'bg-white border-slate-200/80 text-slate-500'
+          className={`relative z-10 mt-auto border-t px-4 sm:px-8 py-8 text-center text-xs ${
+            darkMode ? 'bg-stone-950/60 border-stone-800 text-stone-400' : 'bg-transparent border-stone-200/80 text-stone-500'
           }`}
         >
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+          <div className="max-w-3xl mx-auto flex flex-col items-center gap-3">
+            <div className="ulos-stripes h-1.5 w-40 rounded-full" />
+
+            <div className="mt-1">
               <RanahKulMedLogo size="sm" darkMode={darkMode} />
-              <span className="text-slate-300 dark:text-slate-700">|</span>
-              <span>© 2026 Ranah KulMed. Semua hak dilindungi.</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-5 font-medium">
+              <button onClick={() => setActiveView('pengaturan')} className="hover:text-[#1d63ed] cursor-pointer">
+                Tentang Kami
+              </button>
             </div>
 
             <div className="flex items-center gap-2 font-semibold">
@@ -3187,18 +3347,19 @@ export default function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedDish(null)}
-            className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
           >
             <motion.div
-              initial={{ scale: 0.96, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
+              initial={{ y: 36, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 36, opacity: 0 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className={`rounded-3xl border max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl ${
-                darkMode ? 'bg-slate-900 border-slate-700 text-slate-100' : 'bg-white border-slate-200 text-slate-800'
+              className={`rounded-t-[2rem] sm:rounded-[2rem] border max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl ${
+                darkMode ? 'bg-stone-900 border-stone-800 text-stone-100' : 'bg-white border-stone-200 text-stone-800'
               }`}
             >
-              <div className="relative h-56">
+              <div className="relative h-60">
                 <img
                   src={resolveDishImage(selectedDish)}
                   alt={selectedDish.nama}
@@ -3209,48 +3370,48 @@ export default function App() {
                   }}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                 <button
                   onClick={() => setSelectedDish(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md cursor-pointer"
+                  className="absolute top-4 right-4 grid h-9 w-9 place-items-center rounded-full bg-black/55 hover:bg-red-700 text-white backdrop-blur transition cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
-                <div className="absolute bottom-4 left-6 right-6">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#1d63ed] text-white text-[11px] font-semibold mb-1.5">
+                <div className="absolute bottom-5 left-6 right-6">
+                  <span className="inline-block px-3 py-1 rounded-full bg-amber-500 text-stone-900 text-[11px] font-extrabold mb-2">
                     {selectedDish.kategori}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-white">{selectedDish.nama}</h3>
-                  <p className="text-xs text-slate-200">{selectedDish.namaEn}</p>
+                  <h3 className="font-display text-3xl font-black leading-tight text-white">{selectedDish.nama}</h3>
+                  <p className="text-xs text-white/80 mt-0.5">{selectedDish.namaEn}</p>
                 </div>
               </div>
 
               <div className="p-6 space-y-5">
-                <p className={`text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`text-sm leading-relaxed ${darkMode ? 'text-stone-300' : 'text-stone-600'}`}>
                   {selectedDish.deskripsi}
                 </p>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                  <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200/80'}`}>
-                    <span className="text-slate-400 block">Pengaruh Budaya</span>
-                    <strong className="text-amber-600 dark:text-amber-300 mt-0.5 block">{selectedDish.budaya}</strong>
+                  <div className={`p-3.5 rounded-2xl ring-1 ${darkMode ? 'bg-stone-950 ring-stone-800' : 'bg-[#fff8ec] ring-amber-100'}`}>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wide text-stone-400 block">Pengaruh Budaya</span>
+                    <strong className="text-amber-700 dark:text-amber-300 mt-1 block">{selectedDish.budaya}</strong>
                   </div>
-                  <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200/80'}`}>
-                    <span className="text-slate-400 block">Level Pedas</span>
-                    <strong className="text-rose-500 mt-0.5 flex items-center gap-1">
+                  <div className={`p-3.5 rounded-2xl ring-1 ${darkMode ? 'bg-stone-950 ring-stone-800' : 'bg-[#fff8ec] ring-amber-100'}`}>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wide text-stone-400 block">Level Pedas</span>
+                    <strong className="text-red-700 dark:text-red-400 mt-1 flex items-center gap-1">
                       <Flame className="w-3.5 h-3.5" /> {selectedDish.tingkatKepedasan} / 5
                     </strong>
                   </div>
-                  <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200/80'}`}>
-                    <span className="text-slate-400 block">Teknik Masak</span>
-                    <strong className="text-orange-600 dark:text-orange-300 mt-0.5 flex items-center gap-1">
+                  <div className={`p-3.5 rounded-2xl ring-1 ${darkMode ? 'bg-stone-950 ring-stone-800' : 'bg-[#fff8ec] ring-amber-100'}`}>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wide text-stone-400 block">Teknik Masak</span>
+                    <strong className="text-orange-700 dark:text-orange-300 mt-1 flex items-center gap-1">
                       <ChefHat className="w-3.5 h-3.5 shrink-0" />
                       <span className="truncate">{selectedDish.metodeMasak || '-'}</span>
                     </strong>
                   </div>
-                  <div className={`p-3 rounded-xl border ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200/80'}`}>
-                    <span className="text-slate-400 block">Profil Rasa</span>
-                    <strong className="text-[#1d63ed] dark:text-sky-300 mt-0.5 block">
+                  <div className={`p-3.5 rounded-2xl ring-1 ${darkMode ? 'bg-stone-950 ring-stone-800' : 'bg-[#fff8ec] ring-amber-100'}`}>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wide text-stone-400 block">Profil Rasa</span>
+                    <strong className="text-red-800 dark:text-amber-400 mt-1 block">
                       {selectedDish.rasaDominan || '-'}
                     </strong>
                   </div>
@@ -3258,14 +3419,14 @@ export default function App() {
 
                 {selectedDish.penghargaan && (
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 font-medium">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-300 font-bold">
                       <Award className="w-3.5 h-3.5" /> {selectedDish.penghargaan}
                     </span>
                   </div>
                 )}
 
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                  <h4 className="text-xs font-extrabold uppercase tracking-wider text-stone-400 mb-2">
                     Bahan Utama &amp; Racikan Rempah
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -3276,7 +3437,7 @@ export default function App() {
                           executeSearchSubmit(null, b);
                           setSelectedDish(null);
                         }}
-                        className="px-3 py-1 rounded-full bg-[#eef4ff] dark:bg-sky-500/15 text-[#1d63ed] dark:text-sky-300 text-xs font-medium hover:bg-blue-100 cursor-pointer"
+                        className="px-3 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-bold hover:bg-red-700 hover:text-white transition cursor-pointer"
                       >
                         {b}
                       </button>
@@ -3286,8 +3447,8 @@ export default function App() {
 
                 {dishExtra?.pairings?.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-                      <HeartHandshake className="w-3.5 h-3.5 text-[#1d63ed]" /> Paling Cocok Dinikmati Bersama
+                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-stone-400 mb-2 flex items-center gap-1.5">
+                      <HeartHandshake className="w-3.5 h-3.5 text-red-700 dark:text-amber-400" /> Paling Cocok Dinikmati Bersama
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {dishExtra.pairings.map((p) => (
@@ -3297,7 +3458,7 @@ export default function App() {
                             const match = (allDishes.length ? allDishes : results).find((r) => r.slug === p.slug);
                             if (match) openDishDetail(match);
                           }}
-                          className="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-medium cursor-pointer"
+                          className="px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-300 ring-1 ring-amber-200/80 dark:ring-amber-800 text-xs font-bold hover:bg-amber-100 transition cursor-pointer"
                         >
                           {p.nama}
                         </button>
@@ -3307,21 +3468,21 @@ export default function App() {
                 )}
 
                 <div
-                  className={`p-4 rounded-2xl border flex flex-wrap items-center justify-between gap-4 ${
-                    darkMode ? 'bg-slate-950 border-slate-800' : 'bg-[#f6f9ff] border-blue-200/70'
+                  className={`p-4 rounded-2xl ring-1 flex flex-wrap items-center justify-between gap-4 ${
+                    darkMode ? 'bg-stone-950 ring-stone-800' : 'bg-[#fff8ec] ring-amber-200/70'
                   }`}
                 >
                   <div className="space-y-1">
-                    <p className="text-xs text-[#1d63ed] dark:text-sky-400 font-bold">Rekomendasi Tempat Terbaik</p>
-                    <p className={`text-base font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                    <p className="text-xs text-red-700 dark:text-amber-400 font-extrabold uppercase tracking-wide">Rekomendasi Tempat Terbaik</p>
+                    <p className={`font-display text-lg font-bold ${darkMode ? 'text-white' : 'text-stone-900'}`}>
                       {selectedDish.restoran.nama}
                     </p>
-                    <p className="text-xs text-slate-500 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#1d63ed] shrink-0" /> {selectedDish.restoran.alamat}
+                    <p className="text-xs text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-red-700 shrink-0" /> {selectedDish.restoran.alamat}
                     </p>
-                    <p className="text-xs text-slate-500 flex flex-wrap items-center gap-3">
+                    <p className="text-xs text-stone-500 dark:text-stone-400 flex flex-wrap items-center gap-3">
                       {selectedDish.restoran.kelurahan && (
-                        <span className="text-indigo-600 dark:text-indigo-300 font-medium">
+                        <span className="text-amber-700 dark:text-amber-300 font-semibold">
                           {selectedDish.restoran.kelurahan}
                         </span>
                       )}
@@ -3338,7 +3499,7 @@ export default function App() {
                     )}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-4 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
+                    className="px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-900 text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition"
                   >
                     <Compass className="w-4 h-4" /> Buka Google Maps
                   </a>
@@ -3350,22 +3511,22 @@ export default function App() {
 
                 {dishExtra?.branches?.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-                      <GitBranch className="w-3.5 h-3.5 text-[#1d63ed]" /> Cabang Resmi Lainnya di Medan
+                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-stone-400 mb-2 flex items-center gap-1.5">
+                      <GitBranch className="w-3.5 h-3.5 text-red-700 dark:text-amber-400" /> Cabang Resmi Lainnya di Medan
                     </h4>
                     <div className="space-y-2">
                       {dishExtra.branches.map((b) => (
                         <div
                           key={b.slug}
-                          className={`p-3 rounded-xl border flex items-center justify-between gap-3 text-xs ${
-                            darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
+                          className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 text-xs ${
+                            darkMode ? 'bg-stone-950 border-stone-800' : 'bg-[#fff8ec] border-amber-100'
                           }`}
                         >
                           <div>
                             <p className="font-bold flex items-center gap-1.5">
-                              <Store className="w-3.5 h-3.5 text-rose-500" /> {b.nama}
+                              <Store className="w-3.5 h-3.5 text-red-700" /> {b.nama}
                             </p>
-                            <p className="text-slate-500 mt-0.5">
+                            <p className="text-stone-500 mt-0.5">
                               {b.alamat} · {b.kelurahan || b.kecamatan}
                             </p>
                           </div>
@@ -3375,12 +3536,12 @@ export default function App() {
                             )}`}
                             target="_blank"
                             rel="noreferrer"
-                            className="shrink-0 p-2 rounded-full text-[#1d63ed] hover:bg-blue-50 dark:hover:bg-sky-500/15"
+                            className="shrink-0 p-2 rounded-full text-red-700 hover:bg-amber-100 dark:text-amber-400 dark:hover:bg-stone-800"
                             title="Buka cabang di Google Maps"
                           >
                             <Compass className="w-4 h-4" />
                           </a>
-                          <span className="text-amber-500 font-bold shrink-0">★ {b.rating}</span>
+                          <span className="text-amber-600 dark:text-amber-400 font-extrabold shrink-0">★ {b.rating}</span>
                         </div>
                       ))}
                     </div>
@@ -3390,18 +3551,18 @@ export default function App() {
                 {dishExtra?.linkedData && (
                   <div
                     className={`p-4 rounded-2xl border space-y-2 text-xs ${
-                      darkMode ? 'bg-slate-950 border-slate-800' : 'bg-amber-50/50 border-amber-200/80'
+                      darkMode ? 'bg-stone-950 border-stone-800' : 'bg-amber-50/70 border-amber-200/80'
                     }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+                      <span className="font-bold text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
                         <Database className="w-3.5 h-3.5" /> Wawasan Linked Open Data (owl:sameAs)
                       </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300">
                         {dishExtra.linkedData.source}
                       </span>
                     </div>
-                    <p className={`leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    <p className={`leading-relaxed ${darkMode ? 'text-stone-300' : 'text-stone-700'}`}>
                       {dishExtra.linkedData.abstract}
                     </p>
                   </div>
@@ -3409,14 +3570,14 @@ export default function App() {
 
                 {dishExtra?.sameAs?.length > 0 && (
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="text-slate-400">Referensi Ensiklopedia:</span>
+                    <span className="text-stone-400">Referensi Ensiklopedia:</span>
                     {dishExtra.sameAs.map((link) => (
                       <a
                         key={link}
                         href={link}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[#1d63ed] dark:text-sky-400 underline flex items-center gap-1"
+                        className="text-red-700 dark:text-amber-400 font-semibold underline flex items-center gap-1"
                       >
                         {link.replace('http://dbpedia.org/resource/', '').replace(/_/g, ' ')}
                         <ExternalLink className="w-3 h-3" />
@@ -3427,7 +3588,7 @@ export default function App() {
 
                 {dishExtra?.recommendations?.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    <h4 className="font-display text-lg font-bold text-stone-900 dark:text-white mb-2.5">
                       Rekomendasi Serupa Untukmu
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -3438,10 +3599,10 @@ export default function App() {
                             const match = (allDishes.length ? allDishes : results).find((r) => r.slug === rec.slug);
                             if (match) openDishDetail(match);
                           }}
-                          className={`flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer transition-colors ${
+                          className={`flex items-center gap-3 p-2.5 rounded-2xl border cursor-pointer transition-colors ${
                             darkMode
-                              ? 'bg-slate-950 border-slate-800 hover:border-sky-500'
-                              : 'bg-slate-50 border-slate-200 hover:border-[#1d63ed]'
+                              ? 'bg-stone-950 border-stone-800 hover:border-amber-500'
+                              : 'bg-[#fff8ec] border-amber-100 hover:border-red-600'
                           }`}
                         >
                           <img
@@ -3453,11 +3614,11 @@ export default function App() {
                                 e.currentTarget.src = rec.gambar;
                               }
                             }}
-                            className="w-12 h-12 rounded-lg object-cover"
+                            className="w-12 h-12 rounded-xl object-cover"
                           />
                           <div className="min-w-0">
-                            <p className="text-xs font-bold truncate">{rec.nama}</p>
-                            <p className="text-[11px] text-[#1d63ed] dark:text-sky-400 truncate">{rec.reason}</p>
+                            <p className="font-display text-xs font-bold truncate">{rec.nama}</p>
+                            <p className="text-[11px] text-red-700 dark:text-amber-400 font-semibold truncate">{rec.reason}</p>
                           </div>
                         </div>
                       ))}
@@ -3479,10 +3640,10 @@ export default function App() {
             setAiOpen(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 text-white text-xs font-bold shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
+          className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-red-700 hover:bg-red-800 text-white text-xs font-extrabold shadow-lg shadow-red-700/30 transition-all cursor-pointer"
         >
           <OrganicCulinaryBowlIcon className="w-4 h-4" />
-          <span>Tanya Asisten Offline</span>
+          <span>Tanya Asisten AI</span>
         </button>
       )}
     </div>
