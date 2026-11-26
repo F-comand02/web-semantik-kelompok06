@@ -50,6 +50,7 @@ import {
   OrganicHalalLeafIcon,
 } from './components/OrganicIcons';
 import { resolveDishImage } from './culinaryImages';
+import MedanCulinaryMap from './components/MedanCulinaryMap';
 
 const API_BASE = 'http://localhost:5001/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
@@ -683,6 +684,11 @@ function buildDemoFacets(dishes) {
     districts: tally((d) => ({ slug: d.restoran.kecamatanSlug, label: d.restoran.kecamatan })),
     hubs: tally((d) => ({ slug: d.restoran.kawasanSlug, label: d.restoran.kawasan })),
     techniques: tally((d) => ({ slug: d.teknikSlug, label: d.metodeMasak })),
+    servingTimes: tally((d) =>
+      d.waktuSajian
+        ? { slug: d.waktuSlug || d.waktuSajian.replace(/[^a-zA-Z0-9]/g, ''), label: d.waktuSajian }
+        : null
+    ),
     ingredients: [],
   };
 }
@@ -929,6 +935,7 @@ export default function App() {
     districts: [],
     hubs: [],
     techniques: [],
+    servingTimes: [],
     ingredients: [],
   });
 
@@ -942,7 +949,10 @@ export default function App() {
   const [includeNeighbors, setIncludeNeighbors] = useState(false);
   const [selectedKawasan, setSelectedKawasan] = useState('');
   const [selectedTeknik, setSelectedTeknik] = useState('');
+  const [selectedWaktu, setSelectedWaktu] = useState('');
+  const [maxHargaFilter, setMaxHargaFilter] = useState('');
   const [halalFilter, setHalalFilter] = useState('');
+  const [showMapView, setShowMapView] = useState(false);
   const [visibleCount, setVisibleCount] = useState(12);
 
   const [results, setResults] = useState([]);
@@ -1037,6 +1047,8 @@ export default function App() {
         selectedKecamatan ||
         selectedKawasan ||
         selectedTeknik ||
+        selectedWaktu ||
+        maxHargaFilter ||
         halalFilter
       );
 
@@ -1057,6 +1069,15 @@ export default function App() {
             if (selectedKecamatan && item.restoran.kecamatanSlug !== selectedKecamatan) return false;
             if (selectedKawasan && item.restoran.kawasanSlug !== selectedKawasan) return false;
             if (selectedTeknik && item.teknikSlug !== selectedTeknik) return false;
+            if (selectedWaktu) {
+              const wSlug = item.waktuSlug || (item.waktuSajian || '').replace(/[^a-zA-Z0-9]/g, '');
+              if (wSlug !== selectedWaktu) return false;
+            }
+            if (maxHargaFilter) {
+              const priceNums = (item.kisaranHarga || '').match(/\d[\d.]*/g);
+              const minP = item.hargaMin || (priceNums ? Number(priceNums[0].replace(/\./g, '')) : 0);
+              if (minP > Number(maxHargaFilter)) return false;
+            }
             if (halalFilter === 'true' && !item.isHalal) return false;
             if (halalFilter === 'false' && item.isHalal) return false;
             if (q) {
@@ -1094,6 +1115,8 @@ export default function App() {
         }
         if (selectedKawasan) params.set('kawasan', selectedKawasan);
         if (selectedTeknik) params.set('teknik', selectedTeknik);
+        if (selectedWaktu) params.set('waktu', selectedWaktu);
+        if (maxHargaFilter) params.set('maxHarga', maxHargaFilter);
         if (halalFilter) params.set('halal', halalFilter);
 
         const res = await fetch(`${API_BASE}/search?${params.toString()}`, { signal: controller.signal });
@@ -1124,6 +1147,8 @@ export default function App() {
     includeNeighbors,
     selectedKawasan,
     selectedTeknik,
+    selectedWaktu,
+    maxHargaFilter,
     halalFilter,
     isDemoMode,
   ]);
@@ -1154,6 +1179,8 @@ export default function App() {
     setIncludeNeighbors(false);
     setSelectedKawasan('');
     setSelectedTeknik('');
+    setSelectedWaktu('');
+    setMaxHargaFilter('');
     setHalalFilter('');
     setVisibleCount(12);
   };
@@ -1479,7 +1506,15 @@ export default function App() {
   }, [graphData, graphFocus]);
 
   const hasActiveFilter = Boolean(
-    keyword || selectedKategori || selectedBudaya || selectedKecamatan || selectedKawasan || selectedTeknik || halalFilter
+    keyword ||
+      selectedKategori ||
+      selectedBudaya ||
+      selectedKecamatan ||
+      selectedKawasan ||
+      selectedTeknik ||
+      selectedWaktu ||
+      maxHargaFilter ||
+      halalFilter
   );
 
   const searchSuggestions = useMemo(() => {
@@ -2361,6 +2396,35 @@ export default function App() {
                         <option value="true">Halal Saja</option>
                         <option value="false">Non-Halal Saja</option>
                       </select>
+
+                      <select
+                        value={selectedWaktu}
+                        onChange={(e) => setSelectedWaktu(e.target.value)}
+                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        }`}
+                      >
+                        <option value="">Semua Waktu Sajian</option>
+                        {(facets.servingTimes || []).map((w) => (
+                          <option key={w.slug} value={w.slug}>
+                            {w.label} ({w.count})
+                          </option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={maxHargaFilter}
+                        onChange={(e) => setMaxHargaFilter(e.target.value)}
+                        className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                          darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                        }`}
+                      >
+                        <option value="">Semua Budget Harga</option>
+                        <option value="20000">Hemat (Mulai ≤ Rp 20.000)</option>
+                        <option value="35000">Terjangkau (Mulai ≤ Rp 35.000)</option>
+                        <option value="50000">Menengah (Mulai ≤ Rp 50.000)</option>
+                        <option value="100000">Keluarga / Oleh-Oleh (≤ Rp 100.000)</option>
+                      </select>
                     </div>
 
                     {selectedKecamatan && (
@@ -2396,15 +2460,37 @@ export default function App() {
                     Pilih hidangan untuk melihat detail racikan rempah, jam buka, lokasi peta, dan padanan menu terbaik.
                   </p>
                 </div>
-                {hasActiveFilter && (
+                <div className="flex items-center gap-2.5">
                   <button
-                    onClick={resetFilters}
-                    className="text-xs font-semibold text-[#1d63ed] dark:text-sky-400 hover:underline cursor-pointer"
+                    type="button"
+                    onClick={() => setShowMapView((m) => !m)}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                      showMapView
+                        ? 'bg-[#1d63ed] border-[#1d63ed] text-white shadow-xs'
+                        : darkMode
+                          ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-400'
+                          : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-2xs'
+                    }`}
                   >
-                    Reset Filter
+                    <MapPin className="w-3.5 h-3.5" />
+                    {showMapView ? 'Sembunyikan Peta' : 'Peta Kuliner Medan'}
                   </button>
-                )}
+                  {hasActiveFilter && (
+                    <button
+                      onClick={resetFilters}
+                      className="text-xs font-semibold text-[#1d63ed] dark:text-sky-400 hover:underline cursor-pointer"
+                    >
+                      Reset Filter
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {showMapView && (
+                <div className="mb-6">
+                  <MedanCulinaryMap dishes={activePool} onSelectDish={openDishDetail} darkMode={darkMode} />
+                </div>
+              )}
 
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -2460,13 +2546,29 @@ export default function App() {
         {/* ==================== VIEW 2: EKSPLORASI (FULL CATALOG) ==================== */}
         {activeView === 'eksplorasi' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
-            <div className="mb-6">
-              <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                Jelajah Lengkap Kuliner Medan
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                Saring pilihan kuliner berdasarkan kategori hidangan, warisan budaya, 21 kecamatan, kawasan populer, hingga status halal.
-              </p>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                  Jelajah Lengkap Kuliner Medan
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  Saring pilihan kuliner berdasarkan kategori hidangan, warisan budaya, waktu sajian, budget harga, 21 kecamatan, hingga peta lokasi.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowMapView((m) => !m)}
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
+                  showMapView
+                    ? 'bg-[#1d63ed] border-[#1d63ed] text-white shadow-xs'
+                    : darkMode
+                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-400'
+                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                {showMapView ? 'Sembunyikan Peta Lokasi' : 'Buka Peta 21 Kecamatan'}
+              </button>
             </div>
 
             <div
@@ -2571,6 +2673,47 @@ export default function App() {
                   ))}
                 </select>
 
+                <select
+                  value={selectedWaktu}
+                  onChange={(e) => setSelectedWaktu(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Waktu Sajian</option>
+                  {(facets.servingTimes || []).map((w) => (
+                    <option key={w.slug} value={w.slug}>
+                      {w.label} ({w.count})
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={maxHargaFilter}
+                  onChange={(e) => setMaxHargaFilter(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Semua Budget Harga</option>
+                  <option value="20000">≤ Rp 20.000</option>
+                  <option value="35000">≤ Rp 35.000</option>
+                  <option value="50000">≤ Rp 50.000</option>
+                  <option value="100000">≤ Rp 100.000</option>
+                </select>
+
+                <select
+                  value={halalFilter}
+                  onChange={(e) => setHalalFilter(e.target.value)}
+                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
+                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <option value="">Halal &amp; Non-Halal</option>
+                  <option value="true">Halal Saja</option>
+                  <option value="false">Non-Halal Saja</option>
+                </select>
+
                 <button
                   onClick={resetFilters}
                   className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors cursor-pointer"
@@ -2593,6 +2736,12 @@ export default function App() {
                 </label>
               )}
             </div>
+
+            {showMapView && (
+              <div className="mb-6">
+                <MedanCulinaryMap dishes={activePool} onSelectDish={openDishDetail} darkMode={darkMode} />
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {displayedResults.map(renderDishCard)}
@@ -3374,6 +3523,10 @@ export default function App() {
                   </a>
                 </div>
 
+                {selectedDish.restoran?.lat > 0 && selectedDish.restoran?.long > 0 && (
+                  <MedanCulinaryMap singleDish={selectedDish} darkMode={darkMode} heightClass="h-44" />
+                )}
+
                 {dishExtra?.branches?.length > 0 && (
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
@@ -3410,6 +3563,26 @@ export default function App() {
                         </div>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {dishExtra?.linkedData && (
+                  <div
+                    className={`p-4 rounded-2xl border space-y-2 text-xs ${
+                      darkMode ? 'bg-slate-950 border-slate-800' : 'bg-amber-50/50 border-amber-200/80'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+                        <Database className="w-3.5 h-3.5" /> Wawasan Linked Open Data (owl:sameAs)
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                        {dishExtra.linkedData.source}
+                      </span>
+                    </div>
+                    <p className={`leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                      {dishExtra.linkedData.abstract}
+                    </p>
                   </div>
                 )}
 

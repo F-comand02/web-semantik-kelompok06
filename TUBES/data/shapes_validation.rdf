@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://www.w3.org/2002/07/owl"
+<rdf:RDF xmlns="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#"
+     xml:base="http://kuliner-medan.org/ontology/Kelompok06/KomA/25"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:ex="http://kuliner-medan.org/ontology#"
+     xmlns:ex="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#"
      xmlns:sh="http://www.w3.org/ns/shacl#"
      xmlns:dbr="http://dbpedia.org/resource/"
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
@@ -12,7 +12,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:schema="http://schema.org/">
-    <Ontology/>
+    <owl:Ontology rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25/shapes"/>
     
 
 
@@ -29,67 +29,67 @@
 
     <!-- http://www.w3.org/ns/shacl#class -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#class"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#class"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#datatype -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#datatype"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#datatype"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#maxCount -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxCount"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxCount"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#maxInclusive -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxInclusive"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#maxInclusive"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#message -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#message"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#message"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#minCount -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minCount"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minCount"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#minInclusive -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minInclusive"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#minInclusive"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#path -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#path"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#path"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#pattern -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#pattern"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#pattern"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#property -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#property"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#property"/>
     
 
 
     <!-- http://www.w3.org/ns/shacl#targetClass -->
 
-    <AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#targetClass"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/ns/shacl#targetClass"/>
     
 
 
@@ -106,7 +106,7 @@
 
     <!-- http://www.w3.org/ns/shacl#NodeShape -->
 
-    <Class rdf:about="http://www.w3.org/ns/shacl#NodeShape"/>
+    <owl:Class rdf:about="http://www.w3.org/ns/shacl#NodeShape"/>
     
 
 
@@ -121,9 +121,9 @@
     
 
 
-    <!-- http://kuliner-medan.org/ontology#KulinerShape -->
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KulinerShape -->
 
-    <NamedIndividual rdf:about="http://kuliner-medan.org/ontology#KulinerShape">
+    <owl:NamedIndividual rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KulinerShape">
         <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
         <sh:property>
             <rdf:Description>
@@ -132,35 +132,51 @@
                 <sh:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</sh:maxInclusive>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
                 <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</sh:minInclusive>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#tingkatKepedasan"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#tingkatKepedasan"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#Kategori"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kategori"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#kategori"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#kategori"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#PengaruhBudaya"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#PengaruhBudaya"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#pengaruhBudaya"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#pengaruhBudaya"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#BahanUtama"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#BahanUtama"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#memilikiBahan"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#memilikiBahan"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#Restoran"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#rekomendasiTempat"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#rekomendasiTempat"/>
+            </rdf:Description>
+        </sh:property>
+        <sh:property>
+            <rdf:Description>
+                <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+                <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</sh:minInclusive>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMin"/>
+            </rdf:Description>
+        </sh:property>
+        <sh:property>
+            <rdf:Description>
+                <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+                <sh:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</sh:minInclusive>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#hargaMax"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
@@ -190,17 +206,17 @@
                 <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
                 <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#isHalal"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#isHalal"/>
             </rdf:Description>
         </sh:property>
-        <sh:targetClass rdf:resource="http://kuliner-medan.org/ontology#Kuliner"/>
-    </NamedIndividual>
+        <sh:targetClass rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
+    </owl:NamedIndividual>
     
 
 
-    <!-- http://kuliner-medan.org/ontology#RestoranShape -->
+    <!-- http://kuliner-medan.org/ontology/Kelompok06/KomA/25#RestoranShape -->
 
-    <NamedIndividual rdf:about="http://kuliner-medan.org/ontology#RestoranShape">
+    <owl:NamedIndividual rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#RestoranShape">
         <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
         <sh:property>
             <rdf:Description>
@@ -218,16 +234,16 @@
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#Kelurahan"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kelurahan"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#berlokasiDiKelurahan"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDiKelurahan"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#Kecamatan"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kecamatan"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
-                <sh:path rdf:resource="http://kuliner-medan.org/ontology#berlokasiDi"/>
+                <sh:path rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#berlokasiDi"/>
             </rdf:Description>
         </sh:property>
         <sh:property>
@@ -241,7 +257,7 @@
         </sh:property>
         <sh:property>
             <rdf:Description>
-                <sh:class rdf:resource="http://kuliner-medan.org/ontology#TitikKoordinat"/>
+                <sh:class rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#TitikKoordinat"/>
                 <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
                 <sh:path rdf:resource="http://schema.org/geo"/>
             </rdf:Description>
@@ -255,8 +271,8 @@
                 <sh:path rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#long"/>
             </rdf:Description>
         </sh:property>
-        <sh:targetClass rdf:resource="http://kuliner-medan.org/ontology#Restoran"/>
-    </NamedIndividual>
+        <sh:targetClass rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Restoran"/>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
 

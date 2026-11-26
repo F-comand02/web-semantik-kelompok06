@@ -2,7 +2,7 @@
 <rdf:RDF xmlns="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#"
      xml:base="http://kuliner-medan.org/ontology/Kelompok06/KomA/25"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:ex="http://kuliner-medan.org/ontology#"
+     xmlns:ex="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#"
      xmlns:sh="http://www.w3.org/ns/shacl#"
      xmlns:dbr="http://dbpedia.org/resource/"
      xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"

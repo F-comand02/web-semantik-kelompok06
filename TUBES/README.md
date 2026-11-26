@@ -1,301 +1,131 @@
-Ini file `README.md` versi **Full & Comprehensive** yang mencakup penjelasan lengkap arsitektur semantik, dokumentasi API, panduan pengujian SPARQL, kontribusi, skema validasi, hingga contoh visualisasi Knowledge Graph.
+# 🍜 Ranah KulMed — Sistem Informasi Kuliner Medan Berbasis Web Semantik
 
-```markdown
-# 🍜 Ranah KulMed - Sistem Informasi Kuliner Medan
+[![W3C Semantic Web](https://img.shields.io/badge/W3C-OWL%20%7C%20RDF%20%7C%20SPARQL%201.1%20%7C%20SHACL-1d63ed.svg)](https://www.w3.org/standards/semanticweb/)
+[![Frontend](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%20%2B%20Tailwind%20v4-0ea5e9.svg)](https://react.dev/)
+[![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express%205-10b981.svg)](https://nodejs.org/)
+[![Triplestore](https://img.shields.io/badge/Triplestore-Apache%20Jena%20Fuseki-f59e0b.svg)](https://jena.apache.org/documentation/fuseki2/)
 
-[![Web Semantik](https://img.shields.io/badge/W3C-Semantic%20Web-blue.svg)](https://www.w3.org/W3C/)
-[![React](https://img.shields.io/badge/Frontend-React%20v18-cyan.svg)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Backend-Node.js%20Express-green.svg)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+**Ranah KulMed** adalah platform direktori dan mesin pencari semantik kuliner khas Kota Medan yang dibangun menggunakan standar **W3C Semantic Web** (*OWL 2 Ontology*, *RDF/XML Knowledge Graph*, *SPARQL 1.1 Protocol*, *SHACL Validation*, dan *5-Star Linked Open Data* `owl:sameAs` ke DBpedia).
 
-**Sistem Informasi Kuliner Medan** adalah mesin pencari dan platform eksplorasi kuliner khas Kota Medan berbasis **Web Semantik (Semantic Web)**. Platform ini memanfaatkan *Knowledge Graph* (RDF/Turtle) dan SPARQL Endpoint untuk mengintegrasikan data kuliner, bahan utama, lokasi geografis, kategori, serta sertifikasi halal ke dalam entitas terhubung (*Linked Data*).
-
----
-
-## 📜 Daftar Isi
-- [Latar Belakang](#-latar-belakang)
-- [Arsitektur Sistem](#-arsitektur-sistem)
-- [Fitur Utama](#-fitur-utama)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Model Ontologi & Data Semantik](#-model-ontologi--data-semantik)
-- [Struktur Repositori](#-struktur-repositori)
-- [Panduan Instalasi & Lintas Platform](#-panduan-instalasi--lintas-platform)
-- [Dokumentasi API](#-dokumentasi-api)
-- [Contoh Kueri SPARQL](#-contoh-kueri-sparql)
-- [Pengujian & Validasi Data](#-pengujian--validasi-data)
-- [Pengembangan Lanjutan](#-pengembangan-lanjutan)
-- [Penulis & Lisensi](#-penulis--lisensi)
+Dataset memodelkan **360 entitas kuliner Medan**, **71 restoran & cabang resmi**, **koordinat geospasial WGS84**, **seluruh 21 kecamatan & 151 kelurahan resmi Kota Medan**, **15 kawasan sentra kuliner**, **50 bahan utama & rempah**, **12 warisan budaya**, serta **10 teknik memasak**.
 
 ---
 
-## 💡 Latar Belakang
+## ✨ Fitur Unggulan
 
-Pencarian kuliner pada mesin pencari tradisional umumnya berfokus pada kecocokan kata kunci (*keyword matching*). Dengan pendekatan Web Semantik, sistem ini memahami relasi antar entitas, seperti hubungan antara kuliner dengan daerah asal, bahan pembuatnya, rekomendasi tempat makan, hingga koordinat lokasi geografis secara presisi.
+- **Pencarian Multi-Faset Berbasis SPARQL 1.1**: Filter kuliner secara semantik berdasarkan kategori sajian, pengaruh budaya, 21 kecamatan, kawasan kuliner, teknik masak, waktu sajian (`ex:WaktuSajian`), batas budget harga (`ex:hargaMin`), serta status halal (`ex:isHalal`).
+- **Inferensi Tetangga Spasial (`ex:berbatasanDengan`)**: Perluasan radius pencarian otomatis ke kecamatan-kecamatan yang berbatasan langsung menggunakan properti simetris OWL (`owl:SymmetricProperty`).
+- **Peta Geospasial Interaktif WGS84 (Leaflet + OpenStreetMap)**: Visualisasi titik koordinat `geo:lat` dan `geo:long` untuk 71 tempat kuliner di 21 kecamatan Kota Medan beserta *mini-map* interaktif di setiap detail hidangan.
+- **5-Star Linked Open Data (`owl:sameAs` ↔ DBpedia)**: Pengayaan ringkasan ensiklopedia secara langsung (*live dereferencing*) dari DBpedia/Wikipedia untuk entitas kuliner ikonik Sumatera Utara.
+- **Asisten Kuliner AI Berbasis GraphRAG**: Rekomendasi kontekstual bebas halusinasi (*zero-hallucination structured JSON*) yang di-*grounding* langsung ke katalog Knowledge Graph.
+- **Validasi Integritas Data SHACL (`shapes_validation.rdf`)**: Penjaminan mutu struktur graf untuk seluruh 360 individu `ex:Kuliner` dan 71 individu `ex:Restoran` (label bilingual `@id`/`@en`, rentang kepedasan `0–5`, batas koordinat Kota Medan, dan validitas URI gambar).
 
 ---
 
 ## 🏗️ Arsitektur Sistem
 
 ```text
-+-------------------------------------------------------------------+
-|                        FRONTEND (React + Vite)                    |
-|          UI Futuristik, Filter Kategori, UI Search SPARQL         |
-+-------------------------------------------------------------------+
-                                  │  HTTP / REST API
-                                  ▼
-+-------------------------------------------------------------------+
-|                        BACKEND (Express.js)                       |
-|           SPARQL Query Builder & HTTP Client Controller           |
-+-------------------------------------------------------------------+
-                                  │  SPARQL Protocol (HTTP)
-                                  ▼
-+-------------------------------------------------------------------+
-|                   TRIPLESTORE (Apache Jena Fuseki)                |
-|                    Executing SPARQL over RDF Graph                |
-+-------------------------------------------------------------------+
-                                  │
-                                  ▼
-+-------------------------------------------------------------------+
-|                   KNOWLEDGE GRAPH (`kuliner_medan.ttl`)           |
-|            RDF Triples (Subject - Predicate - Object)             |
-+-------------------------------------------------------------------+
-
++-----------------------------------------------------------------------+
+|              FRONTEND (React 19 + Vite + Tailwind + Leaflet)          |
+|     Multi-Facet Search, Peta Geospasial WGS84, Asisten GraphRAG       |
++-----------------------------------------------------------------------+
+                                   │  REST JSON API (Port 5001)
+                                   ▼
++-----------------------------------------------------------------------+
+|                    BACKEND (Node.js + Express 5)                      |
+|      Dynamic SPARQL 1.1 Query Builder + DBpedia Linked Data Cache     |
++-----------------------------------------------------------------------+
+                                   │  W3C SPARQL 1.1 Protocol (Port 3030)
+                                   ▼
++-----------------------------------------------------------------------+
+|                 TRIPLESTORE (Apache Jena Fuseki)                      |
+|     Dataset: /kuliner  (ontology_schema.rdf + kuliner_medan.rdf)      |
++-----------------------------------------------------------------------+
 ```
 
 ---
 
-## ✨ Fitur Utama
-
-* 🔍 **Semantic Search Engine**: Pencarian cerdas berbasis makna dan konteks kata kunci menggunakan kueri SPARQL `FILTER` dan `CONTAINS`.
-* 🏷️ **Kategori & Relasi Terstruktur**: Menghubungkan makanan berat, oleh-oleh, jajanan street food, minuman khas, serta tempat rekomendasi.
-* 📍 **Geospatial & Halal Info**: Integrasi koordinat lokasi (`schema:geo`) dan status kelayakan konsumsi halal.
-* 🎨 **Futuristic UI**: Tampilan antarmuka modern dengan gaya *Glassmorphism*, komponen reaktif, serta animasi interaktif.
-* 🛡️ **Sesuai Standar W3C**: Menggunakan standar ontologi global `schema.org`, `rdfs`, dan kosakata RDF resmi.
-
----
-
-## 🛠️ Teknologi yang Digunakan
-
-### Frontend
-
-* **React.js (Vite)** — Framework UI modern dan cepat.
-* **Tailwind CSS** — Framework CSS *utility-first* untuk gaya futuristik.
-* **Framer Motion** — Animasi halaman dan komponen UI.
-* **Lucide Icons** — Pustaka ikonografi modern.
-
-### Backend & Semantic Storage
-
-* **Node.js & Express.js** — Middleware server API.
-* **sparql-http-client** — Library pendukung eksekusi kueri SPARQL dari Node.js.
-* **Apache Jena Fuseki / GraphDB** — Server Triplestore penampung data RDF.
-* **RDF / Turtle (`.ttl`)** — Format serialisasi *Knowledge Graph*.
-
----
-
-## 🧬 Model Ontologi & Data Semantik
-
-Dataset dibentuk dengan mengombinasikan namespace standar dan entitas kustom:
-
-```turtle
-@prefix ex:     [http://kuliner-medan.org/ontology#](http://kuliner-medan.org/ontology#) .
-@prefix schema: [http://schema.org/](http://schema.org/) .
-@prefix rdfs:   [http://www.w3.org/2000/01/rdf-schema#](http://www.w3.org/2000/01/rdf-schema#) .
-@prefix xsd:    [http://www.w3.org/2001/XMLSchema#](http://www.w3.org/2001/XMLSchema#) .
-
-# Kelas Utama
-ex:Kuliner    rdfs:subClassOf schema:Recipe .
-ex:Kategori   rdfs:subClassOf rdfs:Class .
-ex:Restoran   rdfs:subClassOf schema:Restaurant .
-
-# Contoh Entitas: Soto Medan
-ex:SotoMedan a ex:Kuliner ;
-    rdfs:label "Soto Medan" ;
-    schema:description "Soto berkuah santan gurih berwarna kuning dengan rempah khas Medan." ;
-    schema:image "[https://images.unsplash.com/photo-1541832676-9b763b0239ab](https://images.unsplash.com/photo-1541832676-9b763b0239ab)" ;
-    ex:kategori ex:MakananBerat ;
-    ex:isHalal true ;
-    ex:rekomendasiTempat ex:SotoSinarPagi .
-
-ex:SotoSinarPagi a ex:Restoran ;
-    schema:name "Soto Medan Sinar Pagi" ;
-    schema:address "Jl. Sei Deli No.2D, Medan" ;
-    schema:geo [ schema:latitude "3.5975" ; schema:longitude "98.6722" ] .
-
-```
-
----
-
-## 📁 Struktur Repositori
+## 📁 Struktur Direktori (`TUBES/`)
 
 ```text
-kuliner-medan-semantic/
-├── .gitignore
-├── README.md
-├── LICENSE
+TUBES/
 ├── data/
-│   ├── kuliner_medan.ttl       # Dataset RDF Triples
-│   └── ontology_schema.ttl     # Skema Ontologi
+│   ├── ontology_schema.rdf      # Skema Ontologi OWL 2 (Kelas, Object & Datatype Properties)
+│   ├── kuliner_medan.rdf        # Knowledge Graph (360 Kuliner, 71 Restoran, 21 Kecamatan, 151 Kelurahan)
+│   └── shapes_validation.rdf    # Aturan Validasi W3C SHACL (KulinerShape & RestoranShape)
 ├── backend/
-│   ├── src/
-│   │   ├── controllers/        # Logika SPARQL Request
-│   │   └── routes/             # Route Endpoints
-│   ├── server.js               # Entry point Express
-│   ├── .env.example
+│   ├── server.js                # REST API & SPARQL 1.1 Query Controller (Port 5001)
+│   ├── validate_shacl.js        # Skrip Verifikasi Kepatuhan SHACL Otomatis
 │   └── package.json
-└── frontend/
-    ├── public/
-    ├── src/
-    │   ├── assets/
-    │   ├── components/         # Searchbar, Card, Filter, Header
-    │   ├── App.jsx             # Main Application Logic
-    │   ├── main.jsx
-    │   └── index.css           # Tailwind Entry
-    ├── tailwind.config.js
-    ├── vite.config.js
-    └── package.json
-
+├── frontend/
+│   ├── public/images/kuliner/   # Koleksi 109 Foto Kuliner Asli Medan & Nusantara
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── MedanCulinaryMap.jsx   # Komponen Peta Geospasial Interaktif Leaflet
+│   │   │   └── OrganicIcons.jsx       # Ikonografi Organik Kustom Ranah KulMed
+│   │   ├── culinaryImages.js    # Pemetaan Slug 360 Entitas ke Foto Kuliner Autentik
+│   │   ├── App.jsx              # Antarmuka Utama Aplikasi
+│   │   └── main.jsx
+│   └── package.json
+├── package.json                 # Runner Terpadu (concurrently backend + frontend)
+└── README.md
 ```
 
 ---
 
-## 🚀 Panduan Instalasi & Lintas Platform
+## 🚀 Panduan Instalasi & Menjalankan Aplikasi
 
-### 1. Clone Repositori
+### 1. Persiapan Apache Jena Fuseki (Port `3030`)
+1. Jalankan **Apache Jena Fuseki** dan buka `http://localhost:3030`.
+2. Buat dataset baru bernama **`kuliner`** (*Persistent / TDB2*).
+3. Unggah file `data/ontology_schema.rdf` dan `data/kuliner_medan.rdf` ke dataset **`kuliner`**.
 
-```bash
-git clone [https://github.com/USERNAME/kuliner-medan-semantic.git](https://github.com/USERNAME/kuliner-medan-semantic.git)
-cd kuliner-medan-semantic
+### 2. Instalasi Seluruh Dependensi
+Dari dalam direktori `TUBES`, jalankan satu perintah berikut untuk menginstal dependensi root, backend, dan frontend sekaligus:
 
+```powershell
+npm run install:all
 ```
 
-### 2. Konfigurasi Triplestore (Apache Jena Fuseki)
-
-1. Unduh dan jalankan Apache Jena Fuseki.
-2. Buka dashboard Fuseki (`http://localhost:3030`).
-3. Buat dataset baru bernama `kuliner` (tipe: *Persistent*).
-4. Unggah file `data/kuliner_medan.ttl` melalui menu **Upload Data**.
-
-### 3. Konfigurasi Backend
-
-```bash
-cd backend
-npm install
-
+### 3. Menjalankan Server Backend & Frontend Bersamaan
+```powershell
+npm start
 ```
+- **Frontend UI**: `http://localhost:5173`
+- **Backend API**: `http://localhost:5001/api/health`
 
-Buat file `.env` berdasarkan `.env.example`:
+*(Catatan: Jika Fuseki sedang tidak aktif, frontend otomatis beralih dengan mulus ke **Mode Pratinjau** agar antarmuka tetap dapat dieksplorasi).*
 
-```env
-PORT=5000
-SPARQL_ENDPOINT=http://localhost:3030/kuliner/query
+### 4. Menjalankan Validasi SHACL Knowledge Graph
+Untuk memverifikasi bahwa seluruh 360 entitas `ex:Kuliner` dan 71 `ex:Restoran` memenuhi seluruh batasan skema `shapes_validation.rdf`:
 
-```
-
-Jalankan server:
-
-```bash
-npm run dev
-
-```
-
-### 4. Konfigurasi Frontend
-
-```bash
-cd ../frontend
-npm install
-npm run dev
-
-```
-
-Akses aplikasi di browser pada URL `http://localhost:5173`.
-
----
-
-## 📡 Dokumentasi API
-
-### `GET /api/search`
-
-Mencari data kuliner berdasarkan kata kunci nama atau deskripsi.
-
-* **Query Parameters**:
-* `keyword` (optional): Kata kunci pencarian (contoh: `Soto`, `Bika`, `Halal`).
-* `kategori` (optional): Filter kategori entitas semantik.
-
-
-* **Sample Response**:
-
-```json
-[
-  {
-    "id": { "type": "uri", "value": "[http://kuliner-medan.org/ontology#SotoMedan](http://kuliner-medan.org/ontology#SotoMedan)" },
-    "nama": { "type": "literal", "value": "Soto Medan" },
-    "deskripsi": { "type": "literal", "value": "Soto berkuah santan gurih..." },
-    "gambar": { "type": "literal", "value": "https://..." },
-    "isHalal": { "type": "literal", "value": "true" }
-  }
-]
-
+```powershell
+npm run validate
 ```
 
 ---
 
-## 🔍 Contoh Kueri SPARQL
+## 📡 Ringkasan Endpoint REST API (`http://localhost:5001`)
 
-### 1. Mencari Makanan Halal beserta Lokasi Rekomendasi Tempatnya
-
-```sparql
-PREFIX ex: [http://kuliner-medan.org/ontology#](http://kuliner-medan.org/ontology#)
-PREFIX schema: [http://schema.org/](http://schema.org/)
-PREFIX rdfs: [http://www.w3.org/2000/01/rdf-schema#](http://www.w3.org/2000/01/rdf-schema#)
-
-SELECT ?kulinerNama ?tempatNama ?alamat WHERE {
-  ?kuliner a ex:Kuliner ;
-           rdfs:label ?kulinerNama ;
-           ex:isHalal true ;
-           ex:rekomendasiTempat ?tempat .
-  
-  ?tempat schema:name ?tempatNama ;
-          schema:address ?alamat .
-}
-
-```
+| Metode | Endpoint | Deskripsi |
+| :---: | :--- | :--- |
+| `GET` | `/api/health` | Mengecek koneksi ke Fuseki serta statistik jumlah *triples* dan entitas. |
+| `GET` | `/api/facets` | Mengambil faset dinamis (kategori, budaya, 21 kecamatan, kawasan, teknik masak, waktu sajian, bahan). |
+| `GET` | `/api/search` | Pencarian multi-faset (`keyword`, `kategori`, `budaya`, `kecamatan`, `includeNeighbors`, `kawasan`, `teknik`, `waktu`, `maxHarga`, `halal`). |
+| `GET` | `/api/culinary/:slug` | Detail entitas semantik: pasangan cocok (`ex:pasanganCocok`), cabang resmi (`ex:cabangDari`), rekomendasi graf, serta abstrak *Linked Open Data* DBpedia (`owl:sameAs`). |
+| `GET` | `/api/graph` | Ekstraksi simpul (*nodes*) dan relasi (*edges*) multi-hop Knowledge Graph. |
+| `POST` | `/api/sparql` | Eksekusi kueri analitik SPARQL 1.1 *read-only* (`SELECT` / `ASK`). |
 
 ---
 
-## 🧪 Pengujian & Validasi Data
+## 👨‍💻 Tim Pengembang — Kelompok 06 (Kom A '25)
 
-* **W3C RDF Validation**: File `.ttl` divalidasi menggunakan [W3C RDF Validation Service](https://www.w3.org/RDF/Validator/).
-* **SPARQL Endpoint Test**: Seluruh kueri telah diuji pada Apache Jena Fuseki Query Interface untuk memastikan performa waktu respons kueri sub-100ms.
+Disusun untuk memenuhi **Tugas Besar Mata Kuliah Web Semantik**:
 
----
-
-## 🔮 Pengembangan Lanjutan
-
-* [ ] Integrasi peta interaktif (Leaflet / Mapbox) memanfaatkan koordinat RDF `schema:geo`.
-* [ ] Fitur *Recommender System* berbasis Graf Pengetahuan (*Knowledge Graph Embeddings*).
-* [ ] Penambahan skema validasi data menggunakan **ShACL (Shapes Constraint Language)**.
-
----
-
-## 👨‍💻 Penulis & Tim Pengembang
-
-Proyek ini dikembangkan oleh Tim Mahasiswa Ilmu Komputer/Teknologi Informasi untuk memenuhi **Tugas Besar Mata Kuliah Web Semantik (Semester 3)**.
-
-| No | Nama | NIM | Peran |
-| :-: | :--- | :--- | :--- |
-| 1 | **Farel Yamotaro Hia** | 251402069 | **Project Manager** |
-| 2 | Ray Nathan Geereno Saragih | 251402046 | Anggota |
-| 3 | Naufal Muhammad Dzaki | 251402128 | Anggota |
-| 4 | William Fransisco Sihotang | 251402052 | Anggota |
-| 5 | Yabesh Day Siahaan | 251402004 | Anggota |
-
-```
-
-<ElicitationsGroup message="Pilih langkah berikutnya untuk pengerjaan repositori kamu:">
-  <Elicitation label="Buatkan file .gitignore dan LICENSE (MIT) siap pakai" query="Buatkan isi file .gitignore dan file LICENSE bertipe MIT yang siap digunakan untuk proyek ini."/>
-  <Elicitation label="Buatkan file dataset kuliner_medan.ttl dengan 10 entitas kuliner lengkap" query="Buatkan isi lengkap file data/kuliner_medan.ttl dengan 10 entitas kuliner khas Medan, koordinat tempat, dan status halal."/>
-</ElicitationsGroup>
-
-<FollowUp label="Mau aku bantu susunkan urutan perintah Git lengkap dari awal buat langsung commit dan push file ini ke GitHub?" query="Tunjukkan perintah Git step-by-step untuk menyimpan file README.md ini dan melakukan push ke repositori GitHub."/>
-
-```
+| No | Nama Mahasiswa | NIM | Peran |
+| :-: | :--- | :---: | :--- |
+| 1 | **Farel Yamotaro Hia** | 251402069 | Project Manager |
+| 2 | **Yabesh Day Siahaan** | 251402004 | Anggota |
+| 3 | **Ray Nathan Geereno Saragih** | 251402046 | Anggota |
+| 4 | **William Fransisco Sihotang** | 251402052 | Anggota |
+| 5 | **Naufal Muhammad Dzaki** | 251402128 | Anggota |

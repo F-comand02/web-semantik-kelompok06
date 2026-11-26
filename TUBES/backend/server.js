@@ -160,14 +160,17 @@ app.get('/api/facets', async (req, res) => {
   `;
 
   try {
-    const [categories, cultures, districts, hubs, techniques, ingredients] = await Promise.all([
-      executeSparql(makeFacetQuery('ex:Kategori', 'ex:kategori')),
-      executeSparql(makeFacetQuery('ex:PengaruhBudaya', 'ex:pengaruhBudaya')),
-      executeSparql(makeFacetQuery('ex:Kecamatan', 'ex:berlokasiDi', true)),
-      executeSparql(makeFacetQuery('ex:KawasanKuliner', 'ex:beradaDiKawasan', true)),
-      executeSparql(makeFacetQuery('ex:TeknikMasak', 'ex:teknikMasak')),
-      executeSparql(makeFacetQuery('ex:BahanUtama', 'ex:memilikiBahan')),
-    ]);
+    const [categories, cultures, districts, hubs, techniques, ingredients, servingTimes, flavorProfiles] =
+      await Promise.all([
+        executeSparql(makeFacetQuery('ex:Kategori', 'ex:kategori')),
+        executeSparql(makeFacetQuery('ex:PengaruhBudaya', 'ex:pengaruhBudaya')),
+        executeSparql(makeFacetQuery('ex:Kecamatan', 'ex:berlokasiDi', true)),
+        executeSparql(makeFacetQuery('ex:KawasanKuliner', 'ex:beradaDiKawasan', true)),
+        executeSparql(makeFacetQuery('ex:TeknikMasak', 'ex:teknikMasak')),
+        executeSparql(makeFacetQuery('ex:BahanUtama', 'ex:memilikiBahan')),
+        executeSparql(makeFacetQuery('ex:WaktuSajian', 'ex:waktuSajian')),
+        executeSparql(makeFacetQuery('ex:ProfilRasa', 'ex:profilRasa')),
+      ]);
 
     const format = (rows) =>
       rows.map((r) => ({
@@ -184,6 +187,8 @@ app.get('/api/facets', async (req, res) => {
       hubs: format(hubs),
       techniques: format(techniques),
       ingredients: format(ingredients),
+      servingTimes: format(servingTimes),
+      flavorProfiles: format(flavorProfiles),
     });
   } catch (err) {
     console.error('Facets Error:', err.message);
@@ -203,6 +208,8 @@ app.get('/api/search', async (req, res) => {
     includeNeighbors = 'false',
     kawasan = '',
     teknik = '',
+    waktu = '',
+    maxHarga = '',
     halal = '',
   } = req.query;
 
@@ -212,12 +219,18 @@ app.get('/api/search', async (req, res) => {
   const cleanKec = sanitizeSlug(kecamatan);
   const cleanKaw = sanitizeSlug(kawasan);
   const cleanTek = sanitizeSlug(teknik);
+  const cleanWak = sanitizeSlug(waktu);
+  const cleanMaxHarga = Number(maxHarga);
 
   const extraPatterns = [];
   if (cleanKat) extraPatterns.push(`FILTER(?katUri = ex:${cleanKat})`);
   if (cleanBud) extraPatterns.push(`FILTER(?budayaUri = ex:${cleanBud})`);
   if (cleanKaw) extraPatterns.push(`FILTER(?kawasanUri = ex:${cleanKaw})`);
   if (cleanTek) extraPatterns.push(`FILTER(?teknikUri = ex:${cleanTek})`);
+  if (cleanWak) extraPatterns.push(`FILTER(?waktuUri = ex:${cleanWak})`);
+  if (Number.isFinite(cleanMaxHarga) && cleanMaxHarga > 0) {
+    extraPatterns.push(`FILTER(?hargaMin <= ${Math.floor(cleanMaxHarga)})`);
+  }
   if (halal === 'true') extraPatterns.push(`FILTER(?isHalal = true)`);
   if (halal === 'false') extraPatterns.push(`FILTER(?isHalal = false)`);
 
@@ -239,8 +252,8 @@ app.get('/api/search', async (req, res) => {
 ${PREFIXES}
 SELECT
   ?id ?nama ?namaEn ?deskripsi ?gambar ?isHalal
-  ?spice ?kisaranHarga ?rasaDominan ?metodeMasak
-  ?katUri ?kategoriNama ?budayaNama ?waktuNama
+  ?spice ?kisaranHarga ?hargaMin ?hargaMax ?rasaDominan ?metodeMasak
+  ?katUri ?kategoriNama ?budayaNama ?waktuUri ?waktuNama
   ?teknikNama ?kawasanNama ?kelurahanNama ?awardNama
   ?restoNama ?alamat ?kecNama ?jamBuka ?rating ?tahunBerdiri ?lat ?long
   (GROUP_CONCAT(DISTINCT ?bahanNama; SEPARATOR=", ") AS ?bahanList)
@@ -258,6 +271,8 @@ WHERE {
 
   FILTER(LANG(?nama) = "id" || LANG(?nama) = "")
   OPTIONAL { ?id rdfs:label ?namaEn . FILTER(LANG(?namaEn) = "en") }
+  OPTIONAL { ?id ex:hargaMin ?hargaMin }
+  OPTIONAL { ?id ex:hargaMax ?hargaMax }
   OPTIONAL { ?id ex:rasaDominan ?rasaDominan }
   OPTIONAL { ?id ex:metodeMasak ?metodeMasak }
   OPTIONAL {
@@ -312,8 +327,8 @@ WHERE {
 }
 GROUP BY
   ?id ?nama ?namaEn ?deskripsi ?gambar ?isHalal
-  ?spice ?kisaranHarga ?rasaDominan ?metodeMasak
-  ?katUri ?kategoriNama ?budayaNama ?waktuNama
+  ?spice ?kisaranHarga ?hargaMin ?hargaMax ?rasaDominan ?metodeMasak
+  ?katUri ?kategoriNama ?budayaNama ?waktuUri ?waktuNama
   ?teknikNama ?kawasanNama ?kelurahanNama ?awardNama
   ?restoNama ?alamat ?kecNama ?jamBuka ?rating ?tahunBerdiri ?lat ?long
   ?budayaUri ?kecUri ?kawasanUri ?teknikUri
@@ -332,12 +347,15 @@ ORDER BY DESC(?rating) ?nama
       isHalal: b.isHalal?.value === 'true',
       tingkatKepedasan: Number(b.spice?.value || 0),
       kisaranHarga: b.kisaranHarga?.value || '',
+      hargaMin: b.hargaMin?.value ? Number(b.hargaMin.value) : null,
+      hargaMax: b.hargaMax?.value ? Number(b.hargaMax.value) : null,
       rasaDominan: b.rasaDominan?.value || '',
       metodeMasak: b.teknikNama?.value || b.metodeMasak?.value || '',
       kategori: b.kategoriNama?.value || '',
       kategoriSlug: toSlug(b.katUri?.value || ''),
       budaya: b.budayaNama?.value || '',
       waktuSajian: b.waktuNama?.value || '',
+      waktuSlug: toSlug(b.waktuUri?.value || ''),
       penghargaan: b.awardNama?.value || '',
       bahanUtama: b.bahanList?.value ? b.bahanList.value.split(', ').filter(Boolean) : [],
       restoran: {
@@ -391,6 +409,77 @@ ORDER BY DESC(?rating) ?nama
   }
 });
 
+// In-memory cache for 5-Star Linked Open Data dereferencing (DBpedia / Wikipedia)
+const linkedDataCache = new Map();
+
+async function fetchLinkedOpenData(sameAsUris = []) {
+  const dbpediaUri = sameAsUris.find((u) => u.startsWith('http://dbpedia.org/resource/'));
+  if (!dbpediaUri) return null;
+  if (linkedDataCache.has(dbpediaUri)) return linkedDataCache.get(dbpediaUri);
+
+  const resourceName = dbpediaUri.replace('http://dbpedia.org/resource/', '');
+  const headers = { 'User-Agent': 'RanahKulMedSemanticWeb/1.0 (https://kuliner-medan.org)' };
+
+  // 1. Try DBpedia public SPARQL endpoint for dbo:abstract
+  try {
+    const dbpQuery = `PREFIX dbo: <http://dbpedia.org/ontology/>
+SELECT ?abstract WHERE {
+  <${dbpediaUri}> dbo:abstract ?abstract .
+  FILTER(LANG(?abstract) IN ("id", "en"))
+}`;
+    const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(dbpQuery)}&format=${encodeURIComponent(
+      'application/sparql-results+json'
+    )}`;
+    const res = await fetch(url, { headers, signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const json = await res.json();
+      const rows = json.results?.bindings || [];
+      const idRow = rows.find((r) => r.abstract?.['xml:lang'] === 'id');
+      const enRow = rows.find((r) => r.abstract?.['xml:lang'] === 'en');
+      const picked = idRow || enRow;
+      if (picked?.abstract?.value) {
+        const result = {
+          uri: dbpediaUri,
+          title: resourceName.replace(/_/g, ' '),
+          abstract: picked.abstract.value,
+          lang: picked.abstract['xml:lang'] || 'id',
+          source: 'DBpedia SPARQL Endpoint',
+        };
+        linkedDataCache.set(dbpediaUri, result);
+        return result;
+      }
+    }
+  } catch {
+    // Fallback to Wikimedia REST summary if DBpedia endpoint is slow/offline
+  }
+
+  // 2. Fallback to Wikipedia REST Linked Summary (id -> en)
+  for (const lang of ['id', 'en']) {
+    try {
+      const wikiUrl = `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(resourceName)}`;
+      const res = await fetch(wikiUrl, { headers, signal: AbortSignal.timeout(2500) });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.extract) {
+          const result = {
+            uri: dbpediaUri,
+            title: json.title || resourceName.replace(/_/g, ' '),
+            abstract: json.extract,
+            lang,
+            source: `DBpedia ↔ Wikipedia (${lang.toUpperCase()})`,
+          };
+          linkedDataCache.set(dbpediaUri, result);
+          return result;
+        }
+      }
+    } catch {
+      // Ignore offline errors gracefully
+    }
+  }
+
+  return null;
+}
+
 // ============================================================================
 // 4. SEMANTIC ENTITY DETAIL, BRANCHES & KNOWLEDGE GRAPH RECOMMENDATIONS
 // ============================================================================
@@ -401,7 +490,9 @@ app.get('/api/culinary/:slug', async (req, res) => {
   const detailQuery = `
     ${PREFIXES}
     SELECT ?sameAs ?pairUri ?pairNama ?awardNama WHERE {
-      OPTIONAL { ex:${slug} owl:sameAs ?sameAs }
+      OPTIONAL {
+        { ex:${slug} owl:sameAs ?sameAs } UNION { ?sameAs owl:sameAs ex:${slug} }
+      }
       OPTIONAL {
         { ex:${slug} ex:pasanganCocok ?pairUri } UNION { ?pairUri ex:pasanganCocok ex:${slug} }
         ?pairUri rdfs:label ?pairNama .
@@ -470,6 +561,7 @@ app.get('/api/culinary/:slug', async (req, res) => {
 
     const sameAs = [...new Set(detailRows.map((r) => r.sameAs?.value).filter(Boolean))];
     const awards = [...new Set(detailRows.map((r) => r.awardNama?.value).filter(Boolean))];
+    const linkedData = await fetchLinkedOpenData(sameAs);
 
     const pairings = [];
     const seenPairs = new Set();
@@ -507,6 +599,7 @@ app.get('/api/culinary/:slug', async (req, res) => {
     res.json({
       slug,
       sameAs,
+      linkedData,
       awards,
       pairings,
       branches,
