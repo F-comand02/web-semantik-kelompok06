@@ -14,10 +14,11 @@ Dataset memodelkan **360 entitas kuliner Medan**, **71 restoran & cabang resmi**
 ## ✨ Fitur Unggulan
 
 - **Pencarian Multi-Faset Berbasis SPARQL 1.1**: Filter kuliner secara semantik berdasarkan kategori sajian, pengaruh budaya, 21 kecamatan, kawasan kuliner, teknik masak, waktu sajian (`ex:WaktuSajian`), batas budget harga (`ex:hargaMin`), serta status halal (`ex:isHalal`).
+- **Eksplorasi Berbasis Koleksi**: Jelajahi pilihan sarapan, oleh-oleh, hidangan pedas berempah, dan kuliner halal tanpa mengulang tampilan mesin pencarian lanjutan.
 - **Inferensi Tetangga Spasial (`ex:berbatasanDengan`)**: Perluasan radius pencarian otomatis ke kecamatan-kecamatan yang berbatasan langsung menggunakan properti simetris OWL (`owl:SymmetricProperty`).
 - **Peta Geospasial Interaktif WGS84 (Leaflet + OpenStreetMap)**: Visualisasi titik koordinat `geo:lat` dan `geo:long` untuk 71 tempat kuliner di 21 kecamatan Kota Medan beserta *mini-map* interaktif di setiap detail hidangan.
 - **5-Star Linked Open Data (`owl:sameAs` ↔ DBpedia)**: Pengayaan ringkasan ensiklopedia secara langsung (*live dereferencing*) dari DBpedia/Wikipedia untuk entitas kuliner ikonik Sumatera Utara.
-- **Asisten Kuliner AI Berbasis GraphRAG**: Rekomendasi kontekstual bebas halusinasi (*zero-hallucination structured JSON*) yang di-*grounding* langsung ke katalog Knowledge Graph.
+- **Asisten Kuliner Offline Berbasis Katalog**: Pencocokan deterministik berdasarkan nama menu dan detail katalog, dijalankan di browser tanpa LLM, API key, model tambahan, atau biaya AI.
 - **Validasi Integritas Data SHACL (`shapes_validation.rdf`)**: Penjaminan mutu struktur graf untuk seluruh 360 individu `ex:Kuliner` dan 71 individu `ex:Restoran` (label bilingual `@id`/`@en`, rentang kepedasan `0–5`, batas koordinat Kota Medan, dan validitas URI gambar).
 
 ---
@@ -27,21 +28,23 @@ Dataset memodelkan **360 entitas kuliner Medan**, **71 restoran & cabang resmi**
 ```text
 +-----------------------------------------------------------------------+
 |              FRONTEND (React 19 + Vite + Tailwind + Leaflet)          |
-|     Multi-Facet Search, Peta Geospasial WGS84, Asisten GraphRAG       |
+|     Multi-Facet Search, Peta Geospasial WGS84, Asisten Offline        |
 +-----------------------------------------------------------------------+
                                    │  REST JSON API (Port 5001)
                                    ▼
 +-----------------------------------------------------------------------+
 |                    BACKEND (Node.js + Express 5)                      |
-|      Dynamic SPARQL 1.1 Query Builder + DBpedia Linked Data Cache     |
+|           SPARQL 1.1 API + DBpedia Cache                              |
 +-----------------------------------------------------------------------+
-                                   │  W3C SPARQL 1.1 Protocol (Port 3030)
-                                   ▼
+                              │ SPARQL 1.1 Protocol (Port 3030)
+                              ▼
 +-----------------------------------------------------------------------+
 |                 TRIPLESTORE (Apache Jena Fuseki)                      |
 |     Dataset: /kuliner  (ontology_schema.rdf + kuliner_medan.rdf)      |
 +-----------------------------------------------------------------------+
 ```
+
+Asisten offline mencocokkan pertanyaan dengan katalog yang sudah dimuat di browser. Pertanyaan tidak dikirim ke model atau layanan AI. Fitur aplikasi lain, seperti pengayaan DBpedia dan peta OpenStreetMap, tetap dapat mengakses layanan eksternal sesuai fungsinya.
 
 ---
 
