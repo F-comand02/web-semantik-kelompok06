@@ -9079,7 +9079,7 @@
 
     <!-- ================ Makanan tambahan Ranah KulMed (300 entri) ================ -->
 
- Nasi Goreng Medan Spesial -->
+    <!-- Tambahan makanan Ranah KulMed: Nasi Goreng Medan Spesial -->
     <owl:NamedIndividual rdf:about="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#KulinerTambahan001">
         <rdf:type rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Kuliner"/>
         <rdf:type rdf:resource="http://kuliner-medan.org/ontology/Kelompok06/KomA/25#Makanan"/>
