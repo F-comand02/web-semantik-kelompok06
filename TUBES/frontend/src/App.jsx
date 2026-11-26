@@ -1,27 +1,18 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Home,
   Compass,
-  LayoutGrid,
   History,
   Bookmark,
-  Settings,
   Search,
-  SlidersHorizontal,
   ArrowRight,
   Sun,
   Moon,
-  FlaskConical,
   ChevronDown,
   Network,
-  Terminal,
-  Code2,
   Utensils,
   Flame,
   MapPin,
-  Sparkles,
-  ShieldCheck,
   ShieldAlert,
   Star,
   Clock,
@@ -39,12 +30,25 @@ import {
   Copy,
   Users,
   Menu,
-  Bot,
   Send,
   RotateCcw,
   KeyRound,
   Filter,
 } from 'lucide-react';
+import {
+  OrganicHomeIcon,
+  OrganicExploreIcon,
+  OrganicCategoryIcon,
+  OrganicHistoryIcon,
+  OrganicBookmarkIcon,
+  OrganicSettingsIcon,
+  OrganicSearchIcon,
+  OrganicFilterIcon,
+  OrganicCulinaryBowlIcon,
+  OrganicSpiceCompassIcon,
+  OrganicSpiceFlameIcon,
+  OrganicHalalLeafIcon,
+} from './components/OrganicIcons';
 
 const API_BASE = 'http://localhost:5000/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
@@ -683,7 +687,7 @@ function buildDemoFacets(dishes) {
 }
 
 /**
- * Brand Logo: Stylized Blue "M" with Integrated Magnifying Glass
+ * Brand Logo: Hand-crafted Organic Medan Culinary Bowl & Spice Leaf Emblem
  */
 function RanahKulMedLogo({ size = 'md', darkMode = false, showText = true }) {
   const dims =
@@ -695,23 +699,60 @@ function RanahKulMedLogo({ size = 'md', darkMode = false, showText = true }) {
 
   return (
     <div className={`inline-flex items-center ${dims.gap} select-none`}>
-      <svg viewBox="0 0 64 64" className={`${dims.icon} shrink-0`} aria-hidden="true">
-        <defs>
-          <linearGradient id="medanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2563eb" />
-            <stop offset="100%" stopColor="#1d4ed8" />
-          </linearGradient>
-        </defs>
+      <svg viewBox="0 0 64 64" className={`${dims.icon} shrink-0`} fill="none" aria-hidden="true">
+        {/* Soft organic ceramic backdrop */}
         <path
-          d="M10 50 V16 C10 12.5 14 10.5 16.8 12.8 L32 25.5 L47.2 12.8 C50 10.5 54 12.5 54 16 V34"
-          fill="none"
-          stroke="url(#medanBlueGrad)"
-          strokeWidth="8.5"
+          d="M32 6 C48 6 58 15.5 57.5 31.5 C57 48 47.5 58 31.5 58 C15.5 58 6 48.5 6.5 32.5 C7 16 16.5 6 32 6 Z"
+          fill={darkMode ? '#1e293b' : '#eaf2ff'}
+          stroke={darkMode ? '#334155' : '#bfdbfe'}
+          strokeWidth="2"
+        />
+        {/* Rising warm aroma wisps */}
+        <path
+          d="M23.5 23.5 C22.3 19.8 25.5 17.8 24.4 14.2"
+          stroke={darkMode ? '#7dd3fc' : '#2563eb'}
+          strokeWidth="2.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M32.5 22 C31.4 18 34.8 15.8 33.6 12"
+          stroke={darkMode ? '#7dd3fc' : '#1d63ed'}
+          strokeWidth="2.8"
+          strokeLinecap="round"
+        />
+        {/* Medan aromatic spice leaf (daun jeruk / serai) */}
+        <path
+          d="M40.5 27.5 C41.8 20.5 47.5 18 51.8 19.4 C50.5 24.8 46.5 28.8 40.5 27.5 Z"
+          fill="#10b981"
+          fillOpacity={darkMode ? '0.35' : '0.25'}
+          stroke={darkMode ? '#34d399' : '#059669'}
+          strokeWidth="2.4"
+          strokeLinejoin="round"
+        />
+        {/* Hand-shaped Medan culinary bowl */}
+        <path
+          d="M14 31.5 C24.5 29.8 39.5 29.8 50 31.5 C49.2 42.2 42.2 49.6 32 49.8 C21.8 49.6 14.8 42.2 14 31.5 Z"
+          fill={darkMode ? '#38bdf8' : '#1d63ed'}
+          fillOpacity="0.16"
+          stroke={darkMode ? '#38bdf8' : '#1d63ed'}
+          strokeWidth="3.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="44" cy="43" r="10.5" fill={darkMode ? '#0f172a' : '#ffffff'} stroke="#1d63ed" strokeWidth="5.5" />
-        <line x1="52" y1="51" x2="59" y2="58" stroke="#1e40af" strokeWidth="6" strokeLinecap="round" />
+        {/* Subtle artisanal rim accent & foot */}
+        <path
+          d="M22.5 39.2 C26.8 41.4 33.4 41.6 38.2 39.5"
+          stroke={darkMode ? '#7dd3fc' : '#1d63ed'}
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeOpacity="0.65"
+        />
+        <path
+          d="M24.2 53.2 C29 54 35 54 39.8 53.2"
+          stroke={darkMode ? '#38bdf8' : '#1e40af'}
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
       </svg>
       {showText && (
         <span className={`font-extrabold tracking-tight leading-none ${dims.text}`}>
@@ -876,7 +917,6 @@ export default function App() {
   const [activeView, setActiveView] = useState('beranda');
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [advancedMenuOpen, setAdvancedMenuOpen] = useState(false);
   const [teamMenuOpen, setTeamMenuOpen] = useState(false);
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
@@ -1443,12 +1483,12 @@ export default function App() {
   const favoriteDishes = (allDishes.length ? allDishes : results).filter((d) => favorites.includes(d.slug));
 
   const sidebarItems = [
-    { id: 'beranda', label: 'Beranda', icon: Home },
-    { id: 'eksplorasi', label: 'Eksplorasi', icon: Compass },
-    { id: 'kategori', label: 'Kategori', icon: LayoutGrid },
-    { id: 'riwayat', label: 'Riwayat', icon: History },
-    { id: 'favorit', label: 'Favorit', icon: Bookmark, count: favorites.length },
-    { id: 'pengaturan', label: 'Pengaturan', icon: Settings },
+    { id: 'beranda', label: 'Beranda', icon: OrganicHomeIcon },
+    { id: 'eksplorasi', label: 'Eksplorasi', icon: OrganicExploreIcon },
+    { id: 'kategori', label: 'Kategori', icon: OrganicCategoryIcon },
+    { id: 'riwayat', label: 'Riwayat', icon: OrganicHistoryIcon },
+    { id: 'favorit', label: 'Favorit', icon: OrganicBookmarkIcon, count: favorites.length },
+    { id: 'pengaturan', label: 'Pengaturan', icon: OrganicSettingsIcon },
   ];
 
   // Reusable Culinary Card Renderer
@@ -1480,7 +1520,7 @@ export default function App() {
               item.isHalal ? 'bg-emerald-500/95 text-white' : 'bg-rose-500/95 text-white'
             }`}
           >
-            {item.isHalal ? <ShieldCheck className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
+            {item.isHalal ? <OrganicHalalLeafIcon className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
             {item.isHalal ? 'Halal' : 'Non-Halal'}
           </span>
 
@@ -1491,7 +1531,7 @@ export default function App() {
               isFav ? 'bg-[#1d63ed] text-white shadow-md' : 'bg-white/85 text-slate-700 hover:bg-white'
             }`}
           >
-            <Bookmark className={`w-3.5 h-3.5 ${isFav ? 'fill-white' : ''}`} />
+            <OrganicBookmarkIcon className="w-3.5 h-3.5" filled={isFav} />
           </button>
 
           <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-white/95 dark:bg-slate-900/90 text-[#1d63ed] dark:text-sky-300 text-[11px] font-semibold shadow-sm">
@@ -1639,7 +1679,7 @@ export default function App() {
             }`}
           >
             <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm mb-3">
-              <Network className="w-5 h-5 text-[#1d63ed] dark:text-sky-400" />
+              <OrganicSpiceCompassIcon className="w-5 h-5 text-[#1d63ed] dark:text-sky-400" />
             </div>
             <h4 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Pencarian Cerdas</h4>
             <p className={`text-xs mt-1 leading-relaxed pr-6 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -1721,7 +1761,7 @@ export default function App() {
           />
         </div>
 
-        {/* TOP BAR (Theme Toggle, Fitur Lanjutan Dropdown, Ranah KulMed Avatar) */}
+        {/* TOP BAR (Theme Toggle & Ranah KulMed Avatar) */}
         <header className="relative z-20 flex items-center justify-between lg:justify-end px-4 sm:px-8 py-4">
           <button
             onClick={() => setMobileMenuOpen(true)}
@@ -1748,70 +1788,11 @@ export default function App() {
 
             <div className={`h-5 w-px ${darkMode ? 'bg-slate-800' : 'bg-slate-200'}`} />
 
-            {/* "Fitur Lanjutan" Dropdown Menu */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setAdvancedMenuOpen((o) => !o);
-                  setTeamMenuOpen(false);
-                }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-                  darkMode
-                    ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-500'
-                    : 'bg-white border-blue-200/90 text-[#1d63ed] hover:bg-blue-50/60 shadow-xs'
-                }`}
-              >
-                <FlaskConical className="w-4 h-4" />
-                <span>Fitur Lanjutan</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${advancedMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              <AnimatePresence>
-                {advancedMenuOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                    className={`absolute right-0 mt-2 w-56 rounded-2xl border p-1.5 shadow-xl z-40 ${
-                      darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200/90'
-                    }`}
-                  >
-                    {[
-                      { id: 'api', label: 'Portal Mitra & API', sub: 'Integrasi data kuliner Medan', icon: Code2 },
-                    ].map((opt) => {
-                      const Icon = opt.icon;
-                      return (
-                        <button
-                          key={opt.id}
-                          onClick={() => {
-                            setActiveView(opt.id);
-                            setAdvancedMenuOpen(false);
-                          }}
-                          className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
-                            darkMode ? 'hover:bg-slate-800' : 'hover:bg-[#eef4ff]'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4 text-[#1d63ed] dark:text-sky-400 mt-0.5 shrink-0" />
-                          <div>
-                            <p className={`text-xs font-semibold ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>
-                              {opt.label}
-                            </p>
-                            <p className="text-[11px] text-slate-400">{opt.sub}</p>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
             {/* Ranah KulMed Team Avatar Pill */}
             <div className="relative">
               <button
                 onClick={() => {
                   setTeamMenuOpen((o) => !o);
-                  setAdvancedMenuOpen(false);
                 }}
                 className="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               >
@@ -1885,7 +1866,7 @@ export default function App() {
                     : 'bg-white border-slate-200/90 focus-within:border-[#1d63ed] shadow-[0_10px_30px_rgba(29,99,237,0.08)]'
                 }`}
               >
-                <Search className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
+                <OrganicSearchIcon className="w-5 h-5 text-slate-400 shrink-0 mr-3" />
                 <input
                   type="text"
                   value={searchInput}
@@ -1920,7 +1901,7 @@ export default function App() {
                       : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
-                  <SlidersHorizontal className="w-4 h-4" />
+                  <OrganicFilterIcon className="w-4 h-4" />
                 </button>
                 <button
                   type="submit"
@@ -1935,7 +1916,7 @@ export default function App() {
             {/* Pencarian Populer Row */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-8 text-xs">
               <span className="inline-flex items-center gap-1 font-semibold text-slate-500 mr-1">
-                <Flame className="w-3.5 h-3.5 text-orange-500" /> Pencarian Populer:
+                <OrganicSpiceFlameIcon className="w-4 h-4 text-orange-500" /> Pencarian Populer:
               </span>
               {POPULAR_SEARCHES.map((tag) => (
                 <button
@@ -1963,17 +1944,20 @@ export default function App() {
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1d63ed] to-sky-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <Sparkles className="w-5 h-5" />
+                  <div
+                    className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${
+                      darkMode
+                        ? 'bg-amber-950/40 border-amber-800/60 text-amber-300'
+                        : 'bg-amber-50/90 border-amber-200/80 text-amber-700'
+                    }`}
+                  >
+                    <OrganicCulinaryBowlIcon className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                         Asisten Kuliner AI Ranah KulMed
                       </h3>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                        Gemini Gratis
-                      </span>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Rekomendasi personal sesuai budget, status halal, bahan rempah, dan lokasi di Medan.
@@ -2138,7 +2122,7 @@ export default function App() {
 
                         {aiLoading && (
                           <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/70 dark:border-slate-800 text-[11px] text-[#1d63ed] dark:text-sky-400 font-medium">
-                            <Sparkles className="w-3.5 h-3.5 animate-spin" /> Mencocokkan katalog kuliner Medan untukmu...
+                            <OrganicCulinaryBowlIcon className="w-4 h-4 animate-pulse" /> Mencocokkan katalog kuliner Medan untukmu...
                           </div>
                         )}
                         <div ref={aiChatEndRef} />
@@ -3353,7 +3337,7 @@ export default function App() {
           }}
           className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 text-white text-xs font-bold shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
         >
-          <Bot className="w-4 h-4" />
+          <OrganicCulinaryBowlIcon className="w-4 h-4" />
           <span>Tanya Asisten AI</span>
         </button>
       )}
