@@ -1980,8 +1980,10 @@ export default function App() {
         {activeView === 'beranda' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-14">
             {/* Hero Container with Ulos Stripes & Warm Dot Pattern */}
-            <section className="dot-pattern relative overflow-hidden rounded-[2rem] border border-amber-200/70 bg-gradient-to-b from-amber-50 to-[#fff8ec] px-5 pb-10 pt-10 text-center dark:border-stone-800 dark:from-stone-900 dark:to-stone-950 sm:px-10 sm:pt-14 mb-8">
-              <div className="ulos-stripes absolute inset-x-0 top-0 h-2" />
+            <section className="dot-pattern relative z-20 rounded-[2rem] border border-amber-200/70 bg-gradient-to-b from-amber-50 to-[#fff8ec] px-5 pb-10 pt-10 text-center dark:border-stone-800 dark:from-stone-900 dark:to-stone-950 sm:px-10 sm:pt-14 mb-8">
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
+                <div className="ulos-stripes absolute inset-x-0 top-0 h-2" />
+              </div>
 
               <p className="mx-auto inline-flex items-center gap-2 rounded-full bg-stone-900 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-widest text-amber-300">
                 <MapPin className="w-3.5 h-3.5" /> Medan, Sumatera Utara · 21 Kecamatan
