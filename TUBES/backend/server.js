@@ -251,11 +251,12 @@ app.get('/api/search', async (req, res) => {
   const finalQuery = `
 ${PREFIXES}
 SELECT
-  ?id ?nama ?namaEn ?deskripsi ?gambar ?isHalal
+  ?id ?nama ?namaEn ?deskripsi ?isHalal
   ?spice ?kisaranHarga ?hargaMin ?hargaMax ?rasaDominan ?metodeMasak
   ?katUri ?kategoriNama ?budayaNama ?waktuUri ?waktuNama
   ?teknikNama ?kawasanNama ?kelurahanNama ?awardNama
   ?restoNama ?alamat ?kecNama ?jamBuka ?rating ?tahunBerdiri ?lat ?long
+  (SAMPLE(?gambar) AS ?sampledImage)
   (GROUP_CONCAT(DISTINCT ?bahanNama; SEPARATOR=", ") AS ?bahanList)
 WHERE {
   ?id a ex:Kuliner ;
@@ -326,12 +327,11 @@ WHERE {
   ${extraPatterns.join('\n  ')}
 }
 GROUP BY
-  ?id ?nama ?namaEn ?deskripsi ?gambar ?isHalal
+  ?id ?nama ?namaEn ?deskripsi ?isHalal
   ?spice ?kisaranHarga ?hargaMin ?hargaMax ?rasaDominan ?metodeMasak
   ?katUri ?kategoriNama ?budayaNama ?waktuUri ?waktuNama
   ?teknikNama ?kawasanNama ?kelurahanNama ?awardNama
   ?restoNama ?alamat ?kecNama ?jamBuka ?rating ?tahunBerdiri ?lat ?long
-  ?budayaUri ?kecUri ?kawasanUri ?teknikUri
 ORDER BY DESC(?rating) ?nama
   `;
 
@@ -343,7 +343,7 @@ ORDER BY DESC(?rating) ?nama
       nama: b.nama?.value || '',
       namaEn: b.namaEn?.value || '',
       deskripsi: b.deskripsi?.value || '',
-      gambar: b.gambar?.value || '',
+      gambar: b.sampledImage?.value || '',
       isHalal: b.isHalal?.value === 'true',
       tingkatKepedasan: Number(b.spice?.value || 0),
       kisaranHarga: b.kisaranHarga?.value || '',
