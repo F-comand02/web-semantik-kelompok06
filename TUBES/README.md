@@ -18,7 +18,7 @@ Dataset memodelkan **360 entitas kuliner Medan**, **71 restoran & cabang resmi**
 - **Inferensi Tetangga Spasial (`ex:berbatasanDengan`)**: Perluasan radius pencarian otomatis ke kecamatan-kecamatan yang berbatasan langsung menggunakan properti simetris OWL (`owl:SymmetricProperty`).
 - **Peta Geospasial Interaktif WGS84 (Leaflet + OpenStreetMap)**: Visualisasi titik koordinat `geo:lat` dan `geo:long` untuk 71 tempat kuliner di 21 kecamatan Kota Medan beserta *mini-map* interaktif di setiap detail hidangan.
 - **5-Star Linked Open Data (`owl:sameAs` ↔ DBpedia)**: Pengayaan ringkasan ensiklopedia secara langsung (*live dereferencing*) dari DBpedia/Wikipedia untuk entitas kuliner ikonik Sumatera Utara.
-- **Asisten Kuliner Offline Berbasis Katalog**: Pencocokan deterministik berdasarkan nama menu dan detail katalog, dijalankan di browser tanpa LLM, API key, model tambahan, atau biaya AI.
+- **Asisten LLM Lokal (Transformers.js + Qwen3 0.6B)**: Model berjalan di browser dengan WebGPU, memakai konteks katalog, dan tidak mengirim prompt ke API inferensi. Penggunaan pertama mengunduh model sekitar 543 MB dari Hugging Face lalu menyimpannya di cache browser; tidak ada API key atau biaya inferensi. Model Qwen3 berlisensi Apache 2.0.
 - **Validasi Integritas Data SHACL (`shapes_validation.rdf`)**: Penjaminan mutu struktur graf untuk seluruh 360 individu `ex:Kuliner` dan 71 individu `ex:Restoran` (label bilingual `@id`/`@en`, rentang kepedasan `0–5`, batas koordinat Kota Medan, dan validitas URI gambar).
 
 ---
@@ -44,7 +44,7 @@ Dataset memodelkan **360 entitas kuliner Medan**, **71 restoran & cabang resmi**
 +-----------------------------------------------------------------------+
 ```
 
-Asisten offline mencocokkan pertanyaan dengan katalog yang sudah dimuat di browser. Pertanyaan tidak dikirim ke model atau layanan AI. Fitur aplikasi lain, seperti pengayaan DBpedia dan peta OpenStreetMap, tetap dapat mengakses layanan eksternal sesuai fungsinya.
+Asisten memuat bobot `onnx-community/Qwen3-0.6B-ONNX` dari Hugging Face saat pertama kali digunakan (sekitar 543 MB untuk varian WebGPU). Setelah tersedia di cache browser, prompt dan inferensi diproses di perangkat pengguna; prompt tidak dikirim ke layanan AI. Pertanyaan bebas dijawab oleh model, sedangkan kebutuhan situasional yang dikenali (misalnya mencari hidangan berkuah saat kedinginan) dijelaskan langsung dari fakta katalog agar rekomendasi tetap relevan. Model lokal memerlukan browser/perangkat dengan dukungan WebGPU. Fitur aplikasi lain, seperti pengayaan DBpedia dan peta OpenStreetMap, tetap dapat mengakses layanan eksternal sesuai fungsinya.
 
 ---
 

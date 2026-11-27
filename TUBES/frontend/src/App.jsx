@@ -5,6 +5,7 @@ import {
   History,
   Bookmark,
   Search,
+  ArrowLeft,
   ArrowRight,
   Sun,
   Moon,
@@ -50,13 +51,14 @@ import {
 } from './components/OrganicIcons';
 import { resolveDishImage } from './culinaryImages';
 import MedanCulinaryMap from './components/MedanCulinaryMap';
+import { generateLocalAssistantText } from './localLanguageModel';
 
 const API_BASE = 'http://localhost:5001/api';
 const ONTOLOGY_URI = 'http://kuliner-medan.org/ontology/Kelompok06/KomA/25#';
 
 const INITIAL_ASSISTANT_MESSAGE = {
   role: 'model',
-  text: 'Halo! Saya Asisten Ranah KulMed. Ceritakan selera rasa, budget, status halal, atau kawasan Medan yang kamu tuju—aku akan mencarikan rekomendasi terbaik langsung dari katalog kami.',
+  text: 'Halo! Saya Asisten AI Lokal Ranah KulMed. Pemakaian pertama mengunduh model sekitar 543 MB; setelah itu pertanyaan diproses di perangkat. Ceritakan selera rasa, budget, status halal, atau kawasan Medan yang kamu tuju.',
   recommendations: [],
   suggestedFilters: null,
   followUpQuestions: [
@@ -816,15 +818,41 @@ function MaimunSilhouette({ className = '' }) {
   );
 }
 
+const ASSISTANT_STOP_WORDS = new Set([
+  'aku', 'saya', 'kamu', 'anda', 'apa', 'apakah', 'ada', 'dong', 'tolong',
+  'mau', 'ingin', 'rekomendasi', 'rekomendasimu', 'rekomendasikan', 'kuliner',
+  'makanan', 'hidangan', 'masakan', 'carikan', 'cari', 'pilihan', 'cocok',
+  'yang', 'untuk', 'dengan', 'kalau', 'saat', 'sedang', 'lagi', 'khas',
+]);
+
+function inferAssistantIntent(question) {
+  const q = String(question || '').toLowerCase();
+  const wantsCoolingFood =
+    /\b(kepanasan|gerah|cuaca panas|panas banget|haus|minuman (yang )?dingin|makanan (yang )?dingin|hidangan (yang )?dingin|yang menyegarkan)\b/.test(q);
+  const wantsWarmFood =
+    !wantsCoolingFood &&
+    /\b(kedinginan|merasa dingin|aku dingin|saya dingin|cuaca dingin|dingin banget|menghangatkan|yang hangat|makanan hangat|hidangan hangat)\b/.test(q);
+
+  return {
+    wantsWarmFood,
+    wantsCoolingFood,
+    description: wantsWarmFood
+      ? 'Pengguna merasa kedinginan dan mencari hidangan berkuah.'
+      : wantsCoolingFood
+        ? 'Pengguna merasa kepanasan dan mencari minuman atau hidangan dingin yang menyegarkan.'
+        : '',
+  };
+}
+
 /**
  * Rank catalog entries against menu names and details mentioned in the question.
  */
-function retrieveGraphContext(question, catalog) {
+function retrieveGraphContext(question, catalog, intent = inferAssistantIntent(question)) {
   const q = String(question || '').toLowerCase();
   const tokens = q
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
-    .filter((t) => t.length >= 2);
+    .filter((t) => t.length >= 2 && !ASSISTANT_STOP_WORDS.has(t));
 
   let maxBudget = null;
   const rbMatch = q.match(/(\d+)\s*(rb|ribu|k)\b/);
@@ -860,17 +888,34 @@ function retrieveGraphContext(question, catalog) {
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
+    const searchableTokens = new Set(searchable.match(/[a-z0-9]+/g) || []);
+    const nameTokens = new Set((d.nama || '').toLowerCase().match(/[a-z0-9]+/g) || []);
 
     tokens.forEach((tok) => {
-      if (searchable.includes(tok)) {
+      if (searchableTokens.has(tok)) {
         score += 3;
         matchesQuestion = true;
       }
-      if ((d.nama || '').toLowerCase().includes(tok)) score += 5;
-      if ((d.kategori || '').toLowerCase().includes(tok)) score += 4;
-      if ((d.restoran?.kecamatan || '').toLowerCase().includes(tok)) score += 4;
-      if ((d.restoran?.kawasan || '').toLowerCase().includes(tok)) score += 4;
+      if ([...nameTokens].some((nameToken) => nameToken === tok || (tok.length >= 3 && nameToken.startsWith(tok)))) {
+        score += 5;
+      }
+      if ((d.kategori || '').toLowerCase().split(/\s+/).includes(tok)) score += 4;
+      if ((d.restoran?.kecamatan || '').toLowerCase().split(/\s+/).includes(tok)) score += 4;
+      if ((d.restoran?.kawasan || '').toLowerCase().split(/\s+/).includes(tok)) score += 4;
     });
+
+    const warmthEvidence = [d.nama, d.deskripsi].filter(Boolean).join(' ').toLowerCase();
+    if (intent.wantsWarmFood && /\b(soto|sup|sop|kuah|kaldu|berkuah)\b/.test(warmthEvidence)) {
+      score += 10;
+      if (/\b(soto|sup|sop|bihun|mie|mi|kari)\b/.test((d.nama || '').toLowerCase())) score += 3;
+      matchesQuestion = true;
+    }
+
+    const coolingEvidence = [d.nama, d.deskripsi].filter(Boolean).join(' ').toLowerCase();
+    if (intent.wantsCoolingFood && /\b(es|dingin|sirup|soda)\b/.test(coolingEvidence)) {
+      score += 10;
+      matchesQuestion = true;
+    }
 
     if (wantsHalal) {
       score += d.isHalal ? 6 : -12;
@@ -933,6 +978,40 @@ function buildOfflineAssistantReply(question, retrieved) {
       'Rekomendasi kuliner malam di sekitar Kesawan',
     ],
   };
+}
+
+function buildIntentAssistantText(dishes, intent) {
+  const top = dishes.slice(0, 3);
+
+  if (!top.length) {
+    return intent.wantsWarmFood
+      ? 'Aku belum menemukan hidangan berkuah atau berkaldu yang cocok di katalog. Coba sebutkan lokasi atau kisaran harga.'
+      : 'Aku belum menemukan minuman atau hidangan es yang cocok di katalog. Coba sebutkan lokasi atau kisaran harga.';
+  }
+
+  if (intent.wantsWarmFood) {
+    const dish =
+      top.find((item) => /\b(kuah|kaldu)\b/i.test(item.deskripsi || '')) ||
+      top.find((item) => /\b(soto|sup|sop)\b/i.test(item.nama || '')) ||
+      top[0];
+    const evidence = /\bkaldu\b/i.test(dish.deskripsi || '')
+      ? 'kuah kaldu'
+      : /\bkuah\b/i.test(dish.deskripsi || '')
+        ? 'kuah'
+        : 'menu soto atau sup';
+    return `Kalau sedang kedinginan, ${dish.nama} bisa dicoba karena deskripsi katalog menyebut ${evidence}. Cek kartu untuk detail lainnya.`;
+  }
+
+  const dish =
+    top.find((item) => /\b(dingin|es batu|es serut)\b/i.test(item.deskripsi || '')) ||
+    top.find((item) => /\b(es|sirup|soda)\b/i.test(item.nama || '')) ||
+    top[0];
+  const evidence = /disajikan dingin(?:\s+dengan es batu)?/i.test(dish.deskripsi || '')
+    ? 'disajikan dingin dengan es batu'
+    : /\b(es batu|es serut|minuman es)\b/i.test(dish.deskripsi || '')
+      ? 'disebut sebagai sajian es'
+      : 'namanya tercatat sebagai hidangan es atau minuman';
+  return `Kalau sedang kepanasan, ${dish.nama} bisa jadi pilihan karena ${evidence}. Cek kartu untuk detail lainnya.`;
 }
 
 function buildDemoGraph(focusSlug) {
@@ -1022,10 +1101,13 @@ export default function App() {
   const [sparqlError, setSparqlError] = useState('');
   const [copiedText, setCopiedText] = useState('');
 
-  // Offline catalog assistant state
+  // Local Transformer.js assistant state
   const [aiOpen, setAiOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiMessages, setAiMessages] = useState([INITIAL_ASSISTANT_MESSAGE]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiLoadingStatus, setAiLoadingStatus] = useState('');
+  const [aiError, setAiError] = useState('');
   const aiChatEndRef = useRef(null);
 
   // Keep the assistant's latest reply visible.
@@ -1303,6 +1385,7 @@ export default function App() {
   const resetAiChat = () => {
     setAiMessages([INITIAL_ASSISTANT_MESSAGE]);
     setAiPrompt('');
+    setAiError('');
   };
 
   const applyAiFilters = (suggested) => {
@@ -1325,22 +1408,41 @@ export default function App() {
     setActiveView('beranda');
   };
 
-  // Match each question against the local culinary catalog; no model or network call is used.
-  const askOfflineCulinary = (e, presetQuestion) => {
+  const askOfflineCulinary = async (e, presetQuestion) => {
     if (e) e.preventDefault();
     const question = (presetQuestion !== undefined ? presetQuestion : aiPrompt).trim();
-    if (!question) return;
+    if (!question || aiLoading) return;
 
+    const catalog = allDishes.length ? allDishes : results.length ? results : DEMO_DISHES;
+    const intent = inferAssistantIntent(question);
+    const retrieved = retrieveGraphContext(question, catalog, intent);
+    const reply = buildOfflineAssistantReply(question, retrieved);
     setAiOpen(true);
     const userMsg = { role: 'user', text: question };
     const nextMessages = [...aiMessages, userMsg];
     setAiMessages(nextMessages);
     if (presetQuestion === undefined) setAiPrompt('');
+    setAiError('');
+    setAiLoading(true);
+    setAiLoadingStatus('Menyiapkan model Qwen3 lokal...');
 
-    const catalog = allDishes.length ? allDishes : results.length ? results : DEMO_DISHES;
-    const retrieved = retrieveGraphContext(question, catalog);
-    const reply = buildOfflineAssistantReply(question, retrieved);
-    setAiMessages([...nextMessages, { role: 'model', ...reply }]);
+    try {
+      const generatedText =
+        intent.wantsWarmFood || intent.wantsCoolingFood
+          ? buildIntentAssistantText(retrieved, intent)
+          : await generateLocalAssistantText(question, retrieved, setAiLoadingStatus, intent);
+      setAiMessages([...nextMessages, { role: 'model', ...reply, text: generatedText }]);
+    } catch (error) {
+      setAiPrompt(question);
+      setAiError(
+        error instanceof Error
+          ? error.message
+          : 'Asisten lokal gagal dijalankan. Silakan coba lagi.'
+      );
+    } finally {
+      setAiLoading(false);
+      setAiLoadingStatus('');
+    }
   };
 
   const positionedGraph = useMemo(() => {
@@ -2047,11 +2149,11 @@ export default function App() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                        Asisten Kuliner AI Ranah KulMed
+                        Asisten AI Lokal Ranah KulMed
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Rekomendasi personal sesuai budget, status halal, bahan rempah, dan lokasi di Medan.
+                      Jawaban dibuat di perangkat dari katalog lokal, tanpa API berbayar.
                     </p>
                   </div>
                 </div>
@@ -2059,6 +2161,7 @@ export default function App() {
                   {aiOpen && aiMessages.length > 1 && (
                     <button
                       type="button"
+                      disabled={aiLoading}
                       onClick={resetAiChat}
                       title="Mulai obrolan baru"
                       className={`p-2 rounded-full border transition-colors cursor-pointer ${
@@ -2200,7 +2303,7 @@ export default function App() {
                                         key={sample}
                                         type="button"
                                         disabled={aiLoading}
-                                        onClick={() => askGeminiCulinary(null, sample)}
+                                        onClick={() => askOfflineCulinary(null, sample)}
                                         className={`text-[11px] px-3 py-1 rounded-full border transition-colors cursor-pointer ${
                                           darkMode
                                             ? 'bg-stone-900 border-stone-700 text-stone-300 hover:border-amber-500'
@@ -2217,31 +2320,32 @@ export default function App() {
                         })}
 
                         {aiLoading && (
-                          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/70 dark:border-slate-800 text-[11px] text-[#1d63ed] dark:text-sky-400 font-medium">
-                            <OrganicCulinaryBowlIcon className="w-4 h-4 animate-pulse" /> Mencocokkan katalog kuliner Medan untukmu...
+                          <div
+                            role="status"
+                            className="inline-flex items-center gap-2 rounded-2xl border border-amber-200/70 bg-white px-3.5 py-2 text-[11px] font-medium text-red-700 dark:border-stone-800 dark:bg-stone-900 dark:text-amber-400"
+                          >
+                            <OrganicCulinaryBowlIcon className="h-4 w-4 animate-pulse" />
+                            {aiLoadingStatus}
                           </div>
                         )}
                         <div ref={aiChatEndRef} />
                       </div>
 
                       {aiError && (
-                        <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-700 dark:text-amber-300">
-                          <span>{aiError}</span>
-                          <button
-                            type="button"
-                            onClick={() => setActiveView('pengaturan')}
-                            className="font-bold underline shrink-0 cursor-pointer"
-                          >
-                            Buka Pengaturan
-                          </button>
+                        <div
+                          role="alert"
+                          className="rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200"
+                        >
+                          Model lokal belum dapat dijalankan: {aiError} Pertanyaanmu tetap tersimpan di kolom agar bisa dicoba lagi.
                         </div>
                       )}
 
-                      <form onSubmit={askGeminiCulinary} className="flex items-center gap-2">
+                      <form onSubmit={askOfflineCulinary} className="flex items-center gap-2">
                         <input
                           type="text"
                           value={aiPrompt}
                           onChange={(e) => setAiPrompt(e.target.value)}
+                          disabled={aiLoading}
                           placeholder="Tanya bebas: misal 'Makan malam halal di Kesawan di bawah 50rb'..."
                           className={`flex-1 rounded-full border px-4 py-2.5 text-xs font-medium outline-none ${
                             darkMode
@@ -2252,10 +2356,10 @@ export default function App() {
                         <button
                           type="submit"
                           disabled={aiLoading || !aiPrompt.trim()}
-                          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#1d63ed] to-[#1e40af] hover:from-blue-500 hover:to-blue-700 disabled:opacity-50 text-white text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-red-700 hover:bg-red-800 disabled:opacity-50 text-white text-xs font-extrabold transition-all cursor-pointer shadow-xs"
                         >
                           <Send className="w-3.5 h-3.5" />
-                          <span>Kirim</span>
+                          <span>{aiLoading ? 'Memuat...' : 'Kirim'}</span>
                         </button>
                       </form>
                     </div>
@@ -2505,241 +2609,90 @@ export default function App() {
         {/* ==================== VIEW 2: EKSPLORASI KOLEKSI ==================== */}
         {activeView === 'eksplorasi' && (
           <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 pt-2 pb-12">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h2 className={`text-2xl font-extrabold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                  Jelajah Lengkap Kuliner Medan
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Saring pilihan kuliner berdasarkan kategori hidangan, warisan budaya, waktu sajian, budget harga, 21 kecamatan, hingga peta lokasi.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowMapView((m) => !m)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
-                  showMapView
-                    ? 'bg-[#1d63ed] border-[#1d63ed] text-white shadow-xs'
-                    : darkMode
-                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:border-sky-400'
-                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                {showMapView ? 'Sembunyikan Peta Lokasi' : 'Buka Peta 21 Kecamatan'}
-              </button>
-            </div>
+            {selectedExploreCollection ? (
+              <>
+                <div className="mb-6">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedExploreCollectionId('');
+                      setVisibleCount(12);
+                    }}
+                    className={`mb-4 inline-flex items-center gap-2 text-sm font-bold transition-colors ${
+                      darkMode ? 'text-amber-400 hover:text-amber-300' : 'text-red-700 hover:text-red-800'
+                    }`}
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Semua Koleksi
+                  </button>
+                  <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                    {selectedExploreCollection.title}
+                  </h2>
+                  <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+                    {selectedExploreCollection.description} {selectedExploreCollection.dishes.length} hidangan.
+                  </p>
+                </div>
 
-            <div
-              className={`rounded-2xl border p-4 mb-6 space-y-4 ${
-                darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200/90 shadow-xs'
-              }`}
-            >
-              <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={keyword}
-                  onChange={(e) => {
-                    setKeyword(e.target.value);
-                    setSearchInput(e.target.value);
-                  }}
-                  placeholder="Cari nama hidangan, bahan rempah, nama restoran, atau kelurahan..."
-                  className={`w-full rounded-xl border py-2.5 pl-10 pr-4 text-xs sm:text-sm outline-none ${
-                    darkMode
-                      ? 'bg-slate-950 border-slate-700 text-white focus:border-sky-400'
-                      : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-[#1d63ed]'
-                  }`}
-                />
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {displayedExploreDishes.map(renderDishCard)}
+                </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
-                <select
-                  value={selectedKategori}
-                  onChange={(e) => setSelectedKategori(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Kategori</option>
-                  {facets.categories.map((c) => (
-                    <option key={c.slug} value={c.slug}>
-                      {c.label} ({c.count})
-                    </option>
-                  ))}
-                </select>
+                {displayedExploreDishes.length < selectedExploreCollection.dishes.length && (
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((count) => count + 12)}
+                    className="mt-8 mx-auto block rounded-full bg-red-700 px-6 py-2.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-red-800 cursor-pointer"
+                  >
+                    Tampilkan Lebih Banyak ({selectedExploreCollection.dishes.length - displayedExploreDishes.length})
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="mb-7">
+                  <h2 className={`font-display text-3xl sm:text-4xl font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                    Jelajahi Kuliner Medan
+                  </h2>
+                  <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
+                    Pilih tema untuk menemukan hidangan yang cocok.
+                  </p>
+                </div>
 
-                <select
-                  value={selectedBudaya}
-                  onChange={(e) => setSelectedBudaya(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Budaya</option>
-                  {facets.cultures.map((c) => (
-                    <option key={c.slug} value={c.slug}>
-                      {c.label} ({c.count})
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={selectedKecamatan}
-                  onChange={(e) => {
-                    setSelectedKecamatan(e.target.value);
-                    if (!e.target.value) setIncludeNeighbors(false);
-                  }}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua 21 Kecamatan</option>
-                  {facets.districts.map((d) => (
-                    <option key={d.slug} value={d.slug}>
-                      {d.label} ({d.count})
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={selectedKawasan}
-                  onChange={(e) => setSelectedKawasan(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Kawasan</option>
-                  {(facets.hubs || []).map((h) => (
-                    <option key={h.slug} value={h.slug}>
-                      {h.label} ({h.count})
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={selectedTeknik}
-                  onChange={(e) => setSelectedTeknik(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Teknik Masak</option>
-                  {(facets.techniques || []).map((t) => (
-                    <option key={t.slug} value={t.slug}>
-                      {t.label} ({t.count})
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={selectedWaktu}
-                  onChange={(e) => setSelectedWaktu(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Waktu Sajian</option>
-                  {(facets.servingTimes || []).map((w) => (
-                    <option key={w.slug} value={w.slug}>
-                      {w.label} ({w.count})
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={maxHargaFilter}
-                  onChange={(e) => setMaxHargaFilter(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Semua Budget Harga</option>
-                  <option value="20000">≤ Rp 20.000</option>
-                  <option value="35000">≤ Rp 35.000</option>
-                  <option value="50000">≤ Rp 50.000</option>
-                  <option value="100000">≤ Rp 100.000</option>
-                </select>
-
-                <select
-                  value={halalFilter}
-                  onChange={(e) => setHalalFilter(e.target.value)}
-                  className={`rounded-xl border px-3 py-2 text-xs outline-none ${
-                    darkMode ? 'bg-slate-950 border-slate-700 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-700'
-                  }`}
-                >
-                  <option value="">Halal &amp; Non-Halal</option>
-                  <option value="true">Halal Saja</option>
-                  <option value="false">Non-Halal Saja</option>
-                </select>
-
-                <button
-                  onClick={resetFilters}
-                  className="px-3 py-2 rounded-xl bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold transition-colors cursor-pointer"
-                >
-                  Reset ({activePool.length} hasil)
-                </button>
-              </div>
-
-              {selectedKecamatan && (
-                <label className="flex items-center gap-2 text-xs text-[#1d63ed] dark:text-sky-400 cursor-pointer pt-1">
-                  <input
-                    type="checkbox"
-                    checked={includeNeighbors}
-                    onChange={(e) => setIncludeNeighbors(e.target.checked)}
-                    className="accent-[#1d63ed]"
-                  />
-                  <span>
-                    <strong>Perluas Radius Lokasi</strong> — tampilkan juga pilihan kuliner di kecamatan sekitar
-                  </span>
-                </label>
-              )}
-            </div>
-
-            {showMapView && (
-              <div className="mb-6">
-                <MedanCulinaryMap dishes={activePool} onSelectDish={openDishDetail} darkMode={darkMode} />
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {displayedResults.map(renderDishCard)}
-            </div>
-
-            {visibleCount < activePool.length && (
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <button
-                  onClick={() => setVisibleCount((c) => c + 24)}
-                  className="px-6 py-2.5 rounded-full bg-[#1d63ed] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer"
-                >
-                  Tampilkan Lebih Banyak ({activePool.length - visibleCount} tersisa)
-                </button>
-                <button
-                  onClick={() => setVisibleCount(activePool.length)}
-                  className={`px-6 py-2.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
-                    darkMode
-                      ? 'bg-slate-900 border-slate-700 text-sky-300 hover:bg-slate-800'
-                      : 'bg-white border-blue-200 text-[#1d63ed] hover:bg-blue-50 shadow-xs'
-                  }`}
-                >
-                  Tampilkan Semua ({activePool.length})
-                </button>
-              </div>
-            )}
-
-            {lastSparql && (
-              <details
-                className={`mt-8 rounded-2xl border p-4 ${
-                  darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
-                }`}
-              >
-                <summary className="cursor-pointer text-xs font-semibold text-[#1d63ed] dark:text-sky-400 flex items-center gap-2">
-                  <Database className="w-4 h-4" /> Detail Kueri Mesin Pencari (Mode Developer)
-                </summary>
-                <pre className="mt-3 p-4 rounded-xl bg-slate-950 text-xs text-emerald-300 overflow-x-auto font-mono">
-                  {lastSparql}
-                </pre>
-              </details>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {exploreCollections.map((collection) => {
+                    const CollectionIcon = collection.icon;
+                    return (
+                      <button
+                        key={collection.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedExploreCollectionId(collection.id);
+                          setVisibleCount(12);
+                        }}
+                        className={`group rounded-3xl border p-5 text-left transition-all hover:-translate-y-1 hover:shadow-lg ${
+                          darkMode
+                            ? 'bg-stone-900 border-stone-800 hover:border-amber-500/60'
+                            : 'bg-white border-stone-200/80 hover:border-amber-400 shadow-sm'
+                        }`}
+                      >
+                        <span className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-amber-100 text-red-800 dark:bg-stone-800 dark:text-amber-400">
+                          <CollectionIcon className="h-6 w-6" />
+                        </span>
+                        <h3 className={`font-display text-lg font-black ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                          {collection.title}
+                        </h3>
+                        <p className="mt-2 min-h-10 text-sm leading-relaxed text-stone-500 dark:text-stone-400">
+                          {collection.description}
+                        </p>
+                        <span className="mt-5 flex items-center justify-between text-xs font-extrabold text-red-700 dark:text-amber-400">
+                          {collection.dishes.length} hidangan
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
             )}
           </main>
         )}
@@ -2766,7 +2719,7 @@ export default function App() {
                     key={cat.slug}
                     onClick={() => {
                       setSelectedKategori(cat.slug);
-                      setActiveView('eksplorasi');
+                      setActiveView('beranda');
                     }}
                     className={`group p-5 rounded-3xl border text-left transition-all flex items-center justify-between cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
                       darkMode
@@ -2794,7 +2747,7 @@ export default function App() {
                     key={cult.slug}
                     onClick={() => {
                       setSelectedBudaya(cult.slug);
-                      setActiveView('eksplorasi');
+                      setActiveView('beranda');
                     }}
                     className={`group p-5 rounded-3xl border text-left transition-all flex items-center justify-between cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
                       darkMode
@@ -3233,7 +3186,7 @@ export default function App() {
                 Pengaturan &amp; Tentang Ranah KulMed
               </h2>
               <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
-                Atur tampilan dan konfigurasi Asisten AI Ranah KulMed sesuai preferensimu.
+                Atur tampilan dan lihat cara kerja Asisten Kuliner Ranah KulMed.
               </p>
             </div>
 
@@ -3255,50 +3208,18 @@ export default function App() {
             </div>
 
             <div
-              className={`rounded-3xl border p-5 sm:p-6 space-y-3 ${
+              className={`rounded-3xl border p-5 sm:p-6 ${
                 darkMode ? 'bg-stone-900 border-stone-800' : 'bg-white border-stone-200/80 shadow-xs'
               }`}
             >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className={`text-sm font-bold flex items-center gap-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                    <KeyRound className="w-4 h-4 text-[#1d63ed]" /> Konfigurasi Asisten AI (Gemini API Gratis)
-                  </p>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Saat dijalankan di laptop lokal (<code className="font-mono">localhost</code>), masukkan API Key gratis
-                    dari Google AI Studio agar Asisten AI aktif penuh. Key disimpan lokal di browser dan tidak pernah
-                    dikirim ke GitHub.
-                  </p>
-                </div>
-                {keySavedNotice && (
-                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-semibold shrink-0">
-                    Tersimpan
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="password"
-                  value={customGeminiKey}
-                  onChange={(e) => saveLocalGeminiKey(e.target.value)}
-                  placeholder="Opsional untuk localhost: AIza..."
-                  className={`flex-1 rounded-xl border px-3.5 py-2 text-xs font-mono outline-none ${
-                    darkMode
-                      ? 'bg-slate-950 border-slate-700 text-white focus:border-sky-400'
-                      : 'bg-slate-50 border-slate-200 text-slate-800 focus:border-[#1d63ed]'
-                  }`}
-                />
-                {customGeminiKey && (
-                  <button
-                    type="button"
-                    onClick={() => saveLocalGeminiKey('')}
-                    className="px-4 py-2 rounded-xl border border-rose-200 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-semibold hover:bg-rose-50 dark:hover:bg-rose-500/10 cursor-pointer"
-                  >
-                    Hapus Key
-                  </button>
-                )}
-              </div>
-              <p className="text-[11px] text-slate-500">
+              <p className={`flex items-center gap-2 font-display text-base font-bold ${darkMode ? 'text-white' : 'text-stone-900'}`}>
+                <OrganicCulinaryBowlIcon className="h-5 w-5 text-red-700 dark:text-amber-400" />
+                Asisten AI Lokal
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-stone-500 dark:text-stone-400">
+                Asisten memakai Qwen3 0.6B melalui Transformers.js. Penggunaan pertama perlu mengunduh model sekitar
+                543 MB dari Hugging Face; browser menyimpannya di cache. Pertanyaan diproses di perangkat, tanpa API
+                key atau biaya inferensi. Browser dan perangkat harus mendukung WebGPU.
               </p>
             </div>
           </main>
@@ -3315,12 +3236,6 @@ export default function App() {
 
             <div className="mt-1">
               <RanahKulMedLogo size="sm" darkMode={darkMode} />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-5 font-medium">
-              <button onClick={() => setActiveView('pengaturan')} className="hover:text-[#1d63ed] cursor-pointer">
-                Tentang Kami
-              </button>
             </div>
 
             <div className="flex items-center gap-2 font-semibold">
@@ -3631,7 +3546,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Floating Quick Summon Button for AI Assistant outside Beranda */}
+      {/* Floating shortcut for the offline assistant outside Beranda */}
       {activeView !== 'beranda' && (
         <button
           type="button"
@@ -3643,7 +3558,7 @@ export default function App() {
           className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-red-700 hover:bg-red-800 text-white text-xs font-extrabold shadow-lg shadow-red-700/30 transition-all cursor-pointer"
         >
           <OrganicCulinaryBowlIcon className="w-4 h-4" />
-          <span>Tanya Asisten AI</span>
+          <span>Tanya Asisten Kuliner</span>
         </button>
       )}
     </div>
